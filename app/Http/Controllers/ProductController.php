@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class StockProdukController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = Product::all(); //mengambil semua data dari tabel supplier
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -19,7 +21,7 @@ class StockProdukController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.add');
     }
 
     /**
@@ -51,7 +53,7 @@ class StockProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -59,6 +61,9 @@ class StockProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('product.destroy')->with('succes', 'data berhasi dihapus');
     }
 }

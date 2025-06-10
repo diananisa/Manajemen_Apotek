@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('_supplier', function (Blueprint $table) {
             $table->id();
-            $table->char('Id_supplier', 10);
-            $table->string('Nama_Produck', 100);
+            $table->char('Id_supplier');
+            $table->string('Nama_Produck');
             $table->date('Tanggal_Masuk');
             $table->date('Tanggal_Kadaluarsa');
             $table->integer('Jumlah');

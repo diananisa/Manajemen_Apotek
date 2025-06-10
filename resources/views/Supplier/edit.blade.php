@@ -56,15 +56,8 @@
                     </div>
                 </div>
             </div>
-              <h3>Tambah Supplier</h3>
-              @if (session('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-
-                </div>
-                    
-                @endif
-              <form action="{{ route('supplier.add') }}" method="post">
+              <h3>Edit Supplier</h3>
+              <form action="{{ route('supplier.edit') }}" method="post">
                 <div class="mb-3">
                     <label for="id_supplier" class="form-label">ID Supplier</label>
                     <input type="text" class="form-control" name="id_supplier">

@@ -40,8 +40,17 @@ class SupplierController extends Controller
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
-        Supplier::create($request->all());
-        return redirect()->route('supplier.index')->with('success', 'Data Berhasil disimpan');
+        Supplier::create([
+            'Id_supplier' => $request->Id_supplier,
+            'Nama_Produck' => $request->Nama_Product,
+            'Tanggal_Masuk' => $request->Tanggal_Masuk,
+            'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
+            'Jumlah' => $request->Jumlah,
+            'Total_Harga' => $request->Total_Harga,
+
+        ]);
+        // Supplier::create($request->all());
+        return redirect()->route('supplier.add')->with('success', 'Data Berhasil disimpan');
     }
 
     /**
@@ -59,7 +68,7 @@ class SupplierController extends Controller
     public function edit(string $id)
     {
         $data = Supplier::findOrFail($id);
-        return view('supplier.edit', compact('data'));
+        return view('supplier.edit', compact('suppliers'));
     }
 
     /**

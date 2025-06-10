@@ -38,62 +38,87 @@
         </div>
 
         {{-- Main Content --}}
+                {{-- Main Content --}}
+
         <div class="col-md-10 p-4">
-            <div class="d-flex justify-content-between mb-3">
-                <h4>Supplier</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold">Supplier</h4>
                 <a href="{{ route('supplier.add') }}" class="btn btn-primary">
                     <i class="bi bi-plus-lg"></i> Tambah Supplier
                 </a>
             </div>
 
-            <div class="table-responsive rounded shadow-sm p-3" style="background: #f5faff">
-                <table class="table table-bordered table-striped">
+            {{-- Alert Success --}}
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            {{-- Table Supplier --}}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
                     <thead class="table-primary">
                         <tr>
                             <th>Id Supplier</th>
-                            <th>Nama</th>
+                            <th>Nama Supplier</th>
                             <th>Nama Produk</th>
                             <th>Tanggal Masuk</th>
-                            <th>Tanggal Kadaluwarsa</th>
+                            <th>Tanggal Kadaluarsa</th>
                             <th>Total Harga</th>
-                            <th>Stok</th>
-                            <th>Action</th>
+                            <th>Stock</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($suppliers as $supplier)
-                        <tr>
-                            <td>{{ $supplier->id_supplier }}</td>
-                            <td>{{ $supplier->Nama}}</td>
-                            <td>{{ $supplier->Nama_produk }}</td>
-                            <td>{{ $supplier->Tanggal_Masuk }}</td>
-                            <td>{{ $supplier->Tanggal_Kadaluarsa }}</td>
-                            <td>Rp. {{ number_format($supplier->total_harga, 0, ',', '.') }}</td>
-                            <td>{{ $supplier->stok }}</td>
-                            <td>
-                                <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-
-                        @if ($suppliers->isEmpty())
-                        <tr>
-                            <td colspan="8" class="text-center text-muted">Belum ada data supplier</td>
-                        </tr>
-                        @endif
+                        @php use Carbon\Carbon; @endphp
+                        @forelse ($suppliers as $supplier)
+                            <tr>
+                                <td>{{ $supplier->id }}</td>
+                                <td>{{ $supplier->nama }}</td>
+                                <td>{{ $supplier->nama_produk }}</td>
+                                <td>{{ \Carbon\Carbon::parse($supplier->tanggal_masuk)->format('d - m - Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($supplier->tanggal_kadaluarsa)->format('d - m - Y') }}</td>
+                                <td>Rp. {{ number_format($supplier->total_harga, 0, ',', '.') }}</td>
+                                <td>{{ $supplier->stock }}</td>
+                                <td>
+                                    <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">Tidak ada data supplier.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> {{-- Akhir Main Content --}}
+
+        {{-- <table class="table"></table>
+        <thead>
+            <tr>
+                <th scope="id_supplier">Id Supplier</th>
+                <th scope="nama_supplier">Nama Supplier</th>
+                <th scope="nama_produck">Nama Produck</th>
+                <th scope="tanggal_masuk">Tanggal Masuk</th>
+                <th scope="tanggal_kadaluarsa">Tanggal_Kadaluarsa</th>
+                <th scope="total_harga">Total Harga</th>
+                <th scope="stock">Stock</th>
+            </tr>
+        </thead> --}}
+
+        
+                     
 
     </div>
 </div>

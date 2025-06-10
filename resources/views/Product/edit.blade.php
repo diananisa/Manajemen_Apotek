@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Apoteker</title>
+    <title>Edit Stock Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -40,7 +40,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
-                <form action="{{ route('supplier.index') }}" method="GET" class="mb-3">
+                <form action="{{ route('product.index') }}" method="GET" class="mb-3">
                     <div class="input-group w-400">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>
@@ -56,45 +56,31 @@
                     </div>
                 </div>
             </div>
-              <h3>Tambah Supplier</h3>
-              @if (session('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-
-                </div>
-                    
-                @endif
-              <form action="{{ route('supplier.add') }}" method="post">
-                <div class="mb-3">
-                    <label for="id_supplier" class="form-label">ID Supplier</label>
-                    <input type="text" class="form-control" name="id_supplier">
-                </div>
-                <div class="mb-3">
-                    <label for="Nama" class="form-label">Nama Supplier</label>
-                    <input type="text" class="form-control" name="Nama">
-                </div>
+              <h3>Edit Product</h3>
+              <form action="{{ route('product.add')}}" method="post">
+                <!-- @csrf -->
                 <div class="mb-3">
                     <label for="Nama_Product" class="form-label">Nama product</label>
                     <input type="text" class="form-control" name="Nama_Product">
                 </div>
                 <div class="mb-3">
-                    <label for="Tangga_Masuk" class="form-label">Tanggal Masuk</label>
-                    <input type="date" class="form-control" name="Tanggal_Masuk">
-                </div>
-                <div class="mb-3">
-                    <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
+                    <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
                     <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
                 </div>
                 <div class="mb-3">
-                    <label for="Stok" class="form-label">Stok</label>
-                    <input type="text" class="form-control" name="Stok">
+                    <label for="Stock" class="form-label">Stok</label>
+                    <input type="text" class="form-control" name="Stock">
                 </div>
                 <div class="mb-3">
-                    <label for="Total_Harga" class="form-label">Total Harga</label>
-                    <input type="text" class="form-control" name="Total_Harga">
+                    <label for="Harga" class="form-label">Harga</label>
+                    <input type="text" class="form-control" name="Harga">
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">please upload square image size less than 100kb</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
+                    <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
               </form>
