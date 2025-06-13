@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<h2 align="center">📘 Tutorial Laravel untuk Pemula</h2>
+<h2 align="center">📘 Laravel Gacorrrr</h2>
 
 Laravel adalah framework PHP yang populer untuk membangun aplikasi web modern dengan sintaks elegan dan efisien. Berikut panduan awal untuk menginstal dan menjalankan Laravel secara lokal.
 
@@ -36,7 +36,19 @@ Sebelum membuat project Laravel, siapkan tools berikut:
 
 ### 🟢 Dengan Laravel Installer:
 ```bash
-composer global require laravel/installer
-laravel new nama-proyek
-cd nama-proyek
+### Membuat project lavaral
+composer Nama_project laravel/laravel ./
+### Membuat Controller
+php artisan make:controller namaController
+### Membuat model
+php artisan make:model nama -m
+### Migrate
+php artisan migrate
+php artisan migrate:fresh
+### Melihat daftar route
+php artisan route:list
+### Menjalankan program
 php artisan serve
+
+### Buka browser dan akses:
+-> (http://127.0.0.1:8000)
