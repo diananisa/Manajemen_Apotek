@@ -57,28 +57,28 @@
                 </div>
             </div>
               <h3>Tambah Supplier</h3>
-              @if (session('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-
-                </div>
-                    
+                @if (session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                        
                 @endif
-              <form action="{{ route('supplier.add') }}" method="post">
+              <form action="{{ route('supplier.store') }}" method="post">
+                @csrf
                 <div class="mb-3">
-                    <label for="id_supplier" class="form-label">ID Supplier</label>
-                    <input type="text" class="form-control" name="id_supplier">
+                    <label for="Id_supplier" class="form-label">ID Supplier</label>
+                    <input type="text" class="form-control" name="Id_supplier">
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="Nama" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" name="Nama">
+                </div> --}}
+                <div class="mb-3">
+                    <label for="Nama_Produck" class="form-label">Nama product</label>
+                    <input type="text" class="form-control" name="Nama_Produck">
                 </div>
                 <div class="mb-3">
-                    <label for="Nama_Product" class="form-label">Nama product</label>
-                    <input type="text" class="form-control" name="Nama_Product">
-                </div>
-                <div class="mb-3">
-                    <label for="Tangga_Masuk" class="form-label">Tanggal Masuk</label>
+                    <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
                     <input type="date" class="form-control" name="Tanggal_Masuk">
                 </div>
                 <div class="mb-3">
@@ -86,8 +86,8 @@
                     <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
                 </div>
                 <div class="mb-3">
-                    <label for="Stok" class="form-label">Stok</label>
-                    <input type="text" class="form-control" name="Stok">
+                    <label for="Jumlah" class="form-label">Jumlah</label>
+                    <input type="text" class="form-control" name="Jumlah">
                 </div>
                 <div class="mb-3">
                     <label for="Total_Harga" class="form-label">Total Harga</label>

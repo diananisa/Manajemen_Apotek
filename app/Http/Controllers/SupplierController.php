@@ -33,7 +33,7 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Id_supplier' => 'required|unique::supplier,Id_Supplier|max:10',
+            'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10',
             'Nama_Produck' => 'required',
             'Tanggal_Masuk' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
@@ -42,7 +42,7 @@ class SupplierController extends Controller
         ]);
         Supplier::create([
             'Id_supplier' => $request->Id_supplier,
-            'Nama_Produck' => $request->Nama_Product,
+            'Nama_Produck' => $request->Nama_Produck,
             'Tanggal_Masuk' => $request->Tanggal_Masuk,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
             'Jumlah' => $request->Jumlah,
@@ -50,7 +50,7 @@ class SupplierController extends Controller
 
         ]);
         // Supplier::create($request->all());
-        return redirect()->route('supplier.add')->with('success', 'Data Berhasil disimpan');
+        return redirect()->route('supplier.index')->with('success', 'Data Berhasil disimpan');
     }
 
     /**
@@ -65,9 +65,9 @@ class SupplierController extends Controller
      * Show the form for editing the specified resource.
      */
     //menampilkan form edit
-    public function edit(string $id)
+    public function edit(string $Id_supplier)
     {
-        $data = Supplier::findOrFail($id);
+        $suppliers = Supplier::findOrFail($Id_supplier);
         return view('supplier.edit', compact('suppliers'));
     }
 
@@ -75,12 +75,12 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      */
     //memperbaharui data
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $Id_supplier)
     {
-        $supplier = Supplier::findOrFail($id);
+        $supplier = Supplier::findOrFail($Id_supplier);
 
         $request->validate([
-            'Id_supplier' => 'required|unique::supplier,Id_Supplier|max:10' . $supplier->Id_Supplier,
+            'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10' . $supplier->Id_Supplier,
             'Nama_Produck' => 'required',
             'Tanggal_Masuk' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
@@ -90,7 +90,7 @@ class SupplierController extends Controller
 
         $supplier->update($request->all());
 
-        return redirect()->route('supplier.update')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('supplier.index')->with('success', 'Data berhasil diupdate');
 
     }
 
@@ -98,9 +98,9 @@ class SupplierController extends Controller
      * Remove the specified resource from storage.
      */
     //menghapus
-    public function destroy(string $id)
+    public function destroy(string $Id_supplier)
     {
-        $supplier = Supplier::findOrFail($id);
+        $supplier = Supplier::findOrFail($Id_supplier);
         $supplier->delete();
 
         return redirect()->route('supplier.destroy')->with('succes', 'data berhasi dihapus');

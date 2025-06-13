@@ -44,6 +44,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold">Supplier</h4>
                 <a href="{{ route('supplier.add') }}" class="btn btn-primary">
+                    @csrf
                     <i class="bi bi-plus-lg"></i> Tambah Supplier
                 </a>
             </div>
@@ -61,8 +62,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Id Supplier</th>
-                            <th>Nama Supplier</th>
-                            <th>Nama Produk</th>
+                            <th>Nama Produck</th>
                             <th>Tanggal Masuk</th>
                             <th>Tanggal Kadaluarsa</th>
                             <th>Total Harga</th>
@@ -74,18 +74,18 @@
                         @php use Carbon\Carbon; @endphp
                         @forelse ($suppliers as $supplier)
                             <tr>
-                                <td>{{ $supplier->id }}</td>
-                                <td>{{ $supplier->nama }}</td>
-                                <td>{{ $supplier->nama_produk }}</td>
-                                <td>{{ \Carbon\Carbon::parse($supplier->tanggal_masuk)->format('d - m - Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($supplier->tanggal_kadaluarsa)->format('d - m - Y') }}</td>
-                                <td>Rp. {{ number_format($supplier->total_harga, 0, ',', '.') }}</td>
-                                <td>{{ $supplier->stock }}</td>
+                                <td>{{ $supplier->Id_supplier }}</td>
+                                <td>{{ $supplier->Nama_Produck }}</td>
+                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td>
+                                <td>{{ $supplier->Jumlah }}</td>
+                                <td>Rp. {{ number_format($supplier->Total_Harga, 0, ',', '.') }}</td>
+
                                 <td>
-                                    <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('supplier.edit', $supplier->Id_supplier) }}" class="btn btn-sm btn-warning">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    <form action="{{ route('supplier.destroy', $supplier->Id_supplier) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">

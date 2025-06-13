@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    protected $table = 'supplier';
+    protected $table = '_supplier';
 
     use HasFactory;
-    protected $fillabel = [
+    protected $fillable = [
         'Id_supplier',
         'Nama_Produck',
         'Tanggal_Masuk',

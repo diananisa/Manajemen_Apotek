@@ -48,13 +48,17 @@ Route::get('/Supplier/edit', function(){
     return view('/Supplier/edit');
 })->name('supplier.edit');
 
-Route::get('/Supplier/index', function () {
-    return view('Supplier/index');
-})->name('supplier.index');
+// 
+Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('supplier.index');
 
-Route::post('/Supplier/store', function () {
-    return view('Supplier/store');
-})->name('supplier.store');
+// Route::post('/Supplier/store', function () {
+//     return view('Supplier/store');
+// })->name('supplier.store');
+Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
+Route::post('/supplier_edit', [SupplierController::class, 'edit'])->name('supplier.edit');
+Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+
+
 
 //PRODUCT
 Route::get('/Product/add', function () {
