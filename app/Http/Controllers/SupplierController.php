@@ -64,12 +64,32 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    //menampilkan form edit
-    public function edit(string $Id_supplier)
+    public function edit($id)
     {
-        $suppliers = Supplier::findOrFail($Id_supplier);
-        return view('supplier.edit', compact('suppliers'));
+       
+        $supplier = Supplier::findOrFail($id);
+        return view('supplier.edit', compact('supplier'));
+
     }
+    // public function getSupplierById($id)
+    // {
+    //     $supplier = Supplier::where('Id_supplier', $id)->first();
+
+    //     if (!$supplier)
+    //     {
+    //         return response()->json(['eror' => 'Supplier tidak ditemukan'], 404);
+    //     }
+
+    //     return response()->json([
+    //         'Nama_Produck' => $supplier->Nama_Produck,
+    //         // 'alamat' => $supplier->alamat,
+    //         'Tanggal_Masuk'   => $supplier->Tanggal_Masuk,
+    //         'Tanggal_Kadaluarsa' => $supplier->Tanggal_Kadaluarsa,
+    //         'Jumlah'            => $supplier->Jumlah,
+    //         'Total_Harga'     => $supplier->Total_Harga,
+    //     ]);
+    // }
+   
 
     /**
      * Update the specified resource in storage.
@@ -78,6 +98,13 @@ class SupplierController extends Controller
     public function update(Request $request, string $Id_supplier)
     {
         $supplier = Supplier::findOrFail($Id_supplier);
+
+        // $supplier->Id_supplier = $request->Id_supplier;
+        $supplier->Nama_Produck = $request->Nama_Produck;
+        $supplier->Tanggal_Masuk = $request->Tanggal_Masuk;
+        $supplier->Tanggal_Kadaluarsa = $request->Tanggal_Kadaluarsa;
+        $supplier->Jumlah = $request->Jumlah;
+        $supplier->Total_Harga = $request->Total_Harga;
 
         $request->validate([
             'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10' . $supplier->Id_Supplier,
@@ -88,6 +115,7 @@ class SupplierController extends Controller
             'Total_Harga' => 'required',
         ]);
 
+        $supplier->save();
         $supplier->update($request->all());
 
         return redirect()->route('supplier.index')->with('success', 'Data berhasil diupdate');

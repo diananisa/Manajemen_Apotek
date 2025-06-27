@@ -55,8 +55,13 @@ Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('suppl
 //     return view('Supplier/store');
 // })->name('supplier.store');
 Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
-Route::post('/supplier_edit', [SupplierController::class, 'edit'])->name('supplier.edit');
+// Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');
 Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
+Route::post('/Supplier/update/{Id_supplier}', [SupplierController::class, 'update'])->name('supplier.update');
+
+// Route::get('api/Supplier/{id}', [SupplierController::class, 'getSupplierbyId']);
+
 
 
 

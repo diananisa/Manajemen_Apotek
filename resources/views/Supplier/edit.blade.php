@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body class="bg-light">
@@ -57,34 +58,39 @@
                 </div>
             </div>
               <h3>Edit Supplier</h3>
-              <form action="{{ route('supplier.edit') }}" method="post">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                    </div>
+                        
+                @endif
+              <form action="{{ route('supplier.update', $supplier->Id_supplier) }}" method="POST">
+                @csrf
                 <div class="mb-3">
-                    <label for="id_supplier" class="form-label">ID Supplier</label>
-                    <input type="text" class="form-control" name="id_supplier">
+                    <label for="Id_supplier" class="form-label">ID Supplier</label>
+                    <input type="text" class="form-control" name="Id_supplier">
                 </div>
                 <div class="mb-3">
-                    <label for="Nama" class="form-label">Nama Supplier</label>
-                    <input type="text" class="form-control" name="Nama">
+                    <label for="Nama_Produck" class="form-label">Nama product</label>
+                    <input type="text" class="form-control" name="Nama_Produck" id="Nama_Produck" value="{{ $supplier->Nama_Produck }}">
                 </div>
                 <div class="mb-3">
-                    <label for="Nama_Product" class="form-label">Nama product</label>
-                    <input type="text" class="form-control" name="Nama_Product">
-                </div>
-                <div class="mb-3">
-                    <label for="Tangga_Masuk" class="form-label">Tanggal Masuk</label>
-                    <input type="date" class="form-control" name="Tanggal_Masuk">
+                    <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
+                    <input type="date" class="form-control" name="Tanggal_Masuk" id="Tanggal_Masuk" value="{{ $supplier->Tanggal_Masuk }}">
                 </div>
                 <div class="mb-3">
                     <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
-                    <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
+                    <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $supplier->Tanggal_Kadaluarsa }}">
                 </div>
                 <div class="mb-3">
-                    <label for="Stok" class="form-label">Stok</label>
-                    <input type="text" class="form-control" name="Stok">
+                    <label for="Jumlah" class="form-label">Jumlah</label>
+                    <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $supplier->Jumlah }}">
                 </div>
                 <div class="mb-3">
                     <label for="Total_Harga" class="form-label">Total Harga</label>
-                    <input type="text" class="form-control" name="Total_Harga">
+                    <input type="text" class="form-control" name="Total_Harga" id="Total_Harga" value="{{ $supplier->Total_Harga }}">
                 </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
@@ -97,7 +103,41 @@
     </div>
 </div>
 
+
 {{-- Bootstrap JS --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#Id_supplier').on('keyup change', function () {
+        let id = $(this).val();
+        console.log("ID yang diketik: ", id);
+
+        if (id !== '') {
+            $.ajax({
+                url: `/api/Supplier/${id}`,
+                type: 'GET',
+                success: function (data) {
+                    $('#Nama_Produck').val(data.Nama_Produck || '');
+                    $('#Tanggal_Masuk').val(data.Tanggal_Masuk || '');
+                    $('#Tanggal_Kadaluarsa').val(data.Tanggal_Kadaluarsa || '');
+                    $('#Jumlah').val(data.Jumlah || '');
+                    $('#Total_Harga').val(data.Total_Harga || '');
+                },
+                error: function () {
+                    $('#Nama_Produck').val('');
+                    $('#Tanggal_Masuk').val('');
+                    $('#Tanggal_Kadaluarsa').val('');
+                    $('#Jumlah').val('');
+                    $('#Total_Harga').val('');
+                }
+            });
+        }
+    });
+
+    $(document).ready(function () {
+        $('#Id_supplier').trigger('change');
+    });
+</script> --}}
+
 </body>
 </html>
