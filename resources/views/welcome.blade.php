@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="3;url=/login"> <!-- Redirect after 3 seconds -->
+    <meta http-equiv="refresh" content="3;url=Login/login"> <!-- Redirect after 3 seconds -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApotekKu</title>
     <!-- Bootstrap CSS CDN -->

@@ -22,10 +22,10 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
+                    <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
@@ -41,7 +41,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
-                <form action="{{ route('supplier.index') }}" method="GET" class="mb-3">
+                <form action="{{ route('presensi.index') }}" method="GET" class="mb-3">
                     <div class="input-group w-400">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>
@@ -57,53 +57,46 @@
                     </div>
                 </div>
             </div>
-              <h3>Tambah Supplier</h3>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                        <i class="bi bi-check-circle-fill me-2"></i>
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+            <div class="row mb-5 g-2">
+                <form action="{{ route('presensi.index') }}" method="GET" class="d-flex flex-wrap gap-2">
+                    {{-- Filter Tipe Harian / Bulanan --}}
+                    <div class="col-md-2">
+                        <div class="card text-center shadow-sm p-2">
+                            <select name="tipe" class="form-select">
+                                <option value="harian" {{ request('tipe') == 'harian' ? 'selected' : '' }}>Harian</option>
+                                <option value="bulanan" {{ request('tipe') == 'bulanan' ? 'selected' : '' }}>Bulanan</option>
+                            </select>
+                        </div>
                     </div>
-                        
-                @endif
-                <form action="{{ route('supplier.store') }}" method="post">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="Id_supplier" class="form-label">ID Supplier</label>
-                        <input type="text" class="form-control" name="Id_supplier">
+
+                    {{-- Filter Tanggal --}}
+                    <div class="col-md-2">
+                        <div class="card text-center shadow-sm p-2">
+                            <input type="date" name="tanggal" value="{{ request('tanggal') ?? now()->format('Y-m-d') }}" class="form-control">
+                        </div>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="Nama" class="form-label">Nama Supplier</label>
-                        <input type="text" class="form-control" name="Nama">
-                    </div> --}}
-                    <div class="mb-3">
-                        <label for="Nama_Produck" class="form-label">Nama product</label>
-                        <input type="text" class="form-control" name="Nama_Produck">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
-                        <input type="date" class="form-control" name="Tanggal_Masuk">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
-                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Jumlah" class="form-label">Jumlah</label>
-                        <input type="text" class="form-control" name="Jumlah">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Total_Harga" class="form-label">Total Harga</label>
-                        <input type="text" class="form-control" name="Total_Harga">
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+
+                    {{-- Filter Pencarian Nama --}}
+                    <div class="col-md-4">
+                        <div class="card text-center shadow-sm p-2">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Cari nama karyawan..." value="{{ request('search') }}">
+                                <button class="btn btn-primary" type="submit">Cari</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
 
-            
+
+            {{-- <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Harian</a></li>
+                    <li><a class="dropdown-item" href="#">Bulanan</a></li>
+                </ul>
+            </div>  --}}
+
         </div>
     </div>
 </div>

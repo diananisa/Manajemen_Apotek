@@ -17,23 +17,29 @@
                 <img src="{{ asset('asset/logo.png') }}" class="img-fluid mb-3" style="max-width: 95px;">
                 <!-- <img src="{{ asset('assets/logo.png') }}" alt="Logo Apotek" style="height: 50px;"> -->
                 <h5 class="mt-0 fw-bold" style="color: black; font-family: 'Source Sans 3', sans-serif; margin-top: 0;">Login to Account</h5>
-                <h6 style="color: black; margin-top: 0;" >Please enter yout email and password to continue</h6>
+                <h6 style="color: black; margin-top: 0;" >Please enter yout username and password to continue</h6>
             <!-- </a> -->
             </div>
         <div class="card-body login-card-body">
+          
           <!-- <p class="login-box-msg">Sign in to start your session</p> -->
-          <form action="{{ route('dashboard_manager') }}" method="get"> 
+        <form action="{{ route('login.submit') }}" method="post"> 
           @csrf
+          @if ($errors->any())
+                <div class="alert alert-danger mt-2">
+                    {{ $errors->first() }}
+                </div>
+            @endif
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input id="loginUsername" type="username" class="form-control" value="" placeholder="" />
-                <label for="loginEmail">Username</label>
+                <input id="loginUsername" name="Username" class="form-control" placeholder="Username" />
+                <label for="loginUsername">Username</label>
               </div>
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
             </div>
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input id="loginPassword" type="password" class="form-control" placeholder="" />
+                <input id="loginPassword" name="password" class="form-control" placeholder="password" />
                 <label for="loginPassword">Password</label>
               </div>
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>

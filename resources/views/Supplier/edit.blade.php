@@ -66,37 +66,38 @@
                     </div>
                         
                 @endif
-              <form action="{{ route('supplier.update', $supplier->Id_supplier) }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="Id_supplier" class="form-label">ID Supplier</label>
-                    <input type="text" class="form-control" name="Id_supplier">
-                </div>
-                <div class="mb-3">
-                    <label for="Nama_Produck" class="form-label">Nama product</label>
-                    <input type="text" class="form-control" name="Nama_Produck" id="Nama_Produck" value="{{ $supplier->Nama_Produck }}">
-                </div>
-                <div class="mb-3">
-                    <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
-                    <input type="date" class="form-control" name="Tanggal_Masuk" id="Tanggal_Masuk" value="{{ $supplier->Tanggal_Masuk }}">
-                </div>
-                <div class="mb-3">
-                    <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
-                    <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $supplier->Tanggal_Kadaluarsa }}">
-                </div>
-                <div class="mb-3">
-                    <label for="Jumlah" class="form-label">Jumlah</label>
-                    <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $supplier->Jumlah }}">
-                </div>
-                <div class="mb-3">
-                    <label for="Total_Harga" class="form-label">Total Harga</label>
-                    <input type="text" class="form-control" name="Total_Harga" id="Total_Harga" value="{{ $supplier->Total_Harga }}">
-                </div>
-                <div class="d-flex justify-content-between">
-                    <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
+                <form action="{{ route('supplier.update') }}" method="post">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="Id_supplier" class="form-label">ID Supplier</label>
+                        <input type="text" class="form-control" name="Id_supplier" value="{{ $supplier->Id_supplier }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nama_Produck" class="form-label">Nama product</label>
+                        <input type="text" class="form-control" name="Nama_Produck" id="Nama_Produck" value="{{ $supplier->Nama_Produck }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
+                        <input type="date" class="form-control" name="Tanggal_Masuk" id="Tanggal_Masuk" value="{{ $supplier->Tanggal_Masuk }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
+                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $supplier->Tanggal_Kadaluarsa }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Jumlah" class="form-label">Jumlah</label>
+                        <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $supplier->Jumlah }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Total_Harga" class="form-label">Total Harga</label>
+                        <input type="text" class="form-control" name="Total_Harga" id="Total_Harga" value="{{ $supplier->Total_Harga }}">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
               </form>
+            </div>  
 
             
         </div>

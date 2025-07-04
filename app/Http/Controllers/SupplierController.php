@@ -64,10 +64,10 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($Id_supplier)
     {
        
-        $supplier = Supplier::findOrFail($id);
+        $supplier = Supplier::where('Id_supplier',$Id_supplier)->firstOrFail();
         return view('supplier.edit', compact('supplier'));
 
     }
@@ -95,19 +95,10 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      */
     //memperbaharui data
-    public function update(Request $request, string $Id_supplier)
+    public function update(Request $request)
     {
-        $supplier = Supplier::findOrFail($Id_supplier);
-
-        // $supplier->Id_supplier = $request->Id_supplier;
-        $supplier->Nama_Produck = $request->Nama_Produck;
-        $supplier->Tanggal_Masuk = $request->Tanggal_Masuk;
-        $supplier->Tanggal_Kadaluarsa = $request->Tanggal_Kadaluarsa;
-        $supplier->Jumlah = $request->Jumlah;
-        $supplier->Total_Harga = $request->Total_Harga;
-
         $request->validate([
-            'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10' . $supplier->Id_Supplier,
+            'Id_supplier' => 'required',
             'Nama_Produck' => 'required',
             'Tanggal_Masuk' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
@@ -115,8 +106,21 @@ class SupplierController extends Controller
             'Total_Harga' => 'required',
         ]);
 
-        $supplier->save();
-        $supplier->update($request->all());
+        // $supplier = Supplier::findOrFail($Id_supplier);
+        Supplier::where('Id_supplier', $request->Id_supplier)->update([
+
+            // ''=>$request->Id_supplier,
+            'Nama_Produck'=>$request->Nama_Produck,
+            'Tanggal_Masuk'=>$request->Tanggal_Masuk,
+            'Tanggal_Kadaluarsa'=>$request->Tanggal_Kadaluarsa,
+            'Jumlah'=>$request->Jumlah,
+            'Total_Harga'=>$request->Total_Harga,
+        ]);
+
+
+
+        // $request->save();
+        //$request->update($request->all());
 
         return redirect()->route('supplier.index')->with('success', 'Data berhasil diupdate');
 
@@ -128,9 +132,11 @@ class SupplierController extends Controller
     //menghapus
     public function destroy(string $Id_supplier)
     {
-        $supplier = Supplier::findOrFail($Id_supplier);
+        $supplier = Supplier::where('Id_supplier',$Id_supplier)->firstOrFail();
+
+        //$supplier = Supplier::findOrFail($Id_supplier);
         $supplier->delete();
 
-        return redirect()->route('supplier.destroy')->with('succes', 'data berhasi dihapus');
+        return redirect()->route('supplier.index')->with('success', 'data berhasi dihapus');
     }
 }

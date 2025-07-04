@@ -85,9 +85,9 @@
                                     <a href="{{ route('supplier.edit', $supplier->Id_supplier) }}" class="btn btn-sm btn-warning">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form action="{{ route('supplier.destroy', $supplier->Id_supplier) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    <form action="{{ route('supplier.destroy', $supplier->Id_supplier) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
-                                        @method('DELETE')
+                                        
                                         <button class="btn btn-sm btn-danger">
                                             <i class="bi bi-trash"></i>
                                         </button>

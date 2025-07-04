@@ -16,11 +16,20 @@
     <div class="row min-vh-100">
 
         {{-- Sidebar --}}
+        
         <div class="col-md-2 bg-white border-end p-3">
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
+            <button class="navbar-toggle" type="button" data-bs-tonggle="collapse">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+            {{-- @if ($errors->any())
+                <div class="alert alert-danger mt-2">
+                    {{ $errors->first() }}
+                </div>
+            @endif --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
@@ -42,7 +51,8 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
-                <form action="{{ route('dashboard_kasir') }}" method="GET" class="mb-3"> <!--NATI GANTI SESUAI ui ux -->
+                {{-- NANTI DI GANTI SESUAI PENCARIAN --}}
+                <form action="{{ route('dashboard_kasir') }}" method="POST" class="mb-3"> <!--NATI GANTI SESUAI ui ux -->
                     <div class="input-group w-400">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>
@@ -53,8 +63,8 @@
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
-                        <div class="fw-bold">Dinda</div>
-                        <small class="text-muted">Apoteker</small>
+                        <div class="fw-bold">{{ session('Username')}}</div>
+                        <small class="text-muted">{{session('role')}}</small>
                     </div>
                 </div>
             </div>

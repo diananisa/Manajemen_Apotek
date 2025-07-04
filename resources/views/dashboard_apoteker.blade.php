@@ -24,7 +24,7 @@
                     <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="Supplier.index"><i class="bi bi-truck me-2"></i>Supplier</a>
+                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
@@ -35,9 +35,7 @@
             </ul>
         </div>
 
-        {{-- Main Content --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
                 <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
@@ -47,15 +45,24 @@
                     </div>
                 </form>
 
-                <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">Dinda</div>
-                        <small class="text-muted">Apoteker</small>
+                <div class="nav justify-content-end">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-cart3 fs-4 text-primary"></i>
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username')}}</div>
+                            <small class="text-muted">{{session('role')}}</small>
+                        </div>
+
                     </div>
                 </div>
-            </div>
+
+        </div>
+
+        {{-- Main Content --}}
+        <div class="col-md-10 p-4 bg-body-tertiary">
+            
               <h3>Dashboard</h3>
 
             {{-- Statistic Cards --}}
