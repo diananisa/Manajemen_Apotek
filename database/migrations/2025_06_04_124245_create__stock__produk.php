@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('_stock__produk', function (Blueprint $table) {
             $table->id();
-            $table->string('Nama_Product', 100);
-            $table->date('Tanggal_kadaluarsa');
-            $table->integer('Stock');
-            $table->float('Harga');
+            $table->string('gambar')->nullable();
+            $table->char('Id_Obat');
+            $table->string('Nama_Obat');
+            $table->string('Tanggal_Kadaluarsa');
+            $table->string('Jumlah');
+            $table->string('Total_Harga');
             $table->timestamps();
         });
     }

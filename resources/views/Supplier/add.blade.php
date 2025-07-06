@@ -71,31 +71,75 @@
                     <div class="mb-3">
                         <label for="Id_supplier" class="form-label">ID Supplier</label>
                         <input type="text" class="form-control" name="Id_supplier">
+                        @error('Id_supplier')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- <div class="mb-3">
                         <label for="Nama" class="form-label">Nama Supplier</label>
                         <input type="text" class="form-control" name="Nama">
                     </div> --}}
                     <div class="mb-3">
-                        <label for="Nama_Produck" class="form-label">Nama product</label>
-                        <input type="text" class="form-control" name="Nama_Produck">
+                        <label for="Nama_Supplier" class="form-label">Nama Supplier</label>
+                        <input type="text" class="form-control" name="Nama_Supplier">
+                         @error('Nama_Supplier')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
-                        <input type="date" class="form-control" name="Tanggal_Masuk">
+                        <label for="Kontak" class="form-label">Kontak</label>
+                        <input type="text" class="form-control" name="Kontak">
+                         @error('Kontak')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
-                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
+                        <label for="Alamat" class="form-label">Alamat</label>
+                        <input type="text" class="form-control" name="Alamat">
+                         @error('Alamat')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="Jumlah" class="form-label">Jumlah</label>
-                        <input type="text" class="form-control" name="Jumlah">
+                        <label for="Jenis_Barang_Obat" class="form-label">Jenis Barang/Obat</label>
+                        <input list="jenisOptions" name="Jenis_Barang_Obat" class="form-control" id="Jenis_Barang_Obat">
+                        <datalist id="jenisOptions">
+                            <option value="Obat Bebas">
+                            <option value="Obat Resep">
+                            <option value="Vitamin/Suplemen">
+                            <option value="Obat Herbal">
+                            <option value="Obat Medis Khusus">
+                        </datalist>
+                         @error('Jenis_Barang_Obat')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- <div class="mb-3">
+                        <label for="Jenis_Barang_Obat" class="form-label">jenis Barang/Obat</label>
+                        <input type="text" class="form-control" name="Jenis_Barang_Obat">
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                    </div> --}}
+                    <div class="mb-3">
+                        <label for="Nama_PIC" class="form-label">Nama PIC</label>
+                        <input type="text" class="form-control" name="Nama_PIC">
+                         @error('Nama_PIC')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="Total_Harga" class="form-label">Total Harga</label>
-                        <input type="text" class="form-control" name="Total_Harga">
+                        <label for="Status" class="form-label">Status</label>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="Status" name="Status" checked>
+                            <label class="custom-control-label" for="is_active">Aktif</label>
+
+                        </div>
                     </div>
+                    
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>

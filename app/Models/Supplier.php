@@ -12,10 +12,11 @@ class Supplier extends Model
     use HasFactory;
     protected $fillable = [
         'Id_supplier',
-        'Nama_Produck',
-        'Tanggal_Masuk',
-        'Tanggal_Kadaluarsa',
-        'Jumlah',
-        'Total_Harga',
+        'Nama_Supplier',
+        'Kontak',
+        'Alamat',
+        'Jenis_Barang_Obat',
+        'Nama_PIC',
+        'Status',
     ];
 }

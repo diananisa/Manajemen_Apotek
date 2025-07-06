@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Presensi;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
 
@@ -83,17 +84,29 @@ Route::get('/Product/add', function () {
     return view('Product/add');
 })->name('product.add');
 
-Route::get('/Product/index', function () {
-    return view('Product/index');
-})->name('product.index');
+Route::get('/Product/cart', function () {
+    return view('Product/cart');
+})->name('product.cart');
+
+
+Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
+
 
 // Route::post('/Product/add', function () {
 //     return view('Product/add');
 // })->name('product.add');
 
-Route::get('/Product/edit', function(){
-    return view('/Product/edit');
-})->name('product.edit');
+// Route::get('/Product/edit', function(){
+//     return view('/Product/edit');
+// })->name('product.edit');
+
+Route::post('/Product_store', [ProductController::class, 'store'])->name('product.store');
+Route::post('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
+Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('product.destroy');
+Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('product.edit');
+
+
+
 
 #PRESENSI
 Route::get('/Presensi/index', function(){

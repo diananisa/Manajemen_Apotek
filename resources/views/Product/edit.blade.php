@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Stock Product</title>
+    <title>Tambah Stock Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -57,33 +57,49 @@
                 </div>
             </div>
               <h3>Edit Product</h3>
-              <form action="{{ route('product.add')}}" method="post">
-                <!-- @csrf -->
-                <div class="mb-3">
-                    <label for="Nama_Product" class="form-label">Nama product</label>
-                    <input type="text" class="form-control" name="Nama_Product">
-                </div>
-                <div class="mb-3">
-                    <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
-                    <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
-                </div>
-                <div class="mb-3">
-                    <label for="Stock" class="form-label">Stok</label>
-                    <input type="text" class="form-control" name="Stock">
-                </div>
-                <div class="mb-3">
-                    <label for="Harga" class="form-label">Harga</label>
-                    <input type="text" class="form-control" name="Harga">
-                </div>
-                <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">please upload square image size less than 100kb</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-              </form>
+              @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                    </div>
+                        
+                @endif
+                <form action="{{ route('product.update', $product->Id_Obat)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="gambar" class="form-label">Gambar</label>
+                        <input type="file" name="gambar" class="form-control" id="gambar" value="{{ $product->gambar }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Id_Obat" class="form-label">Id Obat</label>
+                        <input type="text" class="form-control" name="Id_Obat" id="Id_Obat" value="{{ $product->Id_Obat }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nama_Obat" class="form-label">Nama Obat</label>
+                        <input type="text" class="form-control" name="Nama_Obat" id="Nama_Obat" value="{{ $product->Nama_Obat }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
+                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $product->Tanggal_Kadaluarsa }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Jumlah" class="form-label">Jumlah</label>
+                        <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $product->Jumlah }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Total_Harga" class="form-label">Total Harga</label>
+                        <input type="text" class="form-control" name="Total_Harga" id="Total_Harga" value="{{ $product->Total_Harga }}">
+                    </div>
+                    {{-- <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">please upload square image size less than 100kb</label>
+                        <input class="form-control" type="file" id="formFileMultiple" multiple>
+                    </div> --}}
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
 
             
         </div>

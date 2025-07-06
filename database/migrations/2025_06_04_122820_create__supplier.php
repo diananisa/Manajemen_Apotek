@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('_supplier', function (Blueprint $table) {
             $table->id();
             $table->char('Id_supplier');
-            $table->string('Nama_Produck');
-            $table->date('Tanggal_Masuk');
-            $table->date('Tanggal_Kadaluarsa');
-            $table->integer('Jumlah');
-            $table->float('Total_Harga');
+            $table->string('Nama_Supplier');
+            $table->string('Kontak');
+            $table->string('Alamat');
+            $table->string('Jenis_Barang_Obat');
+            $table->string('Nama_PIC');
+            $table->string('Status');
             $table->timestamps();
         });
     }

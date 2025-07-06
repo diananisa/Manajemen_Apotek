@@ -57,33 +57,59 @@
                 </div>
             </div>
               <h3>Tambah Product</h3>
-              <form action="{{ route('product.add')}}" method="post">
-                <!-- @csrf -->
-                <div class="mb-3">
-                    <label for="Nama_Product" class="form-label">Nama product</label>
-                    <input type="text" class="form-control" name="Nama_Product">
-                </div>
-                <div class="mb-3">
-                    <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
-                    <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
-                </div>
-                <div class="mb-3">
-                    <label for="Stock" class="form-label">Stok</label>
-                    <input type="text" class="form-control" name="Stock">
-                </div>
-                <div class="mb-3">
-                    <label for="Harga" class="form-label">Harga</label>
-                    <input type="text" class="form-control" name="Harga">
-                </div>
-                <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">please upload square image size less than 100kb</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-              </form>
+                <form action="{{ route('product.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="gambar" class="form-label" >Gambar</label>
+                        <input type="file" name="gambar" class="form-control">
+                        {{-- @error('gambar') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror --}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="Id_Obat" class="form-label">Id Obat</label>
+                        <input type="text" class="form-control" name="Id_Obat">
+                        @error('Id_Obat') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="Nama_Obat" class="form-label">Nama Obat</label>
+                        <input type="text" class="form-control" name="Nama_Obat">
+                        @error('Nama_Obat') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
+                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa">
+                        @error('Tanggal_Kadaluarsa') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="Jumlah" class="form-label">Jumlah</label>
+                        <input type="text" class="form-control" name="Jumlah">
+                        @error('Jumlah') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="Total_Harga" class="form-label">Total Harga</label>
+                        <input type="text" class="form-control" name="Total_Harga">
+                        @error('Total_Harga') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    {{-- <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">please upload square image size less than 100kb</label>
+                        <input class="form-control" type="file" id="formFileMultiple" multiple>
+                    </div> --}}
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
 
             
         </div>

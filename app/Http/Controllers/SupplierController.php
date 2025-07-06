@@ -34,19 +34,29 @@ class SupplierController extends Controller
     {
         $request->validate([
             'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10',
-            'Nama_Produck' => 'required',
-            'Tanggal_Masuk' => 'required',
-            'Tanggal_Kadaluarsa' => 'required',
-            'Jumlah' => 'required',
-            'Total_Harga' => 'required',
+            'Nama_Supplier' => 'required',
+            'Kontak' => 'required',
+            'Alamat' => 'required',
+            'Jenis_Barang_Obat' => 'required',
+            'Nama_PIC' => 'required',
+            'Status'=> 'required',
+        ], [
+            'Id_supplier.required' => 'Kolom ID Supplier harus diisi.',
+            'Id_supplier.unique' => 'ID Supplier sudah digunakan.',
+            'Nama_Supplier.required' => 'Kolom Nama Supplier harus diisi.',
+            'Kontak.required' => 'Kolom Kontak harus diisi.',
+            'Alamat.required' => 'Kolom Alamat harus diisi.',
+            'Jenis_Barang_Obat.required' => 'Jenis Barang/Obat harus diisi.',
+            'Nama_PIC.required' => 'Nama PIC harus diisi.',
         ]);
         Supplier::create([
             'Id_supplier' => $request->Id_supplier,
-            'Nama_Produck' => $request->Nama_Produck,
-            'Tanggal_Masuk' => $request->Tanggal_Masuk,
-            'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
-            'Jumlah' => $request->Jumlah,
-            'Total_Harga' => $request->Total_Harga,
+            'Nama_Supplier' => $request->Nama_Supplier,
+            'Kontak' => $request->Kontak,
+            'Alamat' => $request->Alamat,
+            'Jenis_Barang_Obat' => $request->Jenis_Barang_Obat,
+            'Nama_PIC' => $request->Nama_PIC,
+            'Status' =>$request->Status,
 
         ]);
         // Supplier::create($request->all());
@@ -99,22 +109,24 @@ class SupplierController extends Controller
     {
         $request->validate([
             'Id_supplier' => 'required',
-            'Nama_Produck' => 'required',
-            'Tanggal_Masuk' => 'required',
-            'Tanggal_Kadaluarsa' => 'required',
-            'Jumlah' => 'required',
-            'Total_Harga' => 'required',
+            'Nama_Supplier' => 'required',
+            'Kontak' => 'required',
+            'Alamat' => 'required',
+            'Jenis_Barang_Obat' => 'required',
+            'Nama_PIC' => 'required',
+            'Status'=>'required',
         ]);
 
         // $supplier = Supplier::findOrFail($Id_supplier);
         Supplier::where('Id_supplier', $request->Id_supplier)->update([
 
             // ''=>$request->Id_supplier,
-            'Nama_Produck'=>$request->Nama_Produck,
-            'Tanggal_Masuk'=>$request->Tanggal_Masuk,
-            'Tanggal_Kadaluarsa'=>$request->Tanggal_Kadaluarsa,
-            'Jumlah'=>$request->Jumlah,
-            'Total_Harga'=>$request->Total_Harga,
+            'Nama_Supplier'=>$request->Nama_Supplier,
+            'Kontak'=>$request->Kontak,
+            'Alamat'=>$request->Alamat,
+            'Jenis_Barang_Obat'=>$request->Jenis_Barang_Obat,
+            'Nama_PIC'=>$request->Nama_PIC,
+            'Status'=>$request->Status,
         ]);
 
 

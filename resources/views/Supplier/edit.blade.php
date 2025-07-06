@@ -73,24 +73,28 @@
                         <input type="text" class="form-control" name="Id_supplier" value="{{ $supplier->Id_supplier }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Nama_Produck" class="form-label">Nama product</label>
-                        <input type="text" class="form-control" name="Nama_Produck" id="Nama_Produck" value="{{ $supplier->Nama_Produck }}">
+                        <label for="Nama_Supplier" class="form-label">Nama Supplier</label>
+                        <input type="text" class="form-control" name="Nama_Supplier" id="Nama_Supplier" value="{{ $supplier->Nama_Supplier }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Tanggal_Masuk" class="form-label">Tanggal Masuk</label>
-                        <input type="date" class="form-control" name="Tanggal_Masuk" id="Tanggal_Masuk" value="{{ $supplier->Tanggal_Masuk }}">
+                        <label for="Kontak" class="form-label">Kontak</label>
+                        <input type="text" class="form-control" name="Kontak" id="Kontak" value="{{ $supplier->Kontak }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Tanggal_Kadaluarsa" class="form-label">Tanggal Expired</label>
-                        <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $supplier->Tanggal_Kadaluarsa }}">
+                        <label for="Alamat" class="form-label">Alamat</label>
+                        <input type="text" class="form-control" name="Alamat" id="Alamat" value="{{ $supplier->Alamat }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Jumlah" class="form-label">Jumlah</label>
-                        <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $supplier->Jumlah }}">
+                        <label for="Jenis_Barang_Obat" class="form-label">Jenis Barang/Obat</label>
+                        <input type="text" class="form-control" name="Jenis_Barang_Obat" id="Jenis_Barang_Obat" value="{{ $supplier->Jenis_Barang_Obat }}">
                     </div>
                     <div class="mb-3">
-                        <label for="Total_Harga" class="form-label">Total Harga</label>
-                        <input type="text" class="form-control" name="Total_Harga" id="Total_Harga" value="{{ $supplier->Total_Harga }}">
+                        <label for="Nama_PIC" class="form-label">Nama PIC</label>
+                        <input type="text" class="form-control" name="Nama_PIC" id="Nama_PIC" value="{{ $supplier->Nama_PIC }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Status" class="form-label">Status</label>
+                        <input type="text" class="form-control" name="Status" id="Status" value="{{ $supplier->Status }}">
                     </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>

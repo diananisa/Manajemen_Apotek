@@ -33,35 +33,36 @@
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
+            
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-                <!-- <h3>Dashboard</h3> -->
-                 <!-- Search Form -->
-                <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
-                    <div class="input-group w-400">
-                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>
-
-                <div class="nav justify-content-end">
-
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-cart3 fs-4 text-primary"></i>
-                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                        <div>
-                            <div class="fw-bold">{{ session('Username')}}</div>
-                            <small class="text-muted">{{session('role')}}</small>
-                        </div>
-
-                    </div>
-                </div>
-
-        </div>
 
         {{-- Main Content --}}
         <div class="col-md-10 p-4 bg-body-tertiary">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                    <!-- <h3>Dashboard</h3> -->
+                     <!-- Search Form -->
+                    <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
+                        <div class="input-group w-400">
+                            <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">Cari</button>
+                        </div>
+                    </form>
+    
+                    <div class="nav justify-content-end">
+    
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-cart3 fs-4 text-primary"></i>
+                            <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                            <div>
+                                <div class="fw-bold">{{ session('Username')}}</div>
+                                <small class="text-muted">{{session('role')}}</small>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+            </div>
             
               <h3>Dashboard</h3>
 

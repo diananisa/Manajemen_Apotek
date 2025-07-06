@@ -62,11 +62,12 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Id Supplier</th>
-                            <th>Nama Produck</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Tanggal Kadaluarsa</th>
-                            <th>Total Harga</th>
-                            <th>Stock</th>
+                            <th>Nama Supplier</th>
+                            <th>Kontak</th>
+                            <th>Alamat</th>
+                            <th>Jenis Barang/Obat</th>
+                            <th>Nama PIC</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -75,12 +76,17 @@
                         @forelse ($suppliers as $supplier)
                             <tr>
                                 <td>{{ $supplier->Id_supplier }}</td>
-                                <td>{{ $supplier->Nama_Produck }}</td>
-                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td>
-                                <td>{{ $supplier->Jumlah }}</td>
+                                <td>{{ $supplier->Nama_Supplier }}</td>
+                                <td>{{ $supplier->Kontak }}</td>
+                                <td>{{ $supplier->Alamat }}</td>
+                                <td>{{ $supplier->Jenis_Barang_Obat }}</td>
+                                <td>{{ $supplier->Nama_PIC }}</td>
+                                <td>{{ $supplier->Status }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td> --}}
+                                {{-- <td>{{ $supplier->Jumlah }}</td>
                                 <td>Rp. {{ number_format($supplier->Total_Harga, 0, ',', '.') }}</td>
-
+ --}}
                                 <td>
                                     <a href="{{ route('supplier.edit', $supplier->Id_supplier) }}" class="btn btn-sm btn-warning">
                                         <i class="bi bi-pencil-square"></i>
