@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Apoteker</title>
+    <title>Product Kami</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body class="bg-light">
@@ -28,18 +27,20 @@
                     <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{ route('presensi.store') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
+
+        {{-- Main Content --}}
         <div class="col-md-10 p-4 bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
-                <form action="{{ route('presensi.index') }}" method="GET" class="mb-3">
+                <form action="{{ route('product.index') }}" method="GET" class="mb-3">
                     <div class="input-group w-400">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>
@@ -55,35 +56,35 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-5 g-2">
-                <form action="{{ route('presensi.store') }}" method="POST" class="d-inline">
-                    @csrf
-                    <div class="text-center mt-5">
-                        <h4 class="text-danger fw-bold">Anda Belum Presensi</h4>
-                        <img src="{{ asset('asset/checklist.png') }}" width="250" class="my-6"><br>
-                        <a href="{{ route('presensi.index') }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i>Kembali
-                        </a>
-                        <button type="submit" class="btn btn-success">Presensi</button>
-                    </div>
-                </form>
+            <div class="container py-4">
+                <h3 class="fw-bold mb-4">Products</h3>
+                <div class="row g-4">
+                    @foreach($products as $product)
+                        <div class="col-md-4">
+                            <div class="card shadow-sm h-100">
+                                <img src="{{ asset('uploads/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->Nama_Obat }}" style="height: 180px; object-fit: contain;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $product->Nama_Obat }}</h5>
+                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Total_Harga, 0, ',', '.') }} / Strip</p>
+                                    <p class="card-text text-muted">Stock: {{ $product->Jumlah }} box</p>
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-primary w-100">
+                                            <i class="bi bi-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </form>
 
-                
+                                </div>
+                            </div>  
+                        </div>
+                    @endforeach
+                </div>
             </div>
-
-
-         
-
         </div>
-       
-
-
-        
     </div>
 </div>
 
 {{-- Bootstrap JS --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

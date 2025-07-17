@@ -158,4 +158,35 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')->with('success', 'data berhasi dihapus');
     }
+
+    public function utama()
+    {
+        $products = Product::all(); // atau gunakan pagination: Product::paginate(12)
+        return view('product.utama', compact('products'));
+    }
+
+    public function addToCart($id)
+    {
+        $product = Product::where('Id_Obat', $id)->firstOrFail();
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "Nama_Obat" => $product->Nama_Obat,
+                "gambar" => $product->gambar,
+                "Total_Harga" => $product->Total_Harga,
+                "quantity" => 1
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->route('product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+
+    }
+
+
 }

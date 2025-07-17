@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('_stock__produk', function (Blueprint $table) {
             $table->id();
             $table->string('gambar')->nullable();
-            $table->char('Id_Obat');
+            $table->string('Id_Obat')->unique();
             $table->string('Nama_Obat');
-            $table->string('Tanggal_Kadaluarsa');
-            $table->string('Jumlah');
-            $table->string('Total_Harga');
+            $table->date('Tanggal_Kadaluarsa');
+            $table->integer('Jumlah');
+            $table->decimal('Total_Harga');
             $table->timestamps();
         });
     }

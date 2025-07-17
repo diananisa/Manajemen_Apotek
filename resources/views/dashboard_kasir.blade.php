@@ -52,7 +52,7 @@
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->
                 {{-- NANTI DI GANTI SESUAI PENCARIAN --}}
-                <form action="{{ route('dashboard_kasir') }}" method="POST" class="mb-3"> <!--NATI GANTI SESUAI ui ux -->
+                <form action="{{ route('dashboard_kasir') }}" method="get" class="mb-3"> <!--NATI GANTI SESUAI ui ux -->
                     <div class="input-group w-400">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>

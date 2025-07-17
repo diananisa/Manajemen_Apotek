@@ -59,6 +59,7 @@
             </div>
             <div class="row mb-5 g-2">
                 <form action="{{ route('presensi.index') }}" method="GET" class="d-flex flex-wrap gap-2">
+                     @csrf
                     {{-- Filter Tipe Harian / Bulanan --}}
                     <div class="col-md-2">
                         <div class="card text-center shadow-sm p-2">

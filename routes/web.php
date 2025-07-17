@@ -88,6 +88,9 @@ Route::get('/Product/cart', function () {
     return view('Product/cart');
 })->name('product.cart');
 
+Route::get('/Product/utama', [ProductController::class, 'utama'])->name('product.utama');
+
+
 
 Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
 
@@ -104,6 +107,9 @@ Route::post('/Product_store', [ProductController::class, 'store'])->name('produc
 Route::post('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
 Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('product.destroy');
 Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('/Product/cart/add/{id}', [ProductController::class, 'addToCart'])->name('cart.add');
+
+
 
 
 

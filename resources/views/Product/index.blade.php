@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Apoteker</title>
+    <title>List Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -24,12 +24,12 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('supplier.index') }}">
+                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
                         <i class="bi bi-truck me-2"></i>Supplier
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
@@ -86,7 +86,7 @@
                                 <td>{{ $product->Nama_Obat }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td>
                                 <td>{{ $product->Jumlah }}</td>
-                                <td>Rp. {{ number_format($product->Total_Harga, 0, ',', '.') }}</td>
+                                <td>Rp. {{ number_format((float) $product->Total_Harga, 0, ',', '.') }}</td>
                                 {{-- <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td> --}}
                                 {{-- <td>{{ $supplier->Jumlah }}</td>

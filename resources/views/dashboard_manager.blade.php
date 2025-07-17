@@ -29,16 +29,17 @@
                     <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link text-dark" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="{{ route('presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
 
         {{-- Main Content --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
+        {{-- bg-tertiary --}}
+        <div class="col-md-10 p-4 bg-info text-dark"> 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- <h3>Dashboard</h3> -->
                  <!-- Search Form -->

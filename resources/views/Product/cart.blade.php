@@ -68,27 +68,40 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-                @foreach ($products as $product)
-                    <div class="col">
-                        <div class="card h-100 shadow-sm border-0">
-                            <img src="{{ asset('uploads/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->Nama_Obat }}" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">{{ $product->Nama_Obat }}</h5>
-                                <p class="text-primary mb-1">Rp. {{ number_format($product->Total_Harga, 0, ',', '.') }} / Strip</p>
-                                <p class="mb-2 text-muted">Stock: {{ $product->Jumlah }} box</p>
-                                <form action="#" method="POST">
-                                    @csrf
-                                    {{-- action disesuaikan kalau ada keranjang --}}
-                                    <button type="submit" class="btn btn-outline-primary btn-sm w-100">
-                                        ADD TO CART
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <h3>keranjang Belanja</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>jumlah</th>
+                        <th>Harga</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $grandTotal = 0; @endphp
+                    @foreach ($cart as $id => $item)
+                        @php $total = $item['Total_Harga'] * $item['quantity']; $grandTotal += $total; @endphp
+                        <tr>
+                            <td>{{ $item['Nama_Obat'] }}</td>
+                            <td>{{ $item['quantity'] }}</td>
+                            <td>Rp {{ number_format($item['Total_Harga'], 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Total Keseluruhan</strong></td>
+                        <td><strong>Rp {{ number_format($grandTotal, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            
             
         </div>
 
