@@ -88,6 +88,13 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="Harga_Jual" class="form-label">Harga Jual</label>
+                        <input type="text" class="form-control" name="Harga_Jual">
+                        @error('Harga_Jual') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="Jumlah" class="form-label">Jumlah</label>
                         <input type="text" class="form-control" name="Jumlah">
                         @error('Jumlah') 

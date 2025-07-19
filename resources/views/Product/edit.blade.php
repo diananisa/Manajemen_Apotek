@@ -84,6 +84,10 @@
                         <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $product->Tanggal_Kadaluarsa }}">
                     </div>
                     <div class="mb-3">
+                        <label for="Harga_Jual" class="form-label">Harga Jual</label>
+                        <input type="text" class="form-control" name="Harga_Jual" id="Harga_Jual" value="{{ $product->Harga_Satuan }}">
+                    </div>
+                    <div class="mb-3">
                         <label for="Jumlah" class="form-label">Jumlah</label>
                         <input type="text" class="form-control" name="Jumlah" id="Jumlah" value="{{ $product->Jumlah }}">
                     </div>

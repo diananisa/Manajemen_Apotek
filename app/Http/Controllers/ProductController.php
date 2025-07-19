@@ -38,6 +38,7 @@ class ProductController extends Controller
             'Id_Obat' => 'required|unique:_stock__produk,Id_Obat|max:10',
             'Nama_Obat' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
+            'Harga_Jual' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -55,6 +56,7 @@ class ProductController extends Controller
             'Id_Obat' => $request->Id_Obat,
             'Nama_Obat' => $request->Nama_Obat,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
+            'Harga_Jual' => $request->Harga_Jual,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
 
@@ -111,6 +113,7 @@ class ProductController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'Nama_Obat' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
+            'Harga_Jual' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -129,6 +132,7 @@ class ProductController extends Controller
             'gambar' => $namaFile,
             'Nama_Obat' => $request->Nama_Obat,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
+            'Harga_Jual' => $request->Harga_Jual,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
         ]);
@@ -151,10 +155,10 @@ class ProductController extends Controller
     //menghapus
     public function destroy(string $Id_Obat)
     {
-        $procuct = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
+        $product = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
 
         //$supplier = Supplier::findOrFail($Id_supplier);
-        $procuct->delete();
+        $product->delete();
 
         return redirect()->route('Product.index')->with('success', 'data berhasi dihapus');
     }
@@ -177,7 +181,8 @@ class ProductController extends Controller
             $cart[$id] = [
                 "Nama_Obat" => $product->Nama_Obat,
                 "gambar" => $product->gambar,
-                "Total_Harga" => $product->Total_Harga,
+                // "Total_Harga" => $product->Total_Harga,
+                "Harga_Jual" => $product->Harga_Jual,
                 "quantity" => 1
             ];
         }

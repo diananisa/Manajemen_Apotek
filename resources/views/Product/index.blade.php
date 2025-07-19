@@ -65,8 +65,10 @@
                             <th>Id Obat</th>
                             <th>Nama Obat</th>
                             <th>Tanggal Kadaluarsa</th>
+                            <th>Harga Jual</th>
                             <th>Jumlah</th>
                             <th>Total Harga</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,10 +83,11 @@
                                         Tidak ada gambar
                                     @endif
                                 </td>
-                                                {{-- <td>{{ $product->gambar }}</td> --}}
+                                {{-- <td>{{ $product->gambar }}</td> --}}
                                 <td>{{ $product->Id_Obat }}</td>
                                 <td>{{ $product->Nama_Obat }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td>
+                                <td>Rp. {{ number_format((float) $product->Harga_Jual, 0, ',', '.') }}</td>
                                 <td>{{ $product->Jumlah }}</td>
                                 <td>Rp. {{ number_format((float) $product->Total_Harga, 0, ',', '.') }}</td>
                                 {{-- <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
@@ -123,6 +126,7 @@
                 <th scope="nama_produck">Nama Produck</th>
                 <th scope="tanggal_masuk">Tanggal Masuk</th>
                 <th scope="tanggal_kadaluarsa">Tanggal_Kadaluarsa</th>
+                <th scope="harga_jual">Harga_Jual</th>
                 <th scope="total_harga">Total Harga</th>
                 <th scope="stock">Stock</th>
             </tr>

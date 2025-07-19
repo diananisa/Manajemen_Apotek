@@ -14,8 +14,8 @@ class Product extends Model
         'Id_Obat',
         'Nama_Obat',
         'Tanggal_Kadaluarsa',
+        'Harga_Jual',
         'Jumlah',
         'Total_Harga',
-
     ];
 }
