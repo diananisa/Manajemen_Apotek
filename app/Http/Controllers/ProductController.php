@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all(); //mengambil semua data dari tabel supplier
-        return view('product.index', compact('products'));
+        return view('Product.index', compact('products'));
 
     }
 
@@ -24,7 +24,7 @@ class ProductController extends Controller
     //tambah supplier
     public function create()
     {
-        return view('product.add');
+        return view('Product.add');
     }
 
     /**
@@ -60,7 +60,7 @@ class ProductController extends Controller
 
         ]);
         // Supplier::create($request->all());
-        return redirect()->route('product.index')->with('success', 'Data Berhasil disimpan');
+        return redirect()->route('Product.index')->with('success', 'Data Berhasil disimpan');
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductController extends Controller
     {
        
         $product = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
-        return view('product.edit', compact('product'));
+        return view('Product.edit', compact('product'));
 
     }
     // public function getSupplierById($id)
@@ -133,7 +133,7 @@ class ProductController extends Controller
             'Total_Harga' => $request->Total_Harga,
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('Product.index')->with('success', 'Data berhasil diupdate');
     }
 
 
@@ -156,13 +156,13 @@ class ProductController extends Controller
         //$supplier = Supplier::findOrFail($Id_supplier);
         $procuct->delete();
 
-        return redirect()->route('product.index')->with('success', 'data berhasi dihapus');
+        return redirect()->route('Product.index')->with('success', 'data berhasi dihapus');
     }
 
     public function utama()
     {
         $products = Product::all(); // atau gunakan pagination: Product::paginate(12)
-        return view('product.utama', compact('products'));
+        return view('Product.utama', compact('products'));
     }
 
     public function addToCart($id)
@@ -184,7 +184,7 @@ class ProductController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->route('product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        return redirect()->route('Product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
 
     }
 

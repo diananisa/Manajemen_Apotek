@@ -150,4 +150,5 @@ Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('p
 
 // Route::post('/dashboard_apoteker', [WarehouseController::class, 'dashboard_apoteker'])->name('dashboard_apoteker');
 
-// Route::resource('supplier', SupplierController::class);
+Route::resource('Supplier', SupplierController::class);
+Route::resource('Product', ProductController::class);
