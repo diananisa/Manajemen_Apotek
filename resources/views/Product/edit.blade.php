@@ -67,6 +67,7 @@
                 @endif
                 <form action="{{ route('product.update', $product->Id_Obat)}}" method="post" enctype="multipart/form-data">
                     @csrf
+                    @method('put')
                     <div class="mb-3">
                         <label for="gambar" class="form-label">Gambar</label>
                         <input type="file" name="gambar" class="form-control" id="gambar" value="{{ $product->gambar }}">
@@ -84,8 +85,23 @@
                         <input type="date" class="form-control" name="Tanggal_Kadaluarsa" id="Tanggal_Kadaluarsa" value="{{ $product->Tanggal_Kadaluarsa }}">
                     </div>
                     <div class="mb-3">
+                        <label for="supplier_id" class="form-label">Pilih Supplier</label>
+                        <select name="supplier_id" class="form-control" id="supplier_id">
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}" 
+                                    {{ $supplier->id == $product->supplier_id ? 'selected' : '' }}>
+                                    {{ $supplier->Nama_Supplier }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="Harga_Jual" class="form-label">Harga Jual</label>
-                        <input type="text" class="form-control" name="Harga_Jual" id="Harga_Jual" value="{{ $product->Harga_Satuan }}">
+                        <input type="text" class="form-control" name="Harga_Jual" id="Harga_Jual" value="{{ $product->Harga_Jual }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Jenis_Satuan" class="form-label">Jenis Satuan</label>
+                        <input type="text" class="form-control" name="Jenis_Satuan" id="Jenis_Satuan" value="{{ $product->Jenis_Satuan }}">
                     </div>
                     <div class="mb-3">
                         <label for="Jumlah" class="form-label">Jumlah</label>

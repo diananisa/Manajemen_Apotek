@@ -24,7 +24,9 @@ class ProductController extends Controller
     //tambah supplier
     public function create()
     {
-        return view('Product.add');
+        // return view('Product.add');
+        $suppliers = Supplier::all();
+        return view('Product.add', compact('suppliers'));
     }
 
     /**
@@ -37,8 +39,10 @@ class ProductController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'Id_Obat' => 'required|unique:_stock__produk,Id_Obat|max:10',
             'Nama_Obat' => 'required',
+            'supplier_id' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
             'Harga_Jual' => 'required',
+            'Jenis_Satuan' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -55,8 +59,10 @@ class ProductController extends Controller
             'gambar' => $namaFile,
             'Id_Obat' => $request->Id_Obat,
             'Nama_Obat' => $request->Nama_Obat,
+            'supplier_id' => $request->supplier_id,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
             'Harga_Jual' => $request->Harga_Jual,
+            'Jenis_Satuan' => $request->Jenis_Satuan,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
 
@@ -80,8 +86,9 @@ class ProductController extends Controller
     {
        
         $product = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
-        return view('Product.edit', compact('product'));
-
+        $suppliers = Supplier::all();
+        
+        return view('Product.edit', compact('product', 'suppliers'));
     }
     // public function getSupplierById($id)
     // {
@@ -112,8 +119,10 @@ class ProductController extends Controller
         $request->validate([
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'Nama_Obat' => 'required',
+            'supplier_id' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
             'Harga_Jual' => 'required',
+            'Jenis_Satuan' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -131,8 +140,10 @@ class ProductController extends Controller
         $product->update([
             'gambar' => $namaFile,
             'Nama_Obat' => $request->Nama_Obat,
+            'supplier_id' => $request->supplier_id,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
             'Harga_Jual' => $request->Harga_Jual,
+            'Jenis_Satuan' => $request->Jenis_Satuan,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
         ]);
@@ -193,5 +204,10 @@ class ProductController extends Controller
 
     }
 
+    public function laporan()
+    {
+        $products = Product::all();
+        return view('Product.laporan', compact('products'));
+    }
 
 }

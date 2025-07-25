@@ -151,4 +151,11 @@ class SupplierController extends Controller
 
         return redirect()->route('supplier.index')->with('success', 'data berhasi dihapus');
     }
+
+    public function laporan()
+    {
+        $suppliers = Supplier::all();
+        return view('Supplier.laporan', compact('suppliers'));
+    }
+
 }
