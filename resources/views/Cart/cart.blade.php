@@ -81,7 +81,7 @@
                 @php $grandTotal = 0; @endphp
                 @foreach ($cart as $Id_Obat => $item)
                     @php
-                        $hargaSatuan = is_numeric($item['Total_Harga']) ? $item['Total_Harga'] : 0;
+                        $hargaSatuan = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
                         $jumlah = is_numeric($item['quantity']) ? $item['quantity'] : 0;
                         $totalHarga = $hargaSatuan * $jumlah;
                         $grandTotal += $totalHarga;

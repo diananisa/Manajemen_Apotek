@@ -37,8 +37,8 @@ class CartController extends Controller
                 'Tanggal_Transaksi' => $Tanggal_Transaksi,
                 'Nama_Obat'         => $item['Nama_Obat'],
                 'Jumlah'            => $item['quantity'],
-                'Harga_Satuan'      => $item['Total_Harga'],
-                'Total_Harga'       => $item['Total_Harga'] * $item['quantity'],
+                'Harga_Satuan'      => $item['Harga_Satuan'],
+                'Total_Harga'       => $item['Harga_Satuan'] * $item['quantity'],
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ]);
@@ -46,9 +46,9 @@ class CartController extends Controller
 
         session()->forget('cart');
 
-        // Redirect ke PDF, pastikan parameter kode dikirim
-        // return redirect()->route('struk.pdf', ['kode' => $Kode_Transaksi]);
+        return redirect()->route('print.pdf', ['kode' => $Kode_Transaksi]);
     }
+
 
 
     // public function struk()
@@ -85,20 +85,33 @@ class CartController extends Controller
 
     public function cetakPDF($kode)
     {
-        $cart = \App\Models\Cart::where('Kode_Transaksi', $kode)->first();
-        if (!$cart) {
+        $carts = \App\Models\Cart::where('Kode_Transaksi', $kode)->get();
+
+        if ($carts->isEmpty()) {
             return back()->with('error', 'Transaksi tidak ditemukan!');
         }
 
-        $pdf = \PDF::loadView('Cart.struk', compact('Cart'));
-        return $pdf->stream("struk-{$cart->Kode_Transaksi}.pdf");
+        $tanggal = $carts->first()->Tanggal_Transaksi;
+        $total = $carts->sum('Total_Harga');
+
+        $pdf = \PDF::loadView('Cart.struk', [
+            'carts' => $carts,
+            'tanggal' => $tanggal,
+            'kode' => $kode,
+            'kasir' => 'Admin Apotek',
+            'total' => $total,
+            'terbilang' => $this->terbilang($total) . ' Rupiah'
+        ]);
+
+        return $pdf->stream("struk-{$kode}.pdf");
     }
+
 
     public function cash()
     {
-        $struk = Transaksi::latest()->first(); // atau logika sesuai kebutuhan kamu
+        $cart = session()->get('cart'); // Atau bisa dari database jika datanya disimpan di sana
 
-        return view('Cart.cash', compact('cart'));
+        return view('cart.cash', compact('cart'));
     }
 
 

@@ -176,12 +176,13 @@ Route::get('/Cart/cash', function(){
     return view('/Cart/cash');
 })->name('method.cash');
 
-// Route::get('/Cart/struk', function(){
-//     return view('/Cart/struk');
-// })->name('struk.pdf');
+Route::get('/Cart/pdf', function(){
+    return view('/Cart/pdf');
+})->name('print.pdf');
 
 // Route::get('/Struk', [CartController::class, 'struk'])->name('struk');
-Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struck');
+// Cetak PDF berdasarkan kode transaksi (DIPAKAI SAAT CHECKOUT)
+Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
 Route::resource('Supplier', SupplierController::class);
 Route::resource('Product', ProductController::class);

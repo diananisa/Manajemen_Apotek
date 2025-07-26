@@ -201,7 +201,7 @@ class ProductController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->route('Product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        return redirect()->route('cart.view')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
 
     }
 
