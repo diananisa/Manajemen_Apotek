@@ -88,6 +88,28 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="supplier_id">Pilih Supplier</label>
+                        <select name="supplier_id" class="form-control">
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->Nama_Supplier }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga_Jual" class="form-label">Harga Jual</label>
+                        <input type="text" class="form-control" name="Harga_Jual">
+                        @error('Harga_Jual') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="Jenis_Satuan" class="form-label">Jenis Satuan</label>
+                        <input type="text" class="form-control" name="Jenis_Satuan">
+                        @error('Jenis_Satuan') 
+                            <div class="text-danger">{{ $message }}</div> 
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="Jumlah" class="form-label">Jumlah</label>
                         <input type="text" class="form-control" name="Jumlah">
                         @error('Jumlah') 

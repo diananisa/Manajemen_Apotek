@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all(); //mengambil semua data dari tabel supplier
-        return view('product.index', compact('products'));
+        return view('Product.index', compact('products'));
 
     }
 
@@ -24,7 +24,9 @@ class ProductController extends Controller
     //tambah supplier
     public function create()
     {
-        return view('product.add');
+        // return view('Product.add');
+        $suppliers = Supplier::all();
+        return view('Product.add', compact('suppliers'));
     }
 
     /**
@@ -37,7 +39,10 @@ class ProductController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'Id_Obat' => 'required|unique:_stock__produk,Id_Obat|max:10',
             'Nama_Obat' => 'required',
+            'supplier_id' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
+            'Harga_Jual' => 'required',
+            'Jenis_Satuan' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -54,13 +59,16 @@ class ProductController extends Controller
             'gambar' => $namaFile,
             'Id_Obat' => $request->Id_Obat,
             'Nama_Obat' => $request->Nama_Obat,
+            'supplier_id' => $request->supplier_id,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
+            'Harga_Jual' => $request->Harga_Jual,
+            'Jenis_Satuan' => $request->Jenis_Satuan,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
 
         ]);
         // Supplier::create($request->all());
-        return redirect()->route('product.index')->with('success', 'Data Berhasil disimpan');
+        return redirect()->route('Product.index')->with('success', 'Data Berhasil disimpan');
     }
 
     /**
@@ -78,8 +86,9 @@ class ProductController extends Controller
     {
        
         $product = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
-        return view('product.edit', compact('product'));
-
+        $suppliers = Supplier::all();
+        
+        return view('Product.edit', compact('product', 'suppliers'));
     }
     // public function getSupplierById($id)
     // {
@@ -110,7 +119,10 @@ class ProductController extends Controller
         $request->validate([
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'Nama_Obat' => 'required',
+            'supplier_id' => 'required',
             'Tanggal_Kadaluarsa' => 'required',
+            'Harga_Jual' => 'required',
+            'Jenis_Satuan' => 'required',
             'Jumlah' => 'required',
             'Total_Harga' => 'required',
         ]);
@@ -128,12 +140,15 @@ class ProductController extends Controller
         $product->update([
             'gambar' => $namaFile,
             'Nama_Obat' => $request->Nama_Obat,
+            'supplier_id' => $request->supplier_id,
             'Tanggal_Kadaluarsa' => $request->Tanggal_Kadaluarsa,
+            'Harga_Jual' => $request->Harga_Jual,
+            'Jenis_Satuan' => $request->Jenis_Satuan,
             'Jumlah' => $request->Jumlah,
             'Total_Harga' => $request->Total_Harga,
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('Product.index')->with('success', 'Data berhasil diupdate');
     }
 
 
@@ -151,18 +166,18 @@ class ProductController extends Controller
     //menghapus
     public function destroy(string $Id_Obat)
     {
-        $procuct = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
+        $product = Product::where('Id_Obat',$Id_Obat)->firstOrFail();
 
         //$supplier = Supplier::findOrFail($Id_supplier);
-        $procuct->delete();
+        $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'data berhasi dihapus');
+        return redirect()->route('Product.index')->with('success', 'data berhasi dihapus');
     }
 
     public function utama()
     {
         $products = Product::all(); // atau gunakan pagination: Product::paginate(12)
-        return view('product.utama', compact('products'));
+        return view('Product.utama', compact('products'));
     }
 
     public function addToCart(Request $request)
@@ -178,24 +193,22 @@ class ProductController extends Controller
             $cart[$Id_Obat] = [
                 "Nama_Obat" => $product->Nama_Obat,
                 "gambar" => $product->gambar,
-                "Total_Harga" => $product->Total_Harga,
+                // "Total_Harga" => $product->Total_Harga,
+                "Harga_Jual" => $product->Harga_Jual,
                 "quantity" => 1
             ];
         }
 
         session()->put('cart', $cart);
 
-        return redirect()->route('cart.view')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        return redirect()->route('Product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+
     }
-    
 
-    // public function cartView()
-    // {
-    //     $cart = session()->get('cart', []);
-    //     // $products = Product::all(); // Tambahkan ini
-    //     return view('cart', compact('cart'));
-    // }
-
-
+    public function laporan()
+    {
+        $products = Product::all();
+        return view('Product.laporan', compact('products'));
+    }
 
 }

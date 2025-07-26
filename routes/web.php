@@ -59,21 +59,24 @@ Route::post('/Supplier/add', function(){
 })->name('supplier.add');
 
 // Route::get('/Supplier/edit', function(){
-//     return view('/Supplier/edit');
-// })->name('supplier.edit');
-
-// 
-Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('supplier.index');
-
-// Route::post('/Supplier/store', function () {
-//     return view('Supplier/store');
-// })->name('supplier.store');
-Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('supplier.store');
-// Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('supplier.update');
-
-Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
+    //     return view('/Supplier/edit');
+    // })->name('supplier.edit');
+    
+    // 
+    Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('supplier.index');
+    
+    // Route::post('/Supplier/store', function () {
+        //     return view('Supplier/store');
+        // })->name('supplier.store');
+        Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('supplier.store');
+        // Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+        Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('supplier.update');
+        
+        Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+        Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
+        
+        // Laporan Supplier
+        Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class, 'laporan'])->name('supplier.laporan');
 // Route::post('/Supplier/update/{Id_supplier}', [SupplierController::class, 'update'])->name('supplier.update');
 
 // Route::get('api/Supplier/{id}', [SupplierController::class, 'getSupplierbyId']);
@@ -82,9 +85,11 @@ Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])-
 
 
 //PRODUCT
-Route::get('/Product/add', function () {
-    return view('Product/add');
-})->name('product.add');
+// Route::get('/Product/add', function () {
+//     return view('Product/add');
+// })->name('product.add');
+
+Route::get('/Product/add', [ProductController::class, 'create'])->name('product.add');
 
 // Route::get('/Product/cart', function () {
 //     return view('Product/cart');
@@ -93,10 +98,11 @@ Route::get('/Product/add', function () {
 Route::get('/Product/utama', [ProductController::class, 'utama'])->name('product.utama');
 
 
-
-
+Route::put('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
 Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
 
+// Laporan Product
+Route::get('/product-laporan', [\App\Http\Controllers\ProductController::class, 'laporan'])->name('product.laporan');
 
 // Route::post('/Product/add', function () {
 //     return view('Product/add');
@@ -107,7 +113,7 @@ Route::get('/Product/index', [ProductController::class, 'index'])->name('product
 // })->name('product.edit');
 
 Route::post('/Product_store', [ProductController::class, 'store'])->name('product.store');
-Route::post('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
+// Route::post('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
 Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('product.destroy');
 Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('product.edit');
 Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart.add');
@@ -177,3 +183,5 @@ Route::get('/Cart/cash', function(){
 // Route::get('/Struk', [CartController::class, 'struk'])->name('struk');
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struck');
 
+Route::resource('Supplier', SupplierController::class);
+Route::resource('Product', ProductController::class);

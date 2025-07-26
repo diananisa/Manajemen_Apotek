@@ -66,7 +66,7 @@
                     </div>
                         
                 @endif
-                <form action="{{ route('supplier.store') }}" method="post">
+                <form action="{{ route('Supplier.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="Id_supplier" class="form-label">ID Supplier</label>

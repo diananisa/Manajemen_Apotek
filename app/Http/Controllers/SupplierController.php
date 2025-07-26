@@ -13,7 +13,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all(); //mengambil semua data dari tabel supplier
-        return view('supplier.index', compact('suppliers'));
+        return view('Supplier.index', compact('suppliers'));
 
     }
 
@@ -23,7 +23,7 @@ class SupplierController extends Controller
     //tambah supplier
     public function create()
     {
-        return view('supplier.add');
+        return view('Supplier.add');
     }
 
     /**
@@ -60,7 +60,7 @@ class SupplierController extends Controller
 
         ]);
         // Supplier::create($request->all());
-        return redirect()->route('supplier.index')->with('success', 'Data Berhasil disimpan');
+        return redirect()->route('Supplier.index')->with('success', 'Data Berhasil disimpan');
     }
 
     /**
@@ -78,7 +78,7 @@ class SupplierController extends Controller
     {
        
         $supplier = Supplier::where('Id_supplier',$Id_supplier)->firstOrFail();
-        return view('supplier.edit', compact('supplier'));
+        return view('Supplier.edit', compact('supplier'));
 
     }
     // public function getSupplierById($id)
@@ -151,4 +151,11 @@ class SupplierController extends Controller
 
         return redirect()->route('supplier.index')->with('success', 'data berhasi dihapus');
     }
+
+    public function laporan()
+    {
+        $suppliers = Supplier::all();
+        return view('Supplier.laporan', compact('suppliers'));
+    }
+
 }

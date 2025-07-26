@@ -21,13 +21,13 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                    <a class="nav-link active text-dark" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
-                <li class="nav-item mb-2">
+                <!-- <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
-                </li>
+                </li> -->
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
@@ -65,7 +65,7 @@
                                 <img src="{{ asset('uploads/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->Nama_Obat }}" style="height: 180px; object-fit: contain;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->Nama_Obat }}</h5>
-                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Total_Harga, 0, ',', '.') }} / Strip</p>
+                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Satuan, 0, ',', '.') }} / Strip</p>
                                     <p class="card-text text-muted">Stock: {{ $product->Jumlah }} box</p>
                                     <form action="{{ route('cart.add') }}" method="post">
                                         @csrf
