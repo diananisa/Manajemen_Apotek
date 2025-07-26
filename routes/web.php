@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Presensi;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
+
 
 // Route::get('/', function () {
 //     return redirect()->route('dashboard');
@@ -84,11 +86,12 @@ Route::get('/Product/add', function () {
     return view('Product/add');
 })->name('product.add');
 
-Route::get('/Product/cart', function () {
-    return view('Product/cart');
-})->name('product.cart');
+// Route::get('/Product/cart', function () {
+//     return view('Product/cart');
+// })->name('product.cart');
 
 Route::get('/Product/utama', [ProductController::class, 'utama'])->name('product.utama');
+
 
 
 
@@ -107,7 +110,7 @@ Route::post('/Product_store', [ProductController::class, 'store'])->name('produc
 Route::post('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
 Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('product.destroy');
 Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('product.edit');
-Route::post('/Product/cart/add/{id}', [ProductController::class, 'addToCart'])->name('cart.add');
+Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart.add');
 
 
 
@@ -151,3 +154,26 @@ Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('p
 // Route::post('/dashboard_apoteker', [WarehouseController::class, 'dashboard_apoteker'])->name('dashboard_apoteker');
 
 // Route::resource('supplier', SupplierController::class);
+
+Route::get('/Product/cart', [CartController::class, 'cartView'])->name('cart.view');
+Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+// Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/Cart/method', function(){
+    return view('/Cart/method');
+})->name('Cart.method');
+
+Route::get('/Cart/qris', function(){
+    return view('/Cart/qris');
+})->name('method.qris');
+
+Route::get('/Cart/cash', function(){
+    return view('/Cart/cash');
+})->name('method.cash');
+
+// Route::get('/Cart/struk', function(){
+//     return view('/Cart/struk');
+// })->name('struk.pdf');
+
+// Route::get('/Struk', [CartController::class, 'struk'])->name('struk');
+Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struck');
+
