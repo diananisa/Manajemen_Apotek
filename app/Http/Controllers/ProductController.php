@@ -179,16 +179,17 @@ class ProductController extends Controller
         return view('Product.utama', compact('products'));
     }
 
-    public function addToCart($id)
+    public function addToCart(Request $request)
     {
-        $product = Product::where('Id_Obat', $id)->firstOrFail();
+        $Id_Obat = $request->input('Id_Obat');
+        $product = Product::where('Id_Obat', $Id_Obat)->firstOrFail();
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+        if (isset($cart[$Id_Obat])) {
+            $cart[$Id_Obat]['quantity']++;
         } else {
-            $cart[$id] = [
+            $cart[$Id_Obat] = [
                 "Nama_Obat" => $product->Nama_Obat,
                 "gambar" => $product->gambar,
                 // "Total_Harga" => $product->Total_Harga,
@@ -199,9 +200,17 @@ class ProductController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->route('Product.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
-
+        return redirect()->route('cart.view')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
+    
+
+    // public function cartView()
+    // {
+    //     $cart = session()->get('cart', []);
+    //     // $products = Product::all(); // Tambahkan ini
+    //     return view('cart', compact('cart'));
+    // }
+
 
     public function laporan(Request $request)
     {
