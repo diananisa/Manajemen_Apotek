@@ -204,20 +204,13 @@ class ProductController extends Controller
     }
     
 
-    // public function cartView()
-    // {
-    //     $cart = session()->get('cart', []);
-    //     // $products = Product::all(); // Tambahkan ini
-    //     return view('cart', compact('cart'));
-    // }
-
-
     public function laporan(Request $request)
     {
         $search       = $request->get('search');
         $jenisObat    = $request->get('jenis_obat');
         $statusStock  = $request->get('status_stock');
         $sortBy       = $request->get('sort_by', 'Tanggal_Kadaluarsa');
+        
         $sortDir      = $request->get('sort_dir', 'desc');
 
         $query = Product::with('supplier');
