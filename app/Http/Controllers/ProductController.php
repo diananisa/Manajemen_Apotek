@@ -209,7 +209,7 @@ class ProductController extends Controller
         $jenisObat    = $request->get('jenis_obat');
         $statusStock  = $request->get('status_stock');
         $sortBy       = $request->get('sort_by', 'Tanggal_Kadaluarsa');
-        $sortDir      = $request->get('sort_dir', 'asc');
+        $sortDir      = $request->get('sort_dir', 'desc');
 
         $query = Product::with('supplier');
 
