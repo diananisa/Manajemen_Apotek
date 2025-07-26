@@ -75,9 +75,12 @@
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                     {{-- struk --}}
-                    <a href="{{ route('struck', ['kode' => $cart->Kode_Transaksi]) }}" class="btn btn-primary">
-                        Cetak Struk
+                    {{-- <pre>{{ print_r($cart, true) }}</pre> --}}
+
+                    <a href="{{ route('struk.pdf', ['kode' => $cart['Kode_Transaksi']]) }}" class="btn btn-primary">
+                        <i class="bi bi-credit-card"></i> Cetak Struk
                     </a>
+
 
 
 
