@@ -19,7 +19,7 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('dashboard_apoteker') }}">
+                    <a class="nav-link text-dark" href="{{ route('dashboard_manager') }}">
                         <i class="bi bi-speedometer2 me-2"></i>Dashboard
                     </a>
                 </li>
@@ -38,12 +38,58 @@
         </div>
 
         {{-- Main Content --}}
-                {{-- Main Content --}}
-
         <div class="col-md-10 p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold">Product</h4>
+                <h4 class="fw-bold">Laporan Stock Obat</h4>
             </div>
+
+            {{-- Search Form --}}
+            <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama obat...">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    @if(request('search'))
+                        <a href="{{ route('Product.laporan') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                    @endif
+                </div>
+            </form>
+
+
+            {{-- Filter Form --}}
+            <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
+                <div class="row g-2 align-items-end">
+                    {{-- Jenis Obat --}}
+                    <div class="col-md-3">
+                        <label class="form-label">Jenis Obat</label>
+                        <select name="jenis_obat" class="form-select">
+                            <option value="">-- Semua --</option>
+                            @foreach ($jenisOptions ?? [] as $opt)
+                                <option value="{{ $opt }}" {{ request('jenis_obat') == $opt ? 'selected' : '' }}>
+                                    {{ $opt }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Status Stock --}}
+                    <div class="col-md-3">
+                        <label class="form-label">Status Stock</label>
+                        <select name="status_stock" class="form-select">
+                            <option value="">-- Semua --</option>
+                            <option value="aman" {{ request('status_stock') == 'aman' ? 'selected' : '' }}>Aman</option>
+                            <option value="menipis" {{ request('status_stock') == 'menipis' ? 'selected' : '' }}>Menipis</option>
+                            <option value="bahaya" {{ request('status_stock') == 'bahaya' ? 'selected' : '' }}>Bahaya</option>
+                            <option value="habis" {{ request('status_stock') == 'habis' ? 'selected' : '' }}>Habis</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100">Terapkan</button>
+                    </div>
+                </div>
+            </form>
 
             {{-- Table Supplier --}}
             <div class="table-responsive">
@@ -52,11 +98,12 @@
                         <tr>
                             <th>Id Obat</th>
                             <th>Nama Obat</th>
+                            <th>Supplier</th>
+                            <th>Jenis Obat</th>
                             <th>Tanggal Kadaluarsa</th>
-                            <th>Harga Jual</th>
                             <th>Jenis Satuan</th>
-                            <th>Jumlah</th>
-                            <th>Total Harga</th>
+                            <th>Stock</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,15 +112,26 @@
                             <tr>
                                 <td>{{ $product->Id_Obat }}</td>
                                 <td>{{ $product->Nama_Obat }}</td>
+                                <td>{{ $product->supplier->Nama_Supplier ?? '-' }}</td>
+                                <td>{{ $product->supplier->Jenis_Barang_Obat ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td>
-                                <td>Rp. {{ number_format((float) $product->Harga_Jual, 0, ',', '.') }}</td>
                                 <td>{{ $product->Jenis_Satuan }}</td>
                                 <td>{{ $product->Jumlah }}</td>
-                                <td>Rp. {{ number_format((float) $product->Total_Harga, 0, ',', '.') }}</td>
-                                {{-- <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td> --}}
-                                {{-- <td>{{ $supplier->Jumlah }}</td>
-                                <td>Rp. {{ number_format($supplier->Total_Harga, 0, ',', '.') }}</td> --}}
+                                <td>
+                                    @php
+                                        $stock = $product->Jumlah;
+                                        if ($stock > 50) {
+                                            $status = '<span class="badge bg-success">Aman</span>';
+                                        } elseif ($stock > 10) {
+                                            $status = '<span class="badge bg-warning text-dark">Menipis</span>';
+                                        } elseif ($stock > 0) {
+                                            $status = '<span class="badge bg-danger">Bahaya</span>';
+                                        } else {
+                                            $status = '<span class="badge bg-secondary">Habis</span>';
+                                        }
+                                    @endphp
+                                    {!! $status !!}
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -84,24 +142,6 @@
                 </table>
             </div>
         </div> {{-- Akhir Main Content --}}
-
-        {{-- <table class="table"></table>
-        <thead>
-            <tr>
-                <th scope="id_supplier">Id Barang</th>
-                <th scope="nama_supplier">Nama Supplier</th>
-                <th scope="nama_produck">Nama Produck</th>
-                <th scope="tanggal_masuk">Tanggal Masuk</th>
-                <th scope="tanggal_kadaluarsa">Tanggal_Kadaluarsa</th>
-                <th scope="harga_jual">Harga_Jual</th>
-                <th scope="total_harga">Total Harga</th>
-                <th scope="stock">Stock</th>
-            </tr>
-        </thead> --}}
-
-        
-                     
-
     </div>
 </div>
 

@@ -15,7 +15,6 @@ class ProductController extends Controller
     {
         $products = Product::all(); //mengambil semua data dari tabel supplier
         return view('Product.index', compact('products'));
-
     }
 
     /**
@@ -204,10 +203,60 @@ class ProductController extends Controller
 
     }
 
-    public function laporan()
+    public function laporan(Request $request)
     {
-        $products = Product::all();
-        return view('Product.laporan', compact('products'));
+        $search       = $request->get('search');
+        $jenisObat    = $request->get('jenis_obat');
+        $statusStock  = $request->get('status_stock');
+        $sortBy       = $request->get('sort_by', 'Tanggal_Kadaluarsa');
+        $sortDir      = $request->get('sort_dir', 'asc');
+
+        $query = Product::with('supplier');
+
+        // Search Nama Obat
+        if ($search) {
+            $query->where('Nama_Obat', 'like', "%{$search}%");
+        }
+
+        // Filter Jenis Obat
+        if ($jenisObat) {
+            $query->whereHas('supplier', function ($q) use ($jenisObat) {
+                $q->where('Jenis_Barang_Obat', $jenisObat);
+            });
+        }
+
+        // Filter Status Stock
+        if ($statusStock) {
+            switch ($statusStock) {
+                case 'aman':     $query->where('Jumlah', '>', 50); break;
+                case 'menipis':  $query->whereBetween('Jumlah', [11, 50]); break;
+                case 'bahaya':   $query->whereBetween('Jumlah', [1, 10]); break;
+                case 'habis':    $query->where('Jumlah', 0); break;
+            }
+        }
+
+        // Sorting
+        $allowedSort = ['Id_Obat', 'Nama_Obat', 'Tanggal_Kadaluarsa', 'Jumlah'];
+        if (! in_array($sortBy, $allowedSort)) {
+            $sortBy = 'Tanggal_Kadaluarsa';
+        }
+        $sortDir = $sortDir === 'desc' ? 'desc' : 'asc';
+        $query->orderBy($sortBy, $sortDir);
+
+        // Ambil data
+        $products = $query->paginate(15)->appends($request->query());
+
+        // Ambil daftar Jenis Obat untuk dropdown
+        $jenisOptions = Product::with('supplier')
+            ->get()
+            ->pluck('supplier.Jenis_Barang_Obat')
+            ->filter()
+            ->unique()
+            ->values();
+
+        return view('Product.laporan', compact(
+            'products', 'jenisOptions', 'search', 'jenisObat', 'statusStock', 'sortBy', 'sortDir'
+        ));
     }
 
 }
