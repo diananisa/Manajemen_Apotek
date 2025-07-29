@@ -98,12 +98,7 @@ Route::get('/Product/add', [ProductController::class, 'create'])->name('product.
 Route::get('/Product/utama', [ProductController::class, 'utama'])->name('product.utama');
 
 
-<<<<<<< HEAD
 Route::put('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
-=======
-
-
->>>>>>> 8e1a116 (add transaksi)
 Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
 
 // Laporan Product
@@ -164,10 +159,6 @@ Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('p
 
 // Route::post('/dashboard_apoteker', [WarehouseController::class, 'dashboard_apoteker'])->name('dashboard_apoteker');
 
-<<<<<<< HEAD
-Route::resource('Supplier', SupplierController::class);
-Route::resource('Product', ProductController::class);
-=======
 // Route::resource('supplier', SupplierController::class);
 
 Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method');
@@ -178,25 +169,12 @@ Route::get('/Cart/pdf/{kode}', [CartController::class, 'cetakPDF'])->name('print
 
 Route::get('/Product/cart', [CartController::class, 'cartView'])->name('cart.view');
 Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
-// Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
-// Route::get('/Cart/method', function(){
-//     return view('/Cart/method');
-// })->name('Cart.method');
-
-// Route::get('/Cart/qris', function(){
-//     return view('/Cart/qris');
-// })->name('method.qris');
-
-// Route::get('/Cart/cash', function(){
-//     return view('Cart.cash');
-// })->name('method.cash');
 
 Route::get('/Cart/pdf', function(){
     return view('/Cart/pdf');
 })->name('print.pdf');
 
-// Route::get('/Struk', [CartController::class, 'struk'])->name('struk');
-// Cetak PDF berdasarkan kode transaksi (DIPAKAI SAAT CHECKOUT)
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
->>>>>>> 8e1a116 (add transaksi)
+Route::resource('Supplier', SupplierController::class);
+Route::resource('Product', ProductController::class);
