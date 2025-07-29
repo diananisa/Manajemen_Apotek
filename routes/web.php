@@ -170,20 +170,26 @@ Route::resource('Product', ProductController::class);
 =======
 // Route::resource('supplier', SupplierController::class);
 
+Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method');
+Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
+Route::get('/Cart/qris', [CartController::class, 'qris'])->name('method.qris');
+Route::get('/Cart/pdf/{kode}', [CartController::class, 'cetakPDF'])->name('print.pdf');
+
 Route::get('/Product/cart', [CartController::class, 'cartView'])->name('cart.view');
 Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
 // Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
-Route::get('/Cart/method', function(){
-    return view('/Cart/method');
-})->name('Cart.method');
+// Route::get('/Cart/method', function(){
+//     return view('/Cart/method');
+// })->name('Cart.method');
 
-Route::get('/Cart/qris', function(){
-    return view('/Cart/qris');
-})->name('method.qris');
+// Route::get('/Cart/qris', function(){
+//     return view('/Cart/qris');
+// })->name('method.qris');
 
-Route::get('/Cart/cash', function(){
-    return view('/Cart/cash');
-})->name('method.cash');
+// Route::get('/Cart/cash', function(){
+//     return view('Cart.cash');
+// })->name('method.cash');
 
 Route::get('/Cart/pdf', function(){
     return view('/Cart/pdf');

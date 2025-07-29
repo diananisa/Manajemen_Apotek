@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $table= 'Carts';
+    protected $table= 'carts';
 
     protected $fillable=[
         'Kode_Transaksi',
@@ -17,5 +17,9 @@ class Cart extends Model
         'Total_Harga',
     ];
     
+    public function items()
+    {
+        return $this->hasMany(ItemCart::class, 'kode_transaksi', 'Kode_Transaksi');
+    }
 
 }

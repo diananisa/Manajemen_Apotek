@@ -57,7 +57,7 @@
             </div>
             <!-- Modal QRIS -->
             <div class="row mb-5 g-2">
-                <form action="{{ route('method.cash') }}" method="get">
+                <form action="{{ route('method.cash', ['kode' => $kode]) }}" method="get">
                     @csrf
                     <div class="payment-options d-flex justify-content-center gap-4 mb-4">
                         <img src="{{ asset('asset/cash.png') }}" alt="QRIS" width="350"><br>
@@ -77,12 +77,9 @@
                     {{-- struk --}}
                     {{-- <pre>{{ print_r($cart, true) }}</pre> --}}
 
-                    <a href="{{ route('struk.pdf', ['kode' => $cart['Kode_Transaksi']]) }}" class="btn btn-primary">
+                    <a href="{{ route('struk.pdf', ['kode' => $kode]) }}" class="btn btn-primary">
                         <i class="bi bi-credit-card"></i> Cetak Struk
                     </a>
-
-
-
 
                 </div>
             </div>

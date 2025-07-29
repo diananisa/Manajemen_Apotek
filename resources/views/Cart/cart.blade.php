@@ -107,10 +107,10 @@
             @endif
             <div class="d-flex justify-content-between">
                 <a href="{{ route('product.utama') }}" class="btn btn-secondary"><- Kembali</a>
-                <a href="{{ route('Cart.method') }}">
-                    {{-- @csrf --}}
+                <form action="{{ route('checkout') }}" method="POST">
+                    @csrf
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                </a>
+                </form>
                 {{-- <form action="{{ route('product.destroy', $product->Id_Obat) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')"> --}}
 
             </div>

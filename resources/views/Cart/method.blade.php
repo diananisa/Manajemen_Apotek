@@ -64,12 +64,20 @@
                             QRIS
                         </a>
 
-                        <a href="{{ route('method.cash') }}" class="btn btn-outline-primary p-4 rounded-4">
-                            <img src="{{ asset('asset/Group 64.png') }}" alt="CASH" width="230"><br>
-                            CASH
-                        </a>
+                        @if(!empty($kode))
+                            <a href="{{ route('method.cash', ['kode' => $kode]) }}" class="btn btn-outline-primary p-4 rounded-4">
+                                <img src="{{ asset('asset/Group 64.png') }}" alt="CASH" width="230"><br>
+                                CASH
+                            </a>
+                        @else
+                            <div class="alert alert-warning text-center">
+                                Kode transaksi tidak ditemukan. Silakan kembali ke keranjang.
+                            </div>
+                        @endif
                     </div>
 
+                    <pre>KODE: {{ $kode ?? 'Tidak ada' }}</pre>
+                    
                     <div class="d-flex justify-content-center gap-3">
                         <a href="{{ route('cart.view') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left"></i> Kembali
