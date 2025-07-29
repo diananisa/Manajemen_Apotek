@@ -102,7 +102,7 @@ Route::put('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->n
 Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
 
 // Laporan Product
-Route::get('/product-laporan', [\App\Http\Controllers\ProductController::class, 'laporan'])->name('product.laporan');
+Route::get('/product-laporan', [\App\Http\Controllers\ProductController::class, 'laporan'])->name('Product.laporan');
 
 // Route::post('/Product/add', function () {
 //     return view('Product/add');
