@@ -170,7 +170,8 @@ Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method
 Route::get('/Cart/reset', [CartController::class, 'reset'])->name('cart.reset');
 
 // Metode pembayaran
-Route::get('/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
+// Route::post('/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
+Route::match(['get', 'post'], '/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
 Route::get('/Cart/qris/{kode}', [CartController::class, 'qris'])->name('method.qris');
 Route::get('/Cart/debit/{kode}', [CartController::class, 'debit'])->name('method.debit');
 

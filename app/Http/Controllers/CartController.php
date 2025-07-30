@@ -126,6 +126,7 @@ class CartController extends Controller
         // dd('masuk ke checkout');
         
         $cart = session('cart', []);
+        $metode = $request->input('metode');
         
         if (empty($cart)) {
             return back()->with('error', 'Keranjang masih kosong!');
@@ -157,7 +158,7 @@ class CartController extends Controller
             'Kode_Transaksi'    => $Kode_Transaksi,
             'Tanggal_Transaksi' => $Tanggal_Transaksi,
             'Total'             => $total,
-            'Metode_Pembelian'  => $request->input('metode'),
+            'Metode_Pembelian'  => $metode,
             'created_at'        => now(),
             'updated_at'        => now(),
         ]);
@@ -175,55 +176,73 @@ class CartController extends Controller
     }
 
     public function cetakPDF($kode)
-    {
-        $carts = Cart::where('Kode_Transaksi', $kode)->get();
+{
+    // Ambil data transaksi satu baris (untuk tanggal, kode, dll.)
+    $transaksi = Cart::where('Kode_Transaksi', $kode)->first();
 
-        if ($carts->isEmpty()) {
-            return back()->with('error', 'Transaksi tidak ditemukan!');
-        }
-
-        $tanggal = $carts->first()->Tanggal_Transaksi;
-        $total = $carts->sum('Total_Harga');
-
-        $pdf = Pdf::loadView('Cart.struk', [
-            'carts' => $carts,
-            'tanggal' => $tanggal,
-            'kode' => $kode,
-            'kasir' => 'Admin Apotek',
-            'total' => $total,
-            'terbilang' => $this->terbilang($total) . ' Rupiah'
-        ]);
-
-        return $pdf->stream("struk-{$kode}.pdf");
+    if (!$transaksi) {
+        return back()->with('error', 'Transaksi tidak ditemukan!');
     }
 
-    public function cash($kode)
+    // Ambil data cart untuk tabel, digroup berdasarkan Nama_Obat dan Harga_Satuan
+    $carts = DB::table('carts')
+        ->select('Nama_Obat', DB::raw('SUM(Jumlah) as Jumlah'), 'Harga_Satuan', DB::raw('SUM(Total_Harga) as Total_Harga'))
+        ->where('Kode_Transaksi', $kode)
+        ->groupBy('Nama_Obat', 'Harga_Satuan')
+        ->get();
+
+    $total = $carts->sum('Total_Harga');
+
+    $pdf = Pdf::loadView('Cart.struk', [
+        'carts' => $carts,
+        'tanggal' => $transaksi->Tanggal_Transaksi,
+        'kode' => $kode,
+        'kasir' => 'Admin Apotek',
+        'total' => $total,
+        'terbilang' => $this->terbilang($total) . ' Rupiah'
+    ]);
+
+    return $pdf->stream("struk-{$kode}.pdf");
+}
+
+    public function cash(Request $request, $kode)
     {
-        Log::info("Masuk ke halaman cash dengan kode: $kode");
+        $cartItems = session('cart', []);
 
-        $carts = \App\Models\Cart::where('Kode_Transaksi', $kode)->get();
-        Log::info('Jumlah cart ditemukan: ' . $carts->count());
-
-        // return view('Cart.cash', compact('kode'));
-
-        \Log::info("Masuk ke halaman cash dengan kode: " . $kode);
-        $carts = \App\Models\Cart::where('Kode_Transaksi', $kode)->get();
-
-        if ($carts->isEmpty()) {
-            return back()->with('error', 'Transaksi tidak ditemukan!');
+        if (empty($cartItems)) {
+            return back()->with('error', 'Keranjang kosong!');
         }
 
-        $tanggal = $carts->first()->Tanggal_Transaksi;
-        $total = $carts->sum('Total_Harga');
+        $grandTotal = 0;
+        foreach ($cartItems as $item) {
+            $harga = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
+            $qty = is_numeric($item['quantity']) ? $item['quantity'] : 0;
+            $grandTotal += $harga * $qty;
+        }
+
+        // Default
+        $dibayar = null;
+        $kembalian = null;
+        $errorKembalian = null;
+
+        // Kalau POST (user input "dibayar")
+        if ($request->isMethod('post')) {
+            $dibayar = (int) $request->input('dibayar');
+            $kembalian = $dibayar - $grandTotal;
+            if ($kembalian < 0) {
+                $errorKembalian = 'Uang dibayar kurang dari total belanja!';
+            }
+        }
 
         return view('Cart.cash', [
-            'carts' => $carts,
-            'cart' => $carts->first(),
-            'tanggal' => $tanggal,
+            'cartItems' => $cartItems,
             'kode' => $kode,
+            'total' => $grandTotal,
+            'terbilang' => $this->terbilang($grandTotal) . ' Rupiah',
             'kasir' => 'Admin Apotek',
-            'total' => $total,
-            'terbilang' => $this->terbilang($total) . ' Rupiah'
+            'dibayar' => $dibayar,
+            'kembalian' => $kembalian,
+            'errorKembalian' => $errorKembalian,
         ]);
     }
 

@@ -15,9 +15,9 @@
     <h2 class="text-center">Struk Pembelian</h2>
 
     @if(count($carts) > 0)
-        <p><strong>No. Transaksi:</strong> {{ $carts[0]->Kode_Transaksi }}</p>
-        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($carts[0]->Tanggal_Transaksi)->format('d-m-Y H:i') }}</p>
-
+        <p><strong>No. Transaksi:</strong> {{ $kode }}</p>
+         <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($tanggal)->format('d-m-Y H:i') }}</p>
+         
         <hr>
 
         <table>
