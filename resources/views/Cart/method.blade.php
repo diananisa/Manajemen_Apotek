@@ -56,55 +56,72 @@
                 </div>
             </div>
             <div class="row mb-5 g-2">
-                <form action="{{ route('checkout') }}" method="POST">
-                    @csrf
-                    <div class="payment-options d-flex justify-content-center gap-4 mb-4">
-                        <a href="{{ route('method.qris') }}" class="btn btn-outline-primary p-4 rounded-4">
-                            <img src="{{ asset('asset/Group 63.png') }}" alt="QRIS" width="230"><br>
-                            QRIS
-                        </a>
+                <div class="container text-center">
+                    <h3 class="mb-4">Pilih Metode Pembayaran</h3>
 
-                        @if(!empty($kode))
-                            <a href="{{ route('method.cash', ['kode' => $kode]) }}" class="btn btn-outline-primary p-4 rounded-4">
-                                <img src="{{ asset('asset/Group 64.png') }}" alt="CASH" width="230"><br>
-                                CASH
-                            </a>
-                        @else
-                            <div class="alert alert-warning text-center">
-                                Kode transaksi tidak ditemukan. Silakan kembali ke keranjang.
-                            </div>
-                        @endif
+                    <!-- <form action="{{ route('bayar') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="kode" value="{{ $kode }}">
+
+                        <button type="submit" name="metode" value="qris" class="btn btn-outline-primary">QRIS</button>
+                        <button type="submit" name="metode" value="cash" class="btn btn-outline-success">Cash</button>
+                        <button type="submit" name="metode" value="debit" class="btn btn-outline-warning">Debit</button>
+                    </form> -->
+
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+
+                        {{-- Tombol QRIS --}}
+                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <input type="hidden" name="metode" value="qris">
+                            <input type="hidden" name="kode" value="{{ $kode }}">
+                            <button type="submit" class="btn btn-outline-primary p-4">
+                                <img src="{{ asset('asset/Group 63.png') }}" width="200"><br>QRIS
+                            </button>
+                        </form>
+
+                        {{-- Tombol CASH --}}
+                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <input type="hidden" name="metode" value="cash">
+                            <input type="hidden" name="kode" value="{{ $kode }}">
+                            <button type="submit" class="btn btn-outline-success p-4">
+                                <img src="{{ asset('asset/Group 64.png') }}" width="200"><br>Cash
+                            </button>
+                        </form>
+
+                        {{-- Tombol DEBIT --}}
+                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <input type="hidden" name="metode" value="debit">
+                            <input type="hidden" name="kode" value="{{ $kode }}">
+                            <button type="submit" class="btn btn-outline-warning p-4">
+                                <img src="{{ asset('asset/debit.png') }}" width="200"><br>Debit
+                            </button>
+                        </form>
                     </div>
+                </div>
 
-                    <pre>KODE: {{ $kode ?? 'Tidak ada' }}</pre>
-                    
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('cart.view') }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Kembali
-                        </a>
-                        {{-- <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-credit-card"></i> Bayar
-                        </button> --}}
-                    </div>
-                </form>
+                <pre>KODE: {{ $kode ?? 'Tidak ada' }}</pre>
 
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ route('cart.view') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
+                </div>
 
-                
+                <script>
+                    function submitMetode(metode) {
+                        document.getElementById('metodeInput').value = metode;
+                        document.getElementById('formMetode').submit();
+                    }
+                </script>
             </div>
-
-
-         
-
         </div>
-       
-
-
-        
     </div>
 </div>
 
 {{-- Bootstrap JS --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

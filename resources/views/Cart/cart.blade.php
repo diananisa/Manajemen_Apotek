@@ -67,7 +67,7 @@
 
             <h3>Keranjang Belanja</h3>
 
-            @if(isset($cart) && count($cart) > 0)
+            @if(isset($cartItems) && count($cartItems) > 0)
             <table class="table">
                 <thead>
                 <tr>
@@ -79,7 +79,7 @@
             </thead>
             <tbody>
                 @php $grandTotal = 0; @endphp
-                @foreach ($cart as $Id_Obat => $item)
+                @foreach ($cartItems as $Id_Obat => $item)
                     @php
                         $hargaSatuan = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
                         $jumlah = is_numeric($item['quantity']) ? $item['quantity'] : 0;
@@ -107,8 +107,8 @@
             @endif
             <div class="d-flex justify-content-between">
                 <a href="{{ route('product.utama') }}" class="btn btn-secondary"><- Kembali</a>
-                <form action="{{ route('checkout') }}" method="POST">
-                    @csrf
+                <form action="{{ route('Cart.method') }}" method="GET">
+                    <input type="hidden" name="kode" value="{{ $kodeTransaksi }}">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
                 {{-- <form action="{{ route('product.destroy', $product->Id_Obat) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')"> --}}

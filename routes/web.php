@@ -161,19 +161,26 @@ Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('p
 
 // Route::resource('supplier', SupplierController::class);
 
-Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method');
+// Cart related
+Route::get('/Cart/cart', [CartController::class, 'cartView'])->name('cart.view');
+Route::post('/Cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('/bayar', [CartController::class, 'bayar'])->name('bayar');
+Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method');
+Route::get('/Cart/reset', [CartController::class, 'reset'])->name('cart.reset');
+
+// Metode pembayaran
 Route::get('/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
 Route::get('/Cart/qris', [CartController::class, 'qris'])->name('method.qris');
+Route::get('/Cart/debit', [CartController::class, 'debit'])->name('method.debit');
+
+// Success
+Route::get('/Cart/success', function () {
+    return view('Cart.success');
+})->name('cart.success');
+
+// Cetak struk
 Route::get('/Cart/pdf/{kode}', [CartController::class, 'cetakPDF'])->name('print.pdf');
-
-Route::get('/Product/cart', [CartController::class, 'cartView'])->name('cart.view');
-Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
-
-Route::get('/Cart/pdf', function(){
-    return view('/Cart/pdf');
-})->name('print.pdf');
-
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
 Route::resource('Supplier', SupplierController::class);

@@ -10,5 +10,6 @@ class Transaction extends Model
         'Kode_Transaksi',
         'Tanggal_Transaksi',
         'Total',
+        'Metode_Pembelian',
     ];
 }

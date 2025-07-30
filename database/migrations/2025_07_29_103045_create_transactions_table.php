@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('Kode_Transaksi')->unique();
             $table->dateTime('Tanggal_Transaksi');
+            $table->enum('Metode_Pembelian', ['cash', 'qris', 'debit']);
             $table->decimal('Total', 12, 2);
             $table->timestamps();
         });
