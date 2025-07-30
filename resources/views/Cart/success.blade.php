@@ -38,8 +38,12 @@
             <div class="alert alert-success text-center">
                 <h4 class="mb-3"><i class="bi bi-check-circle-fill"></i> Pembayaran Berhasil!</h4>
                 <p>Terima kasih! Transaksi Anda telah berhasil diproses.</p>
-                <a href="{{ route('product.utama') }}" class="btn btn-primary mt-3">
+                <a href="{{ route('cart.reset') }}" class="btn btn-primary mt-3">
                     <i class="bi bi-arrow-left-circle"></i> Kembali ke Halaman Utama
+                </a>
+
+                <a href="{{ route('print.pdf', ['kode' => session('kode_transaksi')]) }}" class="btn btn-outline-secondary mt-2" target="_blank">
+                    <i class="bi bi-printer"></i> Cetak Struk
                 </a>
             </div>
         </div>

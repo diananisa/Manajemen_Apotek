@@ -19,7 +19,7 @@ class CartController extends Controller
     public function reset()
     {
         session()->forget(['cart', 'kode_transaksi', 'Kode_Transaksi_Terakhir']);
-        return redirect()->route('cart.success')->with('success', 'Transaksi berhasil!');
+        return redirect()->route('product.utama');
     }
 
     public function addToCart(Request $request)
@@ -67,6 +67,10 @@ class CartController extends Controller
 
         \Log::info("Redirect ke metode: $metode");
         \Log::info("Kode yang diterima di bayar: $kode");
+
+        Transaction::where('Kode_Transaksi', $kode)->update([
+            'Metode_Pembelian' => $metode,
+        ]);
 
         return redirect()->route('method.' . $metode, ['kode' => $kode]);
 
@@ -153,6 +157,7 @@ class CartController extends Controller
             'Kode_Transaksi'    => $Kode_Transaksi,
             'Tanggal_Transaksi' => $Tanggal_Transaksi,
             'Total'             => $total,
+            'Metode_Pembelian'  => $request->input('metode'),
             'created_at'        => now(),
             'updated_at'        => now(),
         ]);
@@ -160,7 +165,7 @@ class CartController extends Controller
         session()->forget('cart');
         session()->put('Kode_Transaksi_Terakhir', $Kode_Transaksi);
 
-        return redirect()->route('cart.reset');
+        return redirect()->route('cart.success');
     }
 
     private function terbilang($angka)
@@ -222,16 +227,16 @@ class CartController extends Controller
         ]);
     }
 
-    public function qris(Request $request)
+    public function qris($kode)
     {
-        $kode = $request->input('kode');
+        Transaction::where('Kode_Transaksi', $kode)->update(['Metode_Pembelian' => 'qris']);
         return view('Cart.qris', compact('kode'));
     }
 
 
-    public function debit()
+    public function debit($kode)
     {
-        $kode = session('Kode_Transaksi_Terakhir');
+        Transaction::where('Kode_Transaksi', $kode)->update(['Metode_Pembelian' => 'debit']);
         return view('Cart.debit', compact('kode'));
     }
 }
