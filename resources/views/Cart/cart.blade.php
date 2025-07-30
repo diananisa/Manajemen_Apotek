@@ -9,29 +9,30 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-light">
+
 <div class="container-fluid">
     <div class="row min-vh-100">
 
         {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
+        <aside class="col-md-2 bg-white border-end p-3">
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_kasir') }}">
+                    <a class="nav-link text-dark" href="{{ route('dashboard_kasir') }}">
                         <i class="bi bi-speedometer2 me-2"></i>Dashboard
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
-                        <i class="bi bi-truck me-2"></i>Supplier
+                    <a class="nav-link text-dark" href="{{ route('product.utama') }}">
+                        <i class="bi bi-box-seam me-2"></i>Product
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="#">
-                        <i class="bi bi-box-seam me-2"></i>Product Stock
+                    <a class="nav-link text-primary fw-bold" href="#">
+                        <i class="bi bi-cart3 me-2"></i>Keranjang
                     </a>
                 </li>
                 <li class="nav-item">
@@ -40,15 +41,15 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </aside>
 
         {{-- Main Content --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
+        <main class="col-md-10 p-4 bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 {{-- Form Pencarian --}}
-                <form action="{{ route('product.utama') }}" method="POST" class="mb-3">
+                <form action="{{ route('product.utama') }}" method="POST" class="mb-0">
                     @csrf
-                    <div class="input-group w-400">
+                    <div class="input-group" style="width: 400px;">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
                         <button class="btn btn-primary" type="submit">Cari</button>
                     </div>
@@ -65,56 +66,91 @@
                 </div>
             </div>
 
-            <h3>Keranjang Belanja</h3>
+            <h3 class="mb-4">Keranjang Belanja</h3>
 
             @if(isset($cartItems) && count($cartItems) > 0)
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nama Obat</th>
-                    <th>Jumlah</th>
-                    <th>Harga Satuan</th>
-                    <th>Total Harga</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php $grandTotal = 0; @endphp
-                @foreach ($cartItems as $Id_Obat => $item)
-                    @php
-                        $hargaSatuan = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
-                        $jumlah = is_numeric($item['quantity']) ? $item['quantity'] : 0;
-                        $totalHarga = $hargaSatuan * $jumlah;
-                        $grandTotal += $totalHarga;
-                    @endphp
-                    <tr>
-                        <td>{{ $item['Nama_Obat'] }}</td>
-                        <td>{{ $jumlah }}</td>
-                        <td>Rp {{ number_format($hargaSatuan, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($totalHarga, 0, ',', '.') }}</td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td colspan="3" class="text-end"><strong>Total Keseluruhan</strong></td>
-                    <td><strong>Rp {{ number_format($grandTotal, 0, ',', '.') }}</strong></td>
-                </tr>
-            </tbody>
+                <div class="table-responsive">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nama Obat</th>
+                                <th class="text-center">Jumlah</th>
+                                <th>Harga Satuan</th>
+                                <th>Total Harga</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $grandTotal = 0; @endphp
+                            @foreach ($cartItems as $Id_Obat => $item)
+                                @php
+                                    $hargaSatuan = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
+                                    $jumlah = is_numeric($item['quantity']) ? $item['quantity'] : 0;
+                                    $totalHarga = $hargaSatuan * $jumlah;
+                                    $grandTotal += $totalHarga;
+                                @endphp
+                                <tr>
+                                    <td>{{ $item['Nama_Obat'] }}</td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center align-items-center gap-1">
+                                            <form action="{{ route('Cart.updateQty', ['id' => $Id_Obat, 'mode' => 'decrease']) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary px-2">
+                                                    <i class="bi bi-dash"></i>
+                                                </button>
+                                            </form>
 
-            </table>
-            @else
-                <div class="alert alert-info">
-                    Keranjang masih kosong.
+                                            <span class="px-2">{{ $jumlah }}</span>
+
+                                            <form action="{{ route('Cart.updateQty', ['id' => $Id_Obat, 'mode' => 'increase']) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary px-2">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>Rp {{ number_format($hargaSatuan, 0, ',', '.') }}</td>
+                                    <td>Rp {{ number_format($totalHarga, 0, ',', '.') }}</td>
+                                    <td>
+                                        <form action="{{ route('Cart.removeItem', ['id' => $Id_Obat]) }}" method="POST" onsubmit="return confirm('Hapus item ini?')">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr class="table-light">
+                                <td colspan="3" class="text-end fw-bold">Total Keseluruhan</td>
+                                <td colspan="2" class="fw-bold">Rp {{ number_format($grandTotal, 0, ',', '.') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            @else
+                <div class="alert alert-info">Keranjang masih kosong.</div>
             @endif
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('product.utama') }}" class="btn btn-secondary"><- Kembali</a>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ route('product.utama') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Kembali
+                </a>
                 <form action="{{ route('Cart.method') }}" method="GET">
                     <input type="hidden" name="kode" value="{{ $kodeTransaksi }}">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
                 </form>
-                {{-- <form action="{{ route('product.destroy', $product->Id_Obat) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')"> --}}
-
             </div>
-        </div>
+        </main>
+
     </div>
 </div>
 

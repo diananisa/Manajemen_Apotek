@@ -23,11 +23,11 @@
                 <li class="nav-item mb-2">
                     <a class="nav-link active text-dark" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
-                <!-- <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
-                </li> -->
                 <li class="nav-item mb-2">
                     <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-dark" href="{{ route('cart.view') }}"><i class="bi bi-cart3 me-2"></i>Keranjang</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
@@ -38,15 +38,19 @@
         {{-- Main Content --}}
         <div class="col-md-10 p-4 bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <!-- <h3>Dashboard</h3> -->
-                 <!-- Search Form -->
-                <form action="{{ route('product.index') }}" method="GET" class="mb-3">
-                    <div class="input-group w-400">
-                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
+                {{-- Search Form --}}
+                <form method="GET" action="{{ route('product.utama') }}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama obat...">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        @if(request('search'))
+                            <a href="{{ route('product.utama') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                        @endif
                     </div>
                 </form>
-
+        
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">

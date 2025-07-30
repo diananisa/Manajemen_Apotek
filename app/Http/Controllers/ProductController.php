@@ -150,15 +150,6 @@ class ProductController extends Controller
         return redirect()->route('Product.index')->with('success', 'Data berhasil diupdate');
     }
 
-
-
-        // $request->save();
-        //$request->update($request->all());
-
-        // return redirect()->route('product.index')->with('success', 'Data berhasil diupdate');
-
-    // }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -173,9 +164,17 @@ class ProductController extends Controller
         return redirect()->route('Product.index')->with('success', 'data berhasi dihapus');
     }
 
-    public function utama()
+    public function utama(Request $request)
     {
-        $products = Product::all(); // atau gunakan pagination: Product::paginate(12)
+        $search = $request->input('search');
+
+        $products = Product::when($search, function ($query, $search) {
+                return $query->where('Nama_Obat', 'like', '%' . $search . '%');
+            })
+            ->orderByRaw('Jumlah = 0')      // Stok kosong di bawah
+            ->orderByDesc('Jumlah')         // Stok besar ke kecil
+            ->get();
+
         return view('Product.utama', compact('products'));
     }
 
@@ -192,7 +191,6 @@ class ProductController extends Controller
             $cart[$Id_Obat] = [
                 "Nama_Obat" => $product->Nama_Obat,
                 "gambar" => $product->gambar,
-                // "Total_Harga" => $product->Total_Harga,
                 "Harga_Jual" => $product->Harga_Jual,
                 "quantity" => 1
             ];

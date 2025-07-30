@@ -169,8 +169,11 @@ Route::post('/bayar', [CartController::class, 'bayar'])->name('bayar');
 Route::get('/Cart/method', [CartController::class, 'method'])->name('Cart.method');
 Route::get('/Cart/reset', [CartController::class, 'reset'])->name('cart.reset');
 
+// Cart Update
+Route::post('/Cart/updateQty/{id}/{mode}', [CartController::class, 'updateQty'])->name('Cart.updateQty');
+Route::post('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('Cart.removeItem');
+
 // Metode pembayaran
-// Route::post('/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
 Route::match(['get', 'post'], '/Cart/cash/{kode}', [CartController::class, 'cash'])->name('method.cash');
 Route::get('/Cart/qris/{kode}', [CartController::class, 'qris'])->name('method.qris');
 Route::get('/Cart/debit/{kode}', [CartController::class, 'debit'])->name('method.debit');
@@ -181,7 +184,7 @@ Route::get('/Cart/success', function () {
 })->name('cart.success');
 
 // Cetak struk
-Route::get('/Cart/pdf/{kode}', [CartController::class, 'cetakPDF'])->name('print.pdf');
+Route::get('/Cart/pdf', [CartController::class, 'printPDF'])->name('print.pdf');
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
 Route::resource('Supplier', SupplierController::class);

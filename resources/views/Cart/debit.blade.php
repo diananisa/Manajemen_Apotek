@@ -19,16 +19,16 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                    <a class="nav-link active text-dark" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
+                    <a class="nav-link text-dark" href="{{ route('product.utama') }}"><i class="bi bi-box-seam me-2"></i>Product</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-cart3 me-2"></i>Keranjang</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{ route('presensi.store') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>

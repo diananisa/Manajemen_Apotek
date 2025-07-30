@@ -8,14 +8,10 @@ use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Cart;
 use App\Models\Transaction;
+use App\Models\Product;
 
 class CartController extends Controller
 {
-    public function CartUpdate()
-    {
-        // Implementasi update cart jika dibutuhkan
-    }
-
     public function reset()
     {
         session()->forget(['cart', 'kode_transaksi', 'Kode_Transaksi_Terakhir']);
@@ -63,11 +59,27 @@ class CartController extends Controller
 
     public function bayar(Request $request)
     {
-        // dd('masuk ke bayar');
-        // dd($request->all());
-
         $metode = $request->metode;
         $kode = $request->kode;
+
+        // Ambil cart dari session
+        $cartItems = session('cart', []);
+        $total = 0;
+
+        foreach ($cartItems as $item) {
+            $harga = is_numeric($item['Harga_Jual']) ? $item['Harga_Jual'] : 0;
+            $qty = is_numeric($item['quantity']) ? $item['quantity'] : 0;
+            $total += $harga * $qty;
+        }
+
+        $dibayar = $request->input('dibayar');
+        $kembali = $dibayar - $total;
+
+        // Simpan ke session untuk digunakan di struk
+        session([
+            'uang_dibayar' => $dibayar,
+            'uang_kembali' => $kembali,
+        ]);
 
         \Log::info("Redirect ke metode: $metode");
         \Log::info("Kode yang diterima di bayar: $kode");
@@ -151,34 +163,35 @@ class CartController extends Controller
         return ucfirst($f->format($angka));
     }
 
-    public function cetakPDF($kode)
+    public function printPDF(Request $request)
     {
-        // Ambil data transaksi satu baris (untuk tanggal, kode, dll.)
-        $transaksi = Cart::where('Kode_Transaksi', $kode)->first();
+        $kode = $request->query('kode');
+        $dibayar = session('uang_dibayar');
+        $kembali = session('uang_kembali');
+        $metode = $request->query('metode');
+
+        $carts = DB::table('carts')->where('Kode_Transaksi', $kode)->get();
+        $transaksi = Transaction::where('Kode_Transaksi', $kode)->first();
 
         if (!$transaksi) {
-            return back()->with('error', 'Transaksi tidak ditemukan!');
+            return back()->with('error', 'Transaksi tidak ditemukan.');
         }
 
-        // Ambil data cart untuk tabel, digroup berdasarkan Nama_Obat dan Harga_Satuan
-        $carts = DB::table('carts')
-            ->select('Nama_Obat', DB::raw('SUM(Jumlah) as Jumlah'), 'Harga_Satuan', DB::raw('SUM(Total_Harga) as Total_Harga'))
-            ->where('Kode_Transaksi', $kode)
-            ->groupBy('Nama_Obat', 'Harga_Satuan')
-            ->get();
+        $total = $transaksi->Total;
+        $terbilang = $this->terbilang($total) . ' Rupiah';
 
-        $total = $carts->sum('Total_Harga');
-
-        $pdf = Pdf::loadView('Cart.struk', [
+        $pdf = PDF::loadView('Cart.struk', [
             'carts' => $carts,
-            'tanggal' => $transaksi->Tanggal_Transaksi,
             'kode' => $kode,
-            'kasir' => 'Admin Apotek',
+            'tanggal' => $transaksi->Tanggal_Transaksi,
             'total' => $total,
-            'terbilang' => $this->terbilang($total) . ' Rupiah'
+            'terbilang' => $terbilang,
+            'dibayar' => $dibayar,
+            'kembali' => $kembali,
+            'metode' => $transaksi->Metode_Pembelian,
         ]);
 
-        return $pdf->stream("struk-{$kode}.pdf");
+        return $pdf->stream('struk_' . $kode . '.pdf');
     }
 
     public function cash(Request $request, $kode)
@@ -195,18 +208,25 @@ class CartController extends Controller
             $qty = is_numeric($item['quantity']) ? $item['quantity'] : 0;
             $grandTotal += $harga * $qty;
         }
-
+        
         // Default
         $dibayar = null;
         $kembalian = null;
         $errorKembalian = null;
-
+        
         // Kalau POST (user input "dibayar")
         if ($request->isMethod('post')) {
             $dibayar = (int) $request->input('dibayar');
             $kembalian = $dibayar - $grandTotal;
             if ($kembalian < 0) {
                 $errorKembalian = 'Uang dibayar kurang dari total belanja!';
+            }
+            else
+            {
+                session([
+                    'uang_dibayar' => $dibayar,
+                    'uang_kembali' => $kembalian,
+                ]);
             }
         }
 
@@ -233,5 +253,33 @@ class CartController extends Controller
     {
         Transaction::where('Kode_Transaksi', $kode)->update(['Metode_Pembelian' => 'debit']);
         return view('Cart.debit', compact('kode'));
+    }
+
+    public function updateQty(Request $request, $id, $mode)
+    {
+        $cart = session()->get('cart', []);
+        $produk = Product::find($id);
+
+        if (!$produk || !isset($cart[$id])) {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
+        }
+
+        $stokTersedia = $produk->Jumlah;
+        $jumlahSekarang = $cart[$id]['quantity'];
+
+        if ($mode === 'increase') {
+            if ($jumlahSekarang >= $stokTersedia) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk menambah item.');
+            }
+
+            $cart[$id]['quantity']++;
+        } elseif ($mode === 'decrease') {
+            if ($jumlahSekarang > 1) {
+                $cart[$id]['quantity']--;
+            }
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->back();
     }
 }

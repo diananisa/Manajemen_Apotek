@@ -22,9 +22,6 @@
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
-            <!-- <button class="navbar-toggle" type="button" data-bs-tonggle="collapse">
-                <span class="navbar-toggle-icon"></span>
-            </button> -->
             {{-- @if ($errors->any())
                 <div class="alert alert-danger mt-2">
                     {{ $errors->first() }}
@@ -34,11 +31,11 @@
                 <li class="nav-item mb-2">
                     <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
-                <!-- <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
-                </li> -->
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="{{ route('product.utama') }}"><i class="bi bi-box-seam me-2"></i>Product</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-dark" href="{{ route('cart.view') }}"><i class="bi bi-cart3 me-2"></i>Keranjang</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
