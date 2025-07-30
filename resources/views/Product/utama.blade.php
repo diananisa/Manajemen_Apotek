@@ -67,14 +67,19 @@
                                     <h5 class="card-title">{{ $product->Nama_Obat }}</h5>
                                     <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Jual, 0, ',', '.') }} / Strip</p>
                                     <p class="card-text text-muted">Stock: {{ $product->Jumlah }} box</p>
-                                    <form action="{{ route('cart.add') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="Id_Obat" value="{{ $product->Id_Obat }}">
-                                        <button type="submit" class="btn btn-outline-primary w-100">
-                                            <i class="bi bi-cart-plus"></i> Add to Cart
+                                    @if($product->Jumlah > 0)
+                                        <form action="{{ route('cart.add') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="Id_Obat" value="{{ $product->Id_Obat }}">
+                                            <button type="submit" class="btn btn-outline-primary w-100">
+                                                <i class="bi bi-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    @else
+                                        <button class="btn btn-outline-secondary w-100" disabled>
+                                            <i class="bi bi-x-circle"></i> Stok Habis
                                         </button>
-                                    </form>
-
+                                    @endif
                                 </div>
                             </div>  
                         </div>

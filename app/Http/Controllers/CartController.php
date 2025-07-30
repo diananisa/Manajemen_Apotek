@@ -25,9 +25,12 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $produk = DB::table('_stock__produk')->where('Id_Obat', $request->Id_Obat)->first();
-
         if (!$produk) {
             return back()->with('error', 'Produk tidak ditemukan!');
+        }
+        
+        if (!$produk || $produk->Jumlah <= 0) {
+            return back()->with('error', 'Stok produk habis atau tidak ditemukan.');
         }
 
         if (!session()->has('kode_transaksi')) {
@@ -38,6 +41,7 @@ class CartController extends Controller
 
         $id = $produk->Id_Obat;
         $cart[$id] = [
+            'Id_Obat' => $produk->Id_Obat,
             'Nama_Obat' => $produk->Nama_Obat,
             'Harga_Jual' => $produk->Harga_Jual,
             'quantity' => ($cart[$id]['quantity'] ?? 0) + 1,
@@ -73,39 +77,6 @@ class CartController extends Controller
         ]);
 
         return redirect()->route('method.' . $metode, ['kode' => $kode]);
-
-        // Log::info("Redirect ke metode: " . $request->metode);
-
-        // $request->validate([
-        //     'kode' => 'required',
-        //     'metode' => 'required',
-        // ]);
-
-        // // Cek apakah transaksi sudah ada
-        // $existing = Transaction::where('Kode_Transaksi', $request->kode)->first();
-
-        // if (!$existing) {
-        //     // Kalau belum ada, simpan
-        //     Transaction::create([
-        //         'Kode_Transaksi' => $request->kode,
-        //         'Metode_Pembelian' => $request->metode,
-        //         'Tanggal_Transaksi' => now(),
-        //         'Total' => 0,
-        //     ]);
-        // } else {
-        //     // Kalau sudah ada, update metode pembayaran-nya saja
-        //     $existing->update([
-        //         'Metode_Pembelian' => $request->metode,
-        //     ]);
-        // }
-
-        // // Redirect sesuai metode
-        // return match ($request->metode) {
-        //     'cash' => redirect()->route('method.cash', ['kode' => $request->kode]),
-        //     'qris' => redirect()->route('method.qris', ['kode' => $request->kode]),
-        //     'debit' => redirect()->route('method.debit', ['kode' => $request->kode]),
-        //     default => back()->withErrors(['metode' => 'Metode tidak dikenali']),
-        // };
     }
 
     public function method(Request $request)
@@ -142,6 +113,7 @@ class CartController extends Controller
             $total += $subtotal;
             
             DB::table('carts')->insert([
+                'Id_Obat'           => $item['Id_Obat'],
                 'Kode_Transaksi'    => $Kode_Transaksi,
                 'Tanggal_Transaksi' => $Tanggal_Transaksi,
                 'Nama_Obat'         => $item['Nama_Obat'],
@@ -151,6 +123,10 @@ class CartController extends Controller
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ]);
+
+            DB::table('_stock__produk')
+                ->where('Id_Obat', $item['Id_Obat'])
+                ->decrement('Jumlah', $item['quantity']);
         }
 
         // Jangan simpan metode di sini
@@ -176,34 +152,34 @@ class CartController extends Controller
     }
 
     public function cetakPDF($kode)
-{
-    // Ambil data transaksi satu baris (untuk tanggal, kode, dll.)
-    $transaksi = Cart::where('Kode_Transaksi', $kode)->first();
+    {
+        // Ambil data transaksi satu baris (untuk tanggal, kode, dll.)
+        $transaksi = Cart::where('Kode_Transaksi', $kode)->first();
 
-    if (!$transaksi) {
-        return back()->with('error', 'Transaksi tidak ditemukan!');
+        if (!$transaksi) {
+            return back()->with('error', 'Transaksi tidak ditemukan!');
+        }
+
+        // Ambil data cart untuk tabel, digroup berdasarkan Nama_Obat dan Harga_Satuan
+        $carts = DB::table('carts')
+            ->select('Nama_Obat', DB::raw('SUM(Jumlah) as Jumlah'), 'Harga_Satuan', DB::raw('SUM(Total_Harga) as Total_Harga'))
+            ->where('Kode_Transaksi', $kode)
+            ->groupBy('Nama_Obat', 'Harga_Satuan')
+            ->get();
+
+        $total = $carts->sum('Total_Harga');
+
+        $pdf = Pdf::loadView('Cart.struk', [
+            'carts' => $carts,
+            'tanggal' => $transaksi->Tanggal_Transaksi,
+            'kode' => $kode,
+            'kasir' => 'Admin Apotek',
+            'total' => $total,
+            'terbilang' => $this->terbilang($total) . ' Rupiah'
+        ]);
+
+        return $pdf->stream("struk-{$kode}.pdf");
     }
-
-    // Ambil data cart untuk tabel, digroup berdasarkan Nama_Obat dan Harga_Satuan
-    $carts = DB::table('carts')
-        ->select('Nama_Obat', DB::raw('SUM(Jumlah) as Jumlah'), 'Harga_Satuan', DB::raw('SUM(Total_Harga) as Total_Harga'))
-        ->where('Kode_Transaksi', $kode)
-        ->groupBy('Nama_Obat', 'Harga_Satuan')
-        ->get();
-
-    $total = $carts->sum('Total_Harga');
-
-    $pdf = Pdf::loadView('Cart.struk', [
-        'carts' => $carts,
-        'tanggal' => $transaksi->Tanggal_Transaksi,
-        'kode' => $kode,
-        'kasir' => 'Admin Apotek',
-        'total' => $total,
-        'terbilang' => $this->terbilang($total) . ' Rupiah'
-    ]);
-
-    return $pdf->stream("struk-{$kode}.pdf");
-}
 
     public function cash(Request $request, $kode)
     {
