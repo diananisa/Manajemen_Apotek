@@ -4,31 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Kasir</title>
-
+    
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
     {{-- Bootstrap Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+    
     {{-- Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 
-@csrf
-
-<div class="container-fluid">
-    <div class="row min-vh-100">
+    @csrf
+    <div class="d-flex"> <!-- Wrapper Flex -->
 
         {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
+        <div class="sidebar bg-white">
             {{-- Logo --}}
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
-
+            
             {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
@@ -41,11 +42,6 @@
                         <i class="bi bi-box-seam me-2"></i>Product
                     </a>
                 </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('cart.view') }}">
-                        <i class="bi bi-cart3 me-2"></i>Keranjang
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#">
                         <i class="bi bi-clipboard-check me-2"></i>Presensi
@@ -55,12 +51,21 @@
         </div>
 
         {{-- Main Content --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
+        <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
 
-            {{-- User Info --}}
-            <div class="d-flex justify-content-end align-items-center mb-4">
+                <!-- Tombol Toggle Sidebar -->
+                <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- User Info -->
                 <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
+                    <a href="{{ route('cart.view') }}"
+                        class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center cart-btn">
+                        <i class="bi bi-cart3 fs-4"></i>
+                    </a>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
                         <div class="fw-bold">{{ session('Username') }}</div>
@@ -69,15 +74,19 @@
                 </div>
             </div>
 
+            <div style="height: 80px;"></div>
+
+            <h3>Dashboard</h3>
+
             {{-- Chart --}}
-            <div class="container mt-4">
+            <div class="mt-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="mb-4">Total Penjualan</h4>
                         <div class="card-body" style="height: 350px;">
                             <canvas id="salesChart"></canvas>
                         </div>
-                         <div class="d-flex justify-content-end align-items-center mb-3">
+                            <div class="d-flex justify-content-end align-items-center mb-3">
                             <form method="GET" action="{{ route('dashboard_kasir') }}" class="d-flex flex-wrap gap-2 align-items-center">
                                 <!-- Filter Utama -->
                                 <div>
@@ -153,8 +162,8 @@
             </div>
         </div>
     </div>
-</div>
 
+<script src="{{ asset('js/topsidebar.js') }}"></script>
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

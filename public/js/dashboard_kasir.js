@@ -28,6 +28,7 @@ new Chart(ctx, {
     options: {
         responsive: true,
         maintainAspectRatio: false, // Biar bisa auto menyesuaikan tinggi-lebar
+        resizeDelay: 100,
         scales: {
             y: {
                 beginAtZero: true,

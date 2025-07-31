@@ -6,17 +6,20 @@
     <title>List Supplier</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div class="container-fluid">
-    <div class="row min-vh-100">
+    <div class="d-flex">
 
         {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
+        <div class="sidebar bg-white">
+            {{-- Logo --}}
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
+
+            {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="{{ route('dashboard_manager') }}">
@@ -37,11 +40,18 @@
             </ul>
         </div>
 
-        <div class="col-md-10 p-4">
+        {{-- Main Content --}}
+        <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                {{-- Search Form --}}
-                <form method="GET" action="{{ route('supplier.laporan') }}" class="mb-3">
+                <!-- Tombol Toggle Sidebar -->
+                <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('supplier.laporan') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
                     <div class="input-group">
                         <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama supplier...">
                         <button class="btn btn-primary" type="submit">
@@ -53,15 +63,18 @@
                     </div>
                 </form>
 
+                <!-- User Info -->
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
-                        <div class="fw-bold">{{ session('Username')}}</div>
-                        <small class="text-muted">{{session('role')}}</small>
+                        <div class="fw-bold">{{ session('Username') }}</div>
+                        <small class="text-muted">{{ session('role') }}</small>
                     </div>
                 </div>
             </div>
+
+            <div style="height: 80px;"></div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold">Laporan Data Supplier</h4>
@@ -98,7 +111,13 @@
                                 <td>{{ $supplier->Alamat }}</td>
                                 <td>{{ $supplier->Jenis_Barang_Obat }}</td>
                                 <td>{{ $supplier->Nama_PIC }}</td>
-                                <td>{{ $supplier->Status }}</td>
+                                <td class="text-center">
+                                    @if($supplier->Status == 'Aktif')
+                                        <span class="badge bg-success px-3 py-2">Aktif</span>
+                                    @else
+                                        <span class="badge bg-danger px-3 py-2">Tidak Aktif</span>
+                                    @endif
+                                </td>
                                 {{-- <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Masuk)->format('d - m - Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($supplier->Tanggal_Kadaluarsa)->format('d - m - Y') }}</td> --}}
                                 {{-- <td>{{ $supplier->Jumlah }}</td>
@@ -113,26 +132,8 @@
                 </table>
             </div>
         </div> {{-- Akhir Main Content --}}
-
-        {{-- <table class="table"></table>
-        <thead>
-            <tr>
-                <th scope="id_supplier">Id Supplier</th>
-                <th scope="nama_supplier">Nama Supplier</th>
-                <th scope="nama_produck">Nama Produck</th>
-                <th scope="tanggal_masuk">Tanggal Masuk</th>
-                <th scope="tanggal_kadaluarsa">Tanggal_Kadaluarsa</th>
-                <th scope="total_harga">Total Harga</th>
-                <th scope="stock">Stock</th>
-            </tr>
-        </thead> --}}
-
-        
-                     
-
     </div>
-</div>
-
+<script src="{{ asset('js/topsidebar.js') }}"></script>
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

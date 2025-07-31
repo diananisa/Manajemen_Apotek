@@ -3,80 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Struk Transaksi</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 13px;
-            color: #333;
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .text-left { text-align: left; }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .store-info {
-            text-align: center;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-
-        .info {
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 6px;
-            font-weight: bold;
-        }
-
-        td {
-            border: 1px solid #ccc;
-            padding: 6px;
-        }
-
-        .summary {
-            margin-top: 10px;
-        }
-
-        .summary p {
-            margin: 4px 0;
-        }
-
-        .total-box {
-            background-color: #f8f8f8;
-            padding: 10px;
-            border: 1px dashed #aaa;
-            margin-top: 10px;
-        }
-
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px dashed #aaa;
-            margin: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="file://{{ public_path('css/struk.css') }}">
 </head>
 <body>
 
@@ -117,7 +44,7 @@
             </tbody>
         </table>
 
-        <<div class="total-box">
+        <div class="total-box">
             <p class="text-right"><strong>Total Bayar:</strong> Rp {{ number_format($total, 0, ',', '.') }}</p>
 
             @if(isset($dibayar))

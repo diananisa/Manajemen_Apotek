@@ -8,17 +8,20 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div class="container-fluid">
-    <div class="row min-vh-100">
+    <div class="d-flex">
+
         {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
+        <div class="sidebar bg-white">
+            {{-- Logo --}}
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
+
+            {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a class="nav-link active text-dark" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
@@ -26,25 +29,38 @@
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="{{ route('product.utama') }}"><i class="bi bi-box-seam me-2"></i>Product</a>
                 </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-cart3 me-2"></i>Keranjang</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
-        <div class="col-md-10 p-4 bg-body-tertiary">
-            <div class="d-flex justify-content-end align-items-center mb-4">
+
+        {{-- Main Content --}}
+        <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
+
+                <!-- Tombol Toggle Sidebar -->
+                <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- User Info -->
                 <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
+                    <a href="#"
+                        class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart3 fs-4"></i>
+                    </a>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
-                        <div class="fw-bold">{{ session('Username')}}</div>
-                        <small class="text-muted">{{session('role')}}</small>
+                        <div class="fw-bold">{{ session('Username') }}</div>
+                        <small class="text-muted">{{ session('role') }}</small>
                     </div>
                 </div>
             </div>
+
+            <div style="height: 80px;"></div>
+            
             <div class="row mb-5 g-2">
                 <div class="container text-center">
                     <h3 class="mb-4">Pilih Metode Pembayaran</h3>
@@ -97,8 +113,8 @@
             </div>
         </div>
     </div>
-</div>
 
+<script src="{{ asset('js/dashboard_kasir.js') }}"></script>
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

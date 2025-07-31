@@ -78,7 +78,7 @@ class SupplierController extends Controller
             'Alamat' => $request->Alamat,
             'Jenis_Barang_Obat' => $request->Jenis_Barang_Obat,
             'Nama_PIC' => $request->Nama_PIC,
-            'Status' =>$request->Status,
+            'Status' => $request->Status,
 
         ]);
         // Supplier::create($request->all());
@@ -129,7 +129,7 @@ class SupplierController extends Controller
             'Alamat'=>$request->Alamat,
             'Jenis_Barang_Obat'=>$request->Jenis_Barang_Obat,
             'Nama_PIC'=>$request->Nama_PIC,
-            'Status'=>$request->Status,
+            'Status' => $request->Status,
         ]);
 
 

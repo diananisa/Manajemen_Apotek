@@ -1,0 +1,70 @@
+/* Sidebar normal */
+.sidebar {
+    position: fixed; /* Biar diam ketika discroll */
+    top: 0;
+    left: 0;
+    width: 250px; /* Lebar default */
+    height: 100vh; /* Full tinggi layar */
+    background: white;
+    border-right: 1px solid #ddd;
+    overflow-y: auto; /* Kalau isi sidebar panjang bisa discroll sendiri */
+    transition: all 0.3s ease;
+    z-index: 1040; /* Di atas main content */
+}
+
+/* Sidebar tersembunyi */
+.sidebar.hidden {
+    transform: translateX(-100%); /* Hilang total */
+}
+
+/* Main content geser + menyesuaikan lebar */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px); /* Ikut menyesuaikan */
+    min-height: 100vh;
+    overflow-x: hidden; /* Biar nggak cropping ke kanan */
+    transition: all 0.3s ease;
+}
+
+/* Kalau sidebar disembunyikan */
+.sidebar.hidden ~ .main-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* Pastikan tidak ada border dan padding */
+.sidebar.hidden * {
+    display: none !important;
+}
+
+/* Top bar default (sidebar terbuka) */
+.top-bar {
+    position: fixed;
+    top: 15px;
+    left: 270px; /* 250px sidebar + 20px jarak */
+    right: 20px; /* jarak kanan */
+    z-index: 1030;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+/* Kalau sidebar disembunyikan */
+.sidebar.hidden ~ .main-content .top-bar {
+    left: 40px; /* tetap ada jarak dari kiri, tapi gak nempel banget */
+}
+
+/* Tombol keranjang lingkaran */
+.cart-btn {
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+}
+
+/* Hover: outline → fill */
+.cart-btn:hover {
+    background-color: #0d6efd; /* Warna biru Bootstrap */
+    color: white; /* Icon jadi putih */
+}

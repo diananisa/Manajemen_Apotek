@@ -89,9 +89,7 @@ Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart
 // DASHBOARD
 Route::get('/dashboard_apoteker', [DashboardController::class, 'dashboardApoteker'])->name('dashboard_apoteker');
 Route::get('/dashboard_kasir', [DashboardController::class, 'dashboardKasir'])->name('dashboard_kasir');
-
-
-
+Route::get('/dashboard_manager', [DashboardController::class, 'dashboardManager'])->name('dashboard_manager');
 
 
 #PRESENSI

@@ -6,55 +6,65 @@
     <title>Dashboard Apoteker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
+
 </head>
 <body class="bg-light">
-<div class="container-fluid">
-    <div class="row min-vh-100">
 
-        {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
-            <div class="text-center mb-4">
-                <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
-                <h5 class="mt-2">Apoteker.ID</h5>
-            </div>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}">
-                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
-                        <i class="bi bi-truck me-2"></i>Supplier
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('product.index') }}">
-                        <i class="bi bi-box-seam me-2"></i>Product Stock
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
-                </li>
-            </ul>
+<div class="d-flex"> <!-- Wrapper Flex -->
+
+    {{-- Sidebar --}}
+    <div class="sidebar bg-white">
+        <div class="text-center mb-4">
+            <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
+            <h5 class="mt-2">Apoteker.ID</h5>
         </div>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
+                    <i class="bi bi-truck me-2"></i>Supplier
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-dark" href="{{ route('product.index') }}">
+                    <i class="bi bi-box-seam me-2"></i>Product Stock
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+            </li>
+        </ul>
+    </div>
 
-        {{-- Main Content --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
-            <div class="d-flex justify-content-end align-items-center mb-4">
-                <div class="nav justify-content-end">
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-cart3 fs-4 text-primary"></i>
-                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                        <div>
-                            <div class="fw-bold">{{ session('Username')}}</div>
-                            <small class="text-muted">{{session('role')}}</small>
-                        </div>
-                    </div>
+    {{-- Main Content --}}
+    <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+
+        <!-- Top Bar -->
+        <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
+
+            <!-- Tombol Toggle Sidebar -->
+            <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <!-- User Info -->
+            <div class="d-flex align-items-center gap-3">
+                <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                <div>
+                    <div class="fw-bold">{{ session('Username') }}</div>
+                    <small class="text-muted">{{ session('role') }}</small>
                 </div>
             </div>
+        </div>
 
-            <h3>Dashboard</h3>
+        <div style="height: 80px;"></div>
+
+        <h3>Dashboard</h3>
 
             {{-- Statistik Cards --}}
             <div class="row g-3 mb-4">
@@ -210,6 +220,7 @@
 </div>
 
 {{-- Script --}}
+<script src="{{ asset('js/topsidebar.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{{ asset('js/dashboard_apoteker.js') }}"></script>

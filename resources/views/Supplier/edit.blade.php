@@ -85,7 +85,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="Status" class="form-label">Status</label>
-                        <input type="text" class="form-control" name="Status" id="Status" value="{{ $supplier->Status }}">
+
+                        <!-- Hidden default value -->
+                        <input type="hidden" name="Status" value="Tidak Aktif">
+
+                        <!-- Checkbox -->
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id="Status" name="Status" value="Aktif"
+                                {{ old('Status', $supplier->Status ?? '') === 'Aktif' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="Status">Aktif</label>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>

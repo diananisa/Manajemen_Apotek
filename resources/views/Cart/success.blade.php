@@ -6,17 +6,20 @@
     <title>Pembayaran Berhasil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div class="container-fluid">
-    <div class="row min-vh-100">
+    <div class="d-flex">
 
         {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
+        <div class="sidebar bg-white">
+            {{-- Logo --}}
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
+
+            {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
@@ -24,32 +27,61 @@
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{{ route('presensi.store') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
 
-        {{-- Konten Success --}}
-        <div class="col-md-10 p-4 bg-body-tertiary">
-            <div class="alert alert-success text-center">
-                <h4 class="mb-3"><i class="bi bi-check-circle-fill"></i> Pembayaran Berhasil!</h4>
-                <p>Terima kasih! Transaksi Anda telah berhasil diproses.</p>
-                <a href="{{ route('cart.reset') }}" class="btn btn-primary mt-3">
-                    <i class="bi bi-arrow-left-circle"></i> Kembali ke Halaman Utama
-                </a>
+        {{-- Main Content --}}
+        <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
 
-                <a href="{{ route('print.pdf', ['kode' => session('kode_transaksi')]) }}" class="btn btn-outline-secondary mt-2" target="_blank">
-                    <i class="bi bi-printer"></i> Cetak Struk
-                </a>
+                <!-- Tombol Toggle Sidebar -->
+                <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- User Info -->
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#"
+                        class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart3 fs-4"></i>
+                    </a>
+                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                    <div>
+                        <div class="fw-bold">{{ session('Username') }}</div>
+                        <small class="text-muted">{{ session('role') }}</small>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 80px;"></div>
+
+            {{-- Konten Success --}}
+                <div class="d-flex justify-content-center mt-5">
+                <div class="col-md-8 col-lg-6">
+                    <div class="alert alert-success text-center shadow-sm p-5 rounded-4">
+                        <div class="mb-4">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Pembayaran Berhasil!</h4>
+                        <p class="text-muted">Terima kasih! Transaksi Anda telah berhasil diproses.</p>
+
+                        <a href="{{ route('cart.reset') }}" class="btn btn-primary mt-3 rounded-pill px-4">
+                            <i class="bi bi-arrow-left-circle"></i> Kembali ke Halaman Utama
+                        </a>
+
+                        <a href="{{ route('print.pdf', ['kode' => session('kode_transaksi')]) }}"
+                        class="btn btn-outline-secondary mt-2 rounded-pill px-4" target="_blank">
+                            <i class="bi bi-printer"></i> Cetak Struk
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

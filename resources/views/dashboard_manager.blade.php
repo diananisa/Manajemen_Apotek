@@ -4,221 +4,235 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    {{-- Bootstrap CSS --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {{-- Bootstrap Icons --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
 @csrf
-<div class="container-fluid">
-    <div class="row min-vh-100">
+<div class="d-flex">
 
-        {{-- Sidebar --}}
-        <div class="col-md-2 bg-white border-end p-3">
-            <div class="text-center mb-4">
-                <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
-                <h5 class="mt-2">Apoteker.ID</h5>
-            </div>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.laporan') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('Product.laporan') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{ route('presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
-                </li>
-            </ul>
+    {{-- Sidebar --}}
+    <div class="sidebar bg-white">
+        {{-- Logo --}}
+        <div class="text-center mb-4">
+            <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
+            <h5 class="mt-2">Apoteker.ID</h5>
         </div>
 
-        {{-- Main Content --}}
-        {{-- bg-tertiary --}}
-        <div class="col-md-10 p-4 bg-info text-dark"> 
-            <div class="d-flex justify-content-end align-items-center mb-4">
-                <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">{{ session('Username')}}</div>
-                        <small class="text-muted">{{session('role')}}</small>
-                    </div>
-                </div>
-            </div>
-            <h3>Dashboard</h3>
-            <div class="container mt-2">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="mb-4">Sales Details</h4>
-                        <canvas id="salesChart" height="100"></canvas>
-                        <div class="mt-3 d-flex justify-content-end">
-                            <select class="form-select w-auto">
-                                <option selected>October</option>
-                                <option>September</option>
-                                <option>August</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-    <script>
-        const ctx = document.getElementById('salesChart').getContext('2d');
-    
-        const salesData = [
-            { x: 5000, y: 22 },
-            { x: 10000, y: 45 },
-            { x: 15000, y: 43 },
-            { x: 20000, y: 100 },
-            { x: 25000, y: 52 },
-            { x: 30000, y: 48 },
-            { x: 35000, y: 24 },
-            { x: 40000, y: 47 },
-            { x: 45000, y: 75 },
-            { x: 50000, y: 60 },
-            { x: 55000, y: 49 },
-            { x: 60000, y: 55 },
-        ];
-    
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: salesData.map(item => item.x),
-                datasets: [{
-                    label: 'Sales',
-                    data: salesData.map(item => item.y),
-                    fill: true,
-                    borderColor: 'rgba(0,123,255,1)',
-                    backgroundColor: 'rgba(0,123,255,0.1)',
-                    tension: 0.3,
-                    pointBackgroundColor: '#007bff',
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: value => value + '%'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Sales (in K)'
-                        }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.raw + '%';
-                            }
-                        }
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-    </script>
-
-            {{-- Statistic Cards --}}
-            {{-- <div class="row mb-4 g-3">
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Pelanggan</h6>
-                            <h3>4,093</h3>
-                            <span class="text-success small">↑ 8.5% from yesterday</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Barang Terjual</h6>
-                            <h3>10,293</h3>
-                            <span class="text-success small">↑ 1.3% from past week</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Penjualan</h6>
-                            <h3>Rp259,000</h3>
-                            <span class="text-danger small">↓ 4.3% from yesterday</span>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Table Kadaluarsa --}}
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <strong>Kadaluarsa</strong>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Kadaluarsa</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>30-07-2025</td>
-                                <td>30-01-2024</td>
-                                <td>10</td>
-                                <td><span class="badge bg-warning text-dark">Segera Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>21-07-2025</td>
-                                <td>21-01-2024</td>
-                                <td>20</td>
-                                <td><span class="badge bg-warning text-dark">Segera Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>19-06-2025</td>
-                                <td>19-12-2024</td>
-                                <td>10</td>
-                                <td><span class="badge bg-danger">Sudah Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>10-06-2025</td>
-                                <td>10-12-2024</td>
-                                <td>30</td>
-                                <td><span class="badge bg-danger">Sudah Kadaluarsa</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
+        {{-- Menu --}}
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link active text-primary fw-bold" href="#">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-dark" href="{{ route('supplier.laporan') }}">
+                    <i class="bi bi-truck me-2"></i>Supplier
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-dark" href="{{ route('Product.laporan') }}">
+                    <i class="bi bi-box-seam me-2"></i>Product Stock
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{{ route('presensi.belum') }}">
+                    <i class="bi bi-clipboard-check me-2"></i>Presensi
+                </a>
+            </li>
+        </ul>
     </div>
+
+    {{-- Main Content --}}
+    <div class="main-content flex-grow-1 p-4" style="background: url('{{ asset('asset/background.png') }}') no-repeat center center / cover;">
+        <!-- Top Bar -->
+        <div class="top-bar d-flex justify-content-between align-items-center shadow-sm rounded-pill">
+
+            <!-- Tombol Toggle Sidebar -->
+            <button id="toggleSidebar" class="btn btn-outline-primary btn-sm me-3">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <!-- User Info -->
+            <div class="d-flex align-items-center gap-3">
+                <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                <div>
+                    <div class="fw-bold">{{ session('Username') }}</div>
+                    <small class="text-muted">{{ session('role') }}</small>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 80px;"></div>
+
+        <h3>Dashboard</h3>
+
+        {{-- Chart Penjualan --}}
+        <div class="mt-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="mb-4">Total Penjualan</h4>
+                    <div class="card-body" style="height: 350px;">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+
+                    {{-- Filter Penjualan --}}
+                    <div class="d-flex justify-content-end align-items-center mb-3">
+                        <form method="GET" action="{{ route('dashboard_manager') }}" class="d-flex flex-wrap gap-2 align-items-center">
+
+                            {{-- Filter Utama --}}
+                            <div>
+                                <select name="filter" class="form-select" onchange="this.form.submit()">
+                                    <option value="tahun" {{ $filter=='tahun' ? 'selected' : '' }}>Tahunan</option>
+                                    <option value="bulan" {{ $filter=='bulan' ? 'selected' : '' }}>Bulanan</option>
+                                    <option value="hari" {{ $filter=='hari' ? 'selected' : '' }}>Tanggal Harian</option>
+                                    <option value="jam" {{ $filter=='jam' ? 'selected' : '' }}>Jam</option>
+                                </select>
+                            </div>
+
+                            {{-- Tahunan --}}
+                            @if($filter == 'tahun' && count($availableYears) > 3)
+                                <div>
+                                    <select name="tahun_mulai" class="form-select" onchange="this.form.submit()">
+                                        @foreach($availableYears as $y)
+                                            <option value="{{ $y }}" {{ $tahunMulai==$y ? 'selected' : '' }}>{{ $y }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <select name="tahun_akhir" class="form-select" onchange="this.form.submit()">
+                                        @foreach($availableYears as $y)
+                                            <option value="{{ $y }}" {{ $tahunAkhir==$y ? 'selected' : '' }}>{{ $y }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+
+                            {{-- Bulanan --}}
+                            @if($filter == 'bulan')
+                                <div>
+                                    <select name="tahun" class="form-select" onchange="this.form.submit()">
+                                        @foreach($availableYears as $y)
+                                            <option value="{{ $y }}" {{ $tahun==$y ? 'selected' : '' }}>{{ $y }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+
+                            {{-- Harian --}}
+                            @if($filter == 'hari')
+                                <div>
+                                    <select name="tahun" class="form-select" onchange="this.form.submit()">
+                                        @foreach($availableYears as $y)
+                                            <option value="{{ $y }}" {{ $tahun==$y ? 'selected' : '' }}>{{ $y }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <select name="bulan" class="form-select" onchange="this.form.submit()">
+                                        @for($i=1; $i<=12; $i++)
+                                            <option value="{{ $i }}" {{ $bulan==$i ? 'selected' : '' }}>
+                                                {{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            @endif
+
+                            {{-- Jam --}}
+                            @if($filter == 'jam')
+                                <div>
+                                    <input type="date" name="tanggal" value="{{ $tanggal }}" class="form-control" onchange="this.form.submit()">
+                                </div>
+                            @endif
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Tabel Kadaluarsa --}}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header"><strong>Informasi Kadaluarsa Produk</strong></div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th>Id Obat</th>
+                                    <th>Nama Obat</th>
+                                    <th>Tanggal Kadaluarsa</th>
+                                    <th>Tanggal Masuk</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                    <th>Jumlah</th>
+                                    <th>Status Stok</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @forelse ($stok as $item)
+                                    <tr>
+                                        <td>{{ $item->Id_Obat }}</td>
+                                        <td>{{ $item->Nama_Obat }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->Tanggal_Kadaluarsa)->format('d-m-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+                                        <td><span class="badge bg-{{ $item->badge }}">{{ $item->status }}</span></td>
+                                        <td>
+                                            @if (isset($item->sisa_hari))
+                                            @if ($item->sisa_hari === 0)
+                                            Hari Ini
+                                                @elseif ($item->sisa_hari > 0)
+                                                {{ $item->sisa_hari }} hari
+                                                @else
+                                                -
+                                                @endif
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
+                                        <td>{{ $item->Jumlah }}</td>
+                                        <td><span class="badge bg-{{ $item->badge_stok }}">{{ $item->status_stok }}</span></td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="6" class="text-muted">Tidak ada data kadaluarsa.</td>
+                                        </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> {{-- End Main Content --}}
 </div>
+
+<script src="{{ asset('js/topsidebar.js') }}"></script>
 
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{{-- Kirim Data Penjualan dari Laravel ke JS --}}
+<script>
+    window.salesDataLabels = {!! json_encode($salesData->pluck('label')) !!};
+    window.salesDataValues = {!! json_encode($salesData->pluck('total_penjualan')) !!};
+    window.filterType = "{{ $filter }}";
+</script>
+
+{{-- File Chart JS Terpisah --}}
+<script src="{{ asset('js/dashboard_kasir.js') }}"></script>
+
 </body>
 </html>
