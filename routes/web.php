@@ -24,6 +24,8 @@ Route::get('Login/login', function () {
 })->name('Login.login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
+Route::get('/login/Form', [LoginController::class, 'showLoginForm'])->name('login');
+
 
 // Route::post('/login/showLoginForm', function(){
 //     return view('/login/showLoginForm');
@@ -66,17 +68,17 @@ Route::post('/Supplier/add', function(){
     Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('supplier.index');
     
     // Route::post('/Supplier/store', function () {
-        //     return view('Supplier/store');
-        // })->name('supplier.store');
-        Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('supplier.store');
-        // Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-        Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('supplier.update');
-        
-        Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-        Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
-        
-        // Laporan Supplier
-        Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class, 'laporan'])->name('supplier.laporan');
+    //     return view('Supplier/store');
+    // })->name('supplier.store');
+    Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('supplier.store');
+    // Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+    Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('supplier.update');
+    
+    Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+    Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
+    
+    // Laporan Supplier
+    Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class, 'laporan'])->name('supplier.laporan');
 // Route::post('/Supplier/update/{Id_supplier}', [SupplierController::class, 'update'])->name('supplier.update');
 
 // Route::get('api/Supplier/{id}', [SupplierController::class, 'getSupplierbyId']);
@@ -124,26 +126,28 @@ Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart
 
 
 #PRESENSI
-Route::get('/Presensi/index', function(){
-    return view('/Presensi/index');
-})->name('presensi.index');
+// Route::get('/Presensi/index', function(){
+//     return view('/Presensi/index');
+// })->name('presensi.index');
 
 Route::get('/Presensi/belum', function(){
     return view('/Presensi/belum');
 })->name('presensi.belum');
 
-// Route::post('/Presensi/berhasil', function(){
-//     return view('/Presensi/berhasil');
-// })->name('presensi.berhasil');
+
+
 Route::get('/Presensi/sudah', function(){
     return view('/Presensi/sudah');
 })->name('presensi.sudah');
 
-Route::get('/Presensi/gagal', function(){
-    return view('/Presensi/gagal');
-})->name('presensi.gagal');
 
-Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('presensi.store');
+// Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('presensi.store');
+
+// Route::middleware('auth')->group(function () {
+Route::get('/presensi/index', [PresensiController::class, 'index'])->name('presensi.index');
+Route::post('/presensi', [PresensiController::class, 'store'])->name('presensi.store');
+Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
+// });
 
 
 
@@ -186,3 +190,6 @@ Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pd
 
 Route::resource('Supplier', SupplierController::class);
 Route::resource('Product', ProductController::class);
+
+Route::get('/login/data', [LoginController::class, 'showData'])->name('login.data');
+

@@ -3,62 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Login Page</title>
-    <!-- Bootstrap CSS CDN -->
+    <title>Apotek | Login Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-info text-white d-flex justify-content-center align-items-center vh-100">
-    <div class="login-box">
-        <!-- <div class="text-center">
-            <img src="{{ asset('asset/logo.png') }}" alt="ApotekKu Logo" class="img-fluid mb-3" style="max-width: 80px;">
-        </div> -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <img src="{{ asset('asset/logo.png') }}" class="img-fluid mb-3" style="max-width: 95px;">
-                <!-- <img src="{{ asset('assets/logo.png') }}" alt="Logo Apotek" style="height: 50px;"> -->
-                <h5 class="mt-0 fw-bold" style="color: black; font-family: 'Source Sans 3', sans-serif; margin-top: 0;">Login to Account</h5>
-                <h6 style="color: black; margin-top: 0;" >Please enter yout username and password to continue</h6>
-            <!-- </a> -->
-            </div>
-        <div class="card-body login-card-body">
-          
-          <!-- <p class="login-box-msg">Sign in to start your session</p> -->
-        <form action="{{ route('login.submit') }}" method="post"> 
-          @csrf
-          @if ($errors->any())
-                <div class="alert alert-danger mt-2">
-                    {{ $errors->first() }}
-                </div>
-            @endif
-            <div class="input-group mb-1">
-              <div class="form-floating">
-                <input id="loginUsername" name="Username" class="form-control" placeholder="Username" />
-                <label for="loginUsername">Username</label>
-              </div>
-              <div class="input-group-text"><span class="bi bi-envelope"></span></div>
-            </div>
-            <div class="input-group mb-1">
-              <div class="form-floating">
-                <input id="loginPassword" name="password" class="form-control" placeholder="password" />
-                <label for="loginPassword">Password</label>
-              </div>
-              <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
-            </div>
-            <div class="col-8 mx-auto">
-                <div class="d-grid gap-4">
-                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
-                </div> 
-            <div class="row">
-                  <div class="col-8 d-inline-flex align-items-center">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                      <label class="form-check-label" for="flexCheckDefault"> Remember Password </label>
-                    </div>
-                  </div>
-        </form>
-              </p>
-            </div>
-          </div>
+<body class="bg-info d-flex justify-content-center align-items-center vh-100">
+
+<div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+    <div class="text-center mb-4">
+        <img src="{{ asset('asset/logo.png') }}" alt="Logo" style="max-width: 90px;">
+        <h5 class="fw-bold mt-2">Login to Account</h5>
+        <p class="text-muted mb-0">Please enter your username and password</p>
+    </div>
+
+    @if ($errors->any())
+        <div class="alert alert-danger text-center">
+            {{ $errors->first() }}
         </div>
+    @endif
+
+    <form action="{{ route('login.submit') }}" method="POST">
+        @csrf
+        <div class="form-floating mb-3">
+            <input type="text" name="Username" class="form-control" id="Username" placeholder="Username" required>
+            <label for="Username">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" name="password" class="form-control" id="Password" placeholder="Password" required>
+            <label for="Password">Password</label>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Remember Me</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+    </form>
+</div>
+
 </body>
 </html>

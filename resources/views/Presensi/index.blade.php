@@ -52,8 +52,8 @@
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
-                        <div class="fw-bold">Dinda</div>
-                        <small class="text-muted">Apoteker</small>
+                        <div class="fw-bold">{{ session('Username')}}</div>
+                        <small class="text-muted">{{session('role')}}</small>
                     </div>
                 </div>
             </div>
@@ -87,6 +87,42 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            {{-- @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+
+                </div>
+            @endif --}}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>No</th>
+                            <th>Username</th>
+                            <th>Tanggal</th>
+                            <th>Jam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            use Carbon\Carbon;
+                            $no = 1;
+                        @endphp
+                        @forelse ($presensis as $presensi)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $presensi->Username }}</td>
+                                <td>{{ Carbon::parse($presensi->tanggal)->format('d-m-Y') }}</td>
+                                <td>{{ $presensi->jam }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Data presensi tidak ditemukan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
 
 

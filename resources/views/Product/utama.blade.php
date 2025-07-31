@@ -27,10 +27,10 @@
                     <a class="nav-link text-dark" href="#"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li> -->
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="{{ route('presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
