@@ -74,7 +74,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="Id_Obat" class="form-label">Id Obat</label>
-                        <input type="text" class="form-control" name="Id_Obat" id="Id_Obat" value="{{ $product->Id_Obat }}">
+                        <input type="text" class="form-control" name="Id_Obat" id="Id_Obat" value="{{ $product->Id_Obat }}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="Nama_Obat" class="form-label">Nama Obat</label>

@@ -70,7 +70,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="Id_supplier" class="form-label">ID Supplier</label>
-                        <input type="text" class="form-control" name="Id_supplier">
+                        <input type="text" class="form-control" name="Id_supplier" value="{{ $suppliers->Id_supplier }}" readonly>
                         @error('Id_supplier')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

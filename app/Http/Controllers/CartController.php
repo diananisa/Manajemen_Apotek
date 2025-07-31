@@ -258,7 +258,7 @@ class CartController extends Controller
     public function updateQty(Request $request, $id, $mode)
     {
         $cart = session()->get('cart', []);
-        $produk = Product::find($id);
+        $produk = Product::where('Id_Obat', $id)->first();
 
         if (!$produk || !isset($cart[$id])) {
             return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
@@ -282,4 +282,18 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->back();
     }
+
+    public function removeItem($id)
+    {
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang.');
+        }
+
+        return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
+    }
+
 }

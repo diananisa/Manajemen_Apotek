@@ -69,8 +69,8 @@
                                 <img src="{{ asset('uploads/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->Nama_Obat }}" style="height: 180px; object-fit: contain;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->Nama_Obat }}</h5>
-                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Jual, 0, ',', '.') }} / Strip</p>
-                                    <p class="card-text text-muted">Stock: {{ $product->Jumlah }} box</p>
+                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Jual, 0, ',', '.') }}/{{ $product->Jenis_Satuan }}</p>
+                                    <p class="card-text text-muted">Stock: {{ $product->Jumlah }} {{ $product->Jenis_Satuan }}</p>
                                     @if($product->Jumlah > 0)
                                         <form action="{{ route('cart.add') }}" method="post">
                                             @csrf

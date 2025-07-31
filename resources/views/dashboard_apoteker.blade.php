@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Apoteker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body class="bg-light">
 <div class="container-fluid">
@@ -21,137 +19,219 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}">
+                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                    </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
+                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
+                        <i class="bi bi-truck me-2"></i>Supplier
+                    </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link text-dark" href="{{ route('product.index') }}">
+                        <i class="bi bi-box-seam me-2"></i>Product Stock
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
-            
         </div>
-
 
         {{-- Main Content --}}
         <div class="col-md-10 p-4 bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                    <!-- <h3>Dashboard</h3> -->
-                     <!-- Search Form -->
-                    <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
-                        <div class="input-group w-400">
-                            <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                            <button class="btn btn-primary" type="submit">Cari</button>
+                <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
+                    <div class="input-group w-400">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
+                        <button class="btn btn-primary" type="submit">Cari</button>
+                    </div>
+                </form>
+                <div class="nav justify-content-end">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-cart3 fs-4 text-primary"></i>
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username')}}</div>
+                            <small class="text-muted">{{session('role')}}</small>
                         </div>
-                    </form>
-    
-                    <div class="nav justify-content-end">
-    
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="bi bi-cart3 fs-4 text-primary"></i>
-                            <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                            <div>
-                                <div class="fw-bold">{{ session('Username')}}</div>
-                                <small class="text-muted">{{session('role')}}</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Dashboard</h3>
+
+            {{-- Statistik Cards --}}
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Produk Tersedia</h6>
+                            <h3>{{ $produkAktif }}</h3>
+                            <span class="text-muted small">Dengan stok > 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Stok Hampir Habis</h6>
+                            <h3>{{ $stokMenipis }}</h3>
+                            <span class="text-warning small">Stok ≤ 10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Supplier Aktif</h6>
+                            <h3>{{ $supplierAktif }}</h3>
+                            <span class="text-success small">Status aktif</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Supplier Tidak Aktif</h6>
+                            <h3>{{ $supplierNonaktif }}</h3>
+                            <span class="text-danger small">Status nonaktif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Statistik Chart --}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header"><strong>Statistik Obat Kadaluarsa</strong></div>
+                        <div class="card-body">
+                            <div id="radialChart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header"><strong>Statistik Stok Obat</strong></div>
+                        <div class="card-body">
+                            <div id="stokDonutChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tabel Kadaluarsa --}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header"><strong>Informasi Kadaluarsa Produk</strong></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover align-middle">
+                                    <thead class="table-light text-center">
+                                        <tr>
+                                            <th>Id Obat</th>
+                                            <th>Nama Obat</th>
+                                            <th>Tanggal Kadaluarsa</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Status</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @forelse ($stokKadaluarsa as $item)
+                                            <tr>
+                                                <td>{{ $item->Id_Obat }}</td>
+                                                <td>{{ $item->Nama_Obat }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->Tanggal_Kadaluarsa)->format('d-m-Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+                                                <td><span class="badge bg-{{ $item->badge }}">{{ $item->status }}</span></td>
+                                                <td>
+                                                    @if (isset($item->sisa_hari))
+                                                        @if ($item->sisa_hari === 0)
+                                                            Hari Ini
+                                                        @elseif ($item->sisa_hari > 0)
+                                                            {{ $item->sisa_hari }} hari
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr><td colspan="5" class="text-muted">Tidak ada data kadaluarsa.</td></tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
-    
-                        </div>
-                    </div>
-    
-            </div>
-            
-              <h3>Dashboard</h3>
-
-            {{-- Statistic Cards --}}
-            <div class="row mb-4 g-3">
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Pelanggan</h6>
-                            <h3>4,093</h3>
-                            <span class="text-success small">↑ 8.5% from yesterday</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Barang Terjual</h6>
-                            <h3>10,293</h3>
-                            <span class="text-success small">↑ 1.3% from past week</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Penjualan</h6>
-                            <h3>Rp259,000</h3>
-                            <span class="text-danger small">↓ 4.3% from yesterday</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Table Kadaluarsa --}}
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <strong>Kadaluarsa</strong>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Kadaluarsa</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>30-07-2025</td>
-                                <td>30-01-2024</td>
-                                <td>10</td>
-                                <td><span class="badge bg-warning text-dark">Segera Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>21-07-2025</td>
-                                <td>21-01-2024</td>
-                                <td>20</td>
-                                <td><span class="badge bg-warning text-dark">Segera Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>19-06-2025</td>
-                                <td>19-12-2024</td>
-                                <td>10</td>
-                                <td><span class="badge bg-danger">Sudah Kadaluarsa</span></td>
-                            </tr>
-                            <tr>
-                                <td>Paramex</td>
-                                <td>10-06-2025</td>
-                                <td>10-12-2024</td>
-                                <td>30</td>
-                                <td><span class="badge bg-danger">Sudah Kadaluarsa</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            {{-- Tabel Stok --}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header"><strong>Informasi Stok Produk</strong></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover align-middle">
+                                    <thead class="table-light text-center">
+                                        <tr>
+                                            <th>Id Obat</th>
+                                            <th>Nama Obat</th>
+                                            <th>Jumlah</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @forelse ($stok as $item)
+                                            <tr>
+                                                <td>{{ $item->Id_Obat }}</td>
+                                                <td>{{ $item->Nama_Obat }}</td>
+                                                <td>{{ $item->Jumlah }}</td>
+                                                <td><span class="badge bg-{{ $item->badge }}">{{ $item->status }}</span></td>
+                                            </tr>
+                                        @empty
+                                            <tr><td colspan="3" class="text-muted">Semua stok aman.</td></tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </div>
+        </div> {{-- End of Main --}}
     </div>
 </div>
 
-{{-- Bootstrap JS --}}
+{{-- Script --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
+<script>
+    const CHART_DATA = {
+        aman: {{ $chartData['Aman'] }},
+        hampir: {{ $chartData['Hampir Kadaluarsa'] }},
+        kadaluarsa: {{ $chartData['Kadaluarsa'] }}
+    };
+
+    const STOK_CHART = {
+        habis: {{ $stokChart['Habis'] }},
+        bahaya: {{ $stokChart['Hampir Habis'] }},
+        menipis: {{ $stokChart['Menipis'] }},
+        aman: {{ $stokChart['Banyak'] }},
+    };
+</script>
 </body>
 </html>

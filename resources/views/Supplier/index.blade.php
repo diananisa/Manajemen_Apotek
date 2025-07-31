@@ -43,7 +43,7 @@
         <div class="col-md-10 p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold">Supplier</h4>
-                <a href="{{ route('supplier.add') }}" class="btn btn-primary">
+                <a href="{{ route('Supplier.add') }}" class="btn btn-primary">
                     @csrf
                     <i class="bi bi-plus-lg"></i> Tambah Supplier
                 </a>

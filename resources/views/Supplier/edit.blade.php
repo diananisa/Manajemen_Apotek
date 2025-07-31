@@ -70,7 +70,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="Id_supplier" class="form-label">ID Supplier</label>
-                        <input type="text" class="form-control" name="Id_supplier" value="{{ $supplier->Id_supplier }}">
+                        <input type="text" class="form-control" name="Id_supplier" value="{{ $supplier->Id_supplier }}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="Nama_Supplier" class="form-label">Nama Supplier</label>

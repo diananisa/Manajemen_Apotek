@@ -68,7 +68,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="Id_Obat" class="form-label">Id Obat</label>
-                        <input type="text" class="form-control" name="Id_Obat">
+                        <input type="text" class="form-control" name="Id_Obat" value="{{ $newId }}" readonly>
                         @error('Id_Obat') 
                             <div class="text-danger">{{ $message }}</div> 
                         @enderror

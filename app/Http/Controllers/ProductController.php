@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -23,9 +24,22 @@ class ProductController extends Controller
     //tambah supplier
     public function create()
     {
-        // return view('Product.add');
         $suppliers = Supplier::all();
-        return view('Product.add', compact('suppliers'));
+
+        // Ambil ID terakhir
+        $lastId = Product::orderBy('Id_Obat', 'desc')->value('Id_Obat');
+
+        if ($lastId) {
+            // Ambil angka setelah "OBT-"
+            $num = (int) substr($lastId, 4);
+            $num++;
+        } else {
+            $num = 1;
+        }
+
+        $newId = 'OBT-' . str_pad($num, 3, '0', STR_PAD_LEFT);
+
+        return view('Product.add', compact('suppliers', 'newId'));
     }
 
     /**
@@ -47,7 +61,6 @@ class ProductController extends Controller
         ]);
 
         $namaFile = null;
-
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $namaFile = time() . '.' . $file->getClientOriginalExtension();
@@ -88,26 +101,7 @@ class ProductController extends Controller
         $suppliers = Supplier::all();
         
         return view('Product.edit', compact('product', 'suppliers'));
-    }
-    // public function getSupplierById($id)
-    // {
-    //     $supplier = Supplier::where('Id_supplier', $id)->first();
-
-    //     if (!$supplier)
-    //     {
-    //         return response()->json(['eror' => 'Supplier tidak ditemukan'], 404);
-    //     }
-
-    //     return response()->json([
-    //         'Nama_Produck' => $supplier->Nama_Produck,
-    //         // 'alamat' => $supplier->alamat,
-    //         'Tanggal_Masuk'   => $supplier->Tanggal_Masuk,
-    //         'Tanggal_Kadaluarsa' => $supplier->Tanggal_Kadaluarsa,
-    //         'Jumlah'            => $supplier->Jumlah,
-    //         'Total_Harga'     => $supplier->Total_Harga,
-    //     ]);
-    // }
-   
+    }   
 
     /**
      * Update the specified resource in storage.
@@ -228,9 +222,9 @@ class ProductController extends Controller
         // Filter Status Stock
         if ($statusStock) {
             switch ($statusStock) {
-                case 'aman':     $query->where('Jumlah', '>', 50); break;
+                case 'banyak':     $query->where('Jumlah', '>', 50); break;
                 case 'menipis':  $query->whereBetween('Jumlah', [11, 50]); break;
-                case 'bahaya':   $query->whereBetween('Jumlah', [1, 10]); break;
+                case 'hampir_habis':   $query->whereBetween('Jumlah', [1, 10]); break;
                 case 'habis':    $query->where('Jumlah', 0); break;
             }
         }
@@ -257,6 +251,33 @@ class ProductController extends Controller
         return view('Product.laporan', compact(
             'products', 'jenisOptions', 'search', 'jenisObat', 'statusStock', 'sortBy', 'sortDir'
         ));
+    }
+
+    public function kadaluarsa()
+    {
+        $today = Carbon::today();
+
+        $products = Product::select('Nama_Obat', 'Tanggal_Kadaluarsa', 'Tanggal_Masuk', 'Jumlah')
+            ->get()
+            ->map(function ($product) use ($today) {
+                $kadaluarsa = Carbon::parse($product->Tanggal_Kadaluarsa);
+                $diffDays = $today->diffInDays($kadaluarsa, false);
+
+                if ($diffDays < 0) {
+                    $product->status = 'Sudah Kadaluarsa';
+                    $product->badge = 'danger';
+                } elseif ($diffDays <= 30) {
+                    $product->status = 'Segera Kadaluarsa';
+                    $product->badge = 'warning text-dark';
+                } else {
+                    $product->status = 'Aman';
+                    $product->badge = 'success';
+                }
+
+                return $product;
+            });
+
+        return view('Product.kadaluarsa', compact('products'));
     }
 
 }

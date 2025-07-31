@@ -23,7 +23,19 @@ class SupplierController extends Controller
     //tambah supplier
     public function create()
     {
-        return view('Supplier.add');
+        // Generate ID Supplier baru, contoh format SUP-001
+        $lastSupplier = Supplier::orderBy('Id_supplier', 'desc')->first();
+        if ($lastSupplier) {
+            $lastNumber = (int) str_replace('SUP-', '', $lastSupplier->Id_supplier);
+            $newNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $newNumber = '001';
+        }
+        $newId = 'SUP-' . $newNumber;
+
+        return view('Supplier.add', [
+            'suppliers' => (object) ['Id_supplier' => $newId]
+        ]);
     }
 
     /**
@@ -33,7 +45,7 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Id_supplier' => 'required|unique:_supplier,Id_Supplier|max:10',
+            'Id_supplier' => 'required|unique:_supplier,Id_supplier',
             'Nama_Supplier' => 'required',
             'Kontak' => 'required',
             'Alamat' => 'required',
@@ -41,14 +53,13 @@ class SupplierController extends Controller
             'Nama_PIC' => 'required',
             'Status'=> 'required',
         ], [
-            'Id_supplier.required' => 'Kolom ID Supplier harus diisi.',
-            'Id_supplier.unique' => 'ID Supplier sudah digunakan.',
             'Nama_Supplier.required' => 'Kolom Nama Supplier harus diisi.',
             'Kontak.required' => 'Kolom Kontak harus diisi.',
             'Alamat.required' => 'Kolom Alamat harus diisi.',
             'Jenis_Barang_Obat.required' => 'Jenis Barang/Obat harus diisi.',
             'Nama_PIC.required' => 'Nama PIC harus diisi.',
         ]);
+
         Supplier::create([
             'Id_supplier' => $request->Id_supplier,
             'Nama_Supplier' => $request->Nama_Supplier,

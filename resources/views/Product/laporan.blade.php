@@ -78,9 +78,9 @@
                         <label class="form-label">Status Stock</label>
                         <select name="status_stock" class="form-select">
                             <option value="">-- Semua --</option>
-                            <option value="aman" {{ request('status_stock') == 'aman' ? 'selected' : '' }}>Aman</option>
+                            <option value="banyak" {{ request('status_stock') == 'banyak' ? 'selected' : '' }}>Banyak</option>
                             <option value="menipis" {{ request('status_stock') == 'menipis' ? 'selected' : '' }}>Menipis</option>
-                            <option value="bahaya" {{ request('status_stock') == 'bahaya' ? 'selected' : '' }}>Bahaya</option>
+                            <option value="hampir_habis" {{ request('status_stock') == 'hampir_habis' ? 'selected' : '' }}>Hampir Habis</option>
                             <option value="habis" {{ request('status_stock') == 'habis' ? 'selected' : '' }}>Habis</option>
                         </select>
                     </div>
@@ -121,11 +121,11 @@
                                     @php
                                         $stock = $product->Jumlah;
                                         if ($stock > 50) {
-                                            $status = '<span class="badge bg-success">Aman</span>';
+                                            $status = '<span class="badge bg-success">Banyak</span>';
                                         } elseif ($stock > 10) {
                                             $status = '<span class="badge bg-warning text-dark">Menipis</span>';
                                         } elseif ($stock > 0) {
-                                            $status = '<span class="badge bg-danger">Bahaya</span>';
+                                            $status = '<span class="badge bg-danger">Hampir Habis</span>';
                                         } else {
                                             $status = '<span class="badge bg-secondary">Habis</span>';
                                         }
