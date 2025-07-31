@@ -39,24 +39,31 @@
 
         {{-- Main Content --}}
         <div class="col-md-10 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold">Laporan Stock Obat</h4>
-            </div>
-
-            {{-- Search Form --}}
-            <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
-                <div class="input-group">
-                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama obat...">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                    @if(request('search'))
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                {{-- Search Form --}}
+                <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama obat...">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        @if(request('search'))
                         <a href="{{ route('Product.laporan') }}" class="btn btn-outline-secondary ms-2">Reset</a>
-                    @endif
+                        @endif
+                    </div>
+                </form>
+
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-cart3 fs-4 text-primary"></i>
+                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                    <div>
+                        <div class="fw-bold">{{ session('Username')}}</div>
+                        <small class="text-muted">{{session('role')}}</small>
+                    </div>
                 </div>
-            </form>
-
-
+            </div>
+            
+            
             {{-- Filter Form --}}
             <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
                 <div class="row g-2 align-items-end">
@@ -66,13 +73,13 @@
                         <select name="jenis_obat" class="form-select">
                             <option value="">-- Semua --</option>
                             @foreach ($jenisOptions ?? [] as $opt)
-                                <option value="{{ $opt }}" {{ request('jenis_obat') == $opt ? 'selected' : '' }}>
-                                    {{ $opt }}
-                                </option>
+                            <option value="{{ $opt }}" {{ request('jenis_obat') == $opt ? 'selected' : '' }}>
+                                {{ $opt }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
-
+                    
                     {{-- Status Stock --}}
                     <div class="col-md-3">
                         <label class="form-label">Status Stock</label>
@@ -84,12 +91,16 @@
                             <option value="habis" {{ request('status_stock') == 'habis' ? 'selected' : '' }}>Habis</option>
                         </select>
                     </div>
-
+                    
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-primary w-100">Terapkan</button>
                     </div>
                 </div>
             </form>
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold">Laporan Stock Obat</h4>
+            </div>
 
             {{-- Table Supplier --}}
             <div class="table-responsive">

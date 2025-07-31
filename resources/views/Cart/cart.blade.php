@@ -45,16 +45,7 @@
 
         {{-- Main Content --}}
         <main class="col-md-10 p-4 bg-body-tertiary">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                {{-- Form Pencarian --}}
-                <form action="{{ route('product.utama') }}" method="POST" class="mb-0">
-                    @csrf
-                    <div class="input-group" style="width: 400px;">
-                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>
-
+            <div class="d-flex justify-content-end align-items-center mb-4">
                 {{-- Profil --}}
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-cart3 fs-4 text-primary"></i>

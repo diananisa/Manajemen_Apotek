@@ -41,13 +41,7 @@
 
         {{-- Main Content --}}
         <div class="col-md-10 p-4 bg-body-tertiary">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <form action="{{ route('dashboard_apoteker') }}" method="GET" class="mb-3">
-                    <div class="input-group w-400">
-                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>
+            <div class="d-flex justify-content-end align-items-center mb-4">
                 <div class="nav justify-content-end">
                     <div class="d-flex align-items-center gap-3">
                         <i class="bi bi-cart3 fs-4 text-primary"></i>
@@ -218,7 +212,7 @@
 {{-- Script --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="{{ asset('js/dashboard.js') }}"></script>
+<script src="{{ asset('js/dashboard_apoteker.js') }}"></script>
 <script>
     const CHART_DATA = {
         aman: {{ $chartData['Aman'] }},

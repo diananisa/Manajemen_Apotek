@@ -10,11 +10,21 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = Supplier::all(); //mengambil semua data dari tabel supplier
-        return view('Supplier.index', compact('suppliers'));
+        $suppliers      = Supplier::all();
+        $search         = $request->get('search');
+        $query          = Supplier::query();
 
+        // Search Nama Supplier
+        if ($search) {
+            $query->where('Nama_Supplier', 'like', "%{$search}%");
+        }
+
+        // Ambil data
+        $suppliers = $query->paginate(15)->appends($request->query());
+
+        return view('Supplier.index', compact('suppliers', 'search'));
     }
 
     /**
@@ -53,6 +63,7 @@ class SupplierController extends Controller
             'Nama_PIC' => 'required',
             'Status'=> 'required',
         ], [
+            'Id_supplier.required' => '-',
             'Nama_Supplier.required' => 'Kolom Nama Supplier harus diisi.',
             'Kontak.required' => 'Kolom Kontak harus diisi.',
             'Alamat.required' => 'Kolom Alamat harus diisi.',
@@ -92,25 +103,6 @@ class SupplierController extends Controller
         return view('Supplier.edit', compact('supplier'));
 
     }
-    // public function getSupplierById($id)
-    // {
-    //     $supplier = Supplier::where('Id_supplier', $id)->first();
-
-    //     if (!$supplier)
-    //     {
-    //         return response()->json(['eror' => 'Supplier tidak ditemukan'], 404);
-    //     }
-
-    //     return response()->json([
-    //         'Nama_Produck' => $supplier->Nama_Produck,
-    //         // 'alamat' => $supplier->alamat,
-    //         'Tanggal_Masuk'   => $supplier->Tanggal_Masuk,
-    //         'Tanggal_Kadaluarsa' => $supplier->Tanggal_Kadaluarsa,
-    //         'Jumlah'            => $supplier->Jumlah,
-    //         'Total_Harga'     => $supplier->Total_Harga,
-    //     ]);
-    // }
-   
 
     /**
      * Update the specified resource in storage.
@@ -156,17 +148,26 @@ class SupplierController extends Controller
     public function destroy(string $Id_supplier)
     {
         $supplier = Supplier::where('Id_supplier',$Id_supplier)->firstOrFail();
-
-        //$supplier = Supplier::findOrFail($Id_supplier);
         $supplier->delete();
 
         return redirect()->route('supplier.index')->with('success', 'data berhasi dihapus');
     }
-
-    public function laporan()
+    
+    public function laporan(Request $request)
     {
-        $suppliers = Supplier::all();
-        return view('Supplier.laporan', compact('suppliers'));
+        $search         = $request->get('search');
+        $query          = Supplier::query();
+        
+        // Search Nama Supplier
+        if ($search) {
+            $query->where('Nama_Supplier', 'like', "%{$search}%");
+        }
+        
+        // Ambil data
+        $suppliers = $query->paginate(15)->appends($request->query());
+        
+        
+        return view('Supplier.laporan', compact('suppliers', 'search'));
     }
 
 }

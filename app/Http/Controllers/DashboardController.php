@@ -10,7 +10,7 @@ use App\Models\Supplier;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function dashboardApoteker(Request $request)
     {
         $today = Carbon::today();
 
@@ -101,4 +101,80 @@ class DashboardController extends Controller
             return $item;
         });
     }
+
+    public function dashboardKasir(Request $request)
+{
+    $filter     = $request->input('filter', 'bulan');
+    $tahun      = $request->input('tahun', now()->year);
+    $bulan      = $request->input('bulan', now()->month);
+    $tanggal    = $request->input('tanggal', now()->toDateString());
+    $tahunMulai = $request->input('tahun_mulai');
+    $tahunAkhir = $request->input('tahun_akhir');
+
+    // Ambil semua tahun transaksi
+    $availableYears = DB::table('transactions')
+        ->selectRaw('DISTINCT YEAR(Tanggal_Transaksi) as tahun')
+        ->orderBy('tahun', 'asc')
+        ->pluck('tahun');
+
+    // Default agar tidak undefined
+    $salesData = collect();
+
+    if ($filter === 'tahun') {
+        if (count($availableYears) > 3 && $tahunMulai && $tahunAkhir) {
+            $salesData = DB::table('transactions')
+                ->selectRaw('YEAR(Tanggal_Transaksi) as label, SUM(Total) as total_penjualan')
+                ->whereBetween(DB::raw('YEAR(Tanggal_Transaksi)'), [$tahunMulai, $tahunAkhir])
+                ->groupByRaw('YEAR(Tanggal_Transaksi)')
+                ->orderByRaw('YEAR(Tanggal_Transaksi)')
+                ->get();
+        } else {
+            $salesData = DB::table('transactions')
+                ->selectRaw('YEAR(Tanggal_Transaksi) as label, SUM(Total) as total_penjualan')
+                ->groupByRaw('YEAR(Tanggal_Transaksi)')
+                ->orderByRaw('YEAR(Tanggal_Transaksi)')
+                ->get();
+        }
+
+    } elseif ($filter === 'bulan') {
+        $salesData = DB::table('transactions')
+            ->selectRaw('MONTH(Tanggal_Transaksi) as bulan_num, MONTHNAME(Tanggal_Transaksi) as label, SUM(Total) as total_penjualan')
+            ->whereYear('Tanggal_Transaksi', $tahun)
+            ->groupByRaw('MONTH(Tanggal_Transaksi), MONTHNAME(Tanggal_Transaksi)')
+            ->orderByRaw('bulan_num')
+            ->get();
+
+    } elseif ($filter === 'hari') {
+        // Harian dalam bulan tertentu
+        $salesData = DB::table('transactions')
+            ->selectRaw('DAY(Tanggal_Transaksi) as hari_num, CONCAT(LPAD(DAY(Tanggal_Transaksi), 2, "0"), " ", MONTHNAME(Tanggal_Transaksi)) as label, SUM(Total) as total_penjualan')
+            ->whereYear('Tanggal_Transaksi', $tahun)
+            ->whereMonth('Tanggal_Transaksi', $bulan)
+            ->groupByRaw('DAY(Tanggal_Transaksi), CONCAT(LPAD(DAY(Tanggal_Transaksi), 2, "0"), " ", MONTHNAME(Tanggal_Transaksi))')
+            ->orderByRaw('hari_num')
+            ->get();
+
+    } elseif ($filter === 'jam') {
+        // Per jam dalam hari tertentu
+        $salesData = DB::table('transactions')
+            ->selectRaw('HOUR(Tanggal_Transaksi) as jam_num, CONCAT(LPAD(HOUR(Tanggal_Transaksi), 2, "0"), ":00") as label, SUM(Total) as total_penjualan')
+            ->whereDate('Tanggal_Transaksi', $tanggal)
+            ->groupByRaw('HOUR(Tanggal_Transaksi), CONCAT(LPAD(HOUR(Tanggal_Transaksi), 2, "0"), ":00")')
+            ->orderByRaw('jam_num')
+            ->get();
+    }
+
+    return view('dashboard_kasir', compact(
+        'salesData',
+        'filter',
+        'tahun',
+        'bulan',
+        'tanggal',
+        'tahunMulai',
+        'tahunAkhir',
+        'availableYears'
+    ));
+}
+
+
 }

@@ -40,16 +40,7 @@
         {{-- Main Content --}}
         {{-- bg-tertiary --}}
         <div class="col-md-10 p-4 bg-info text-dark"> 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <!-- <h3>Dashboard</h3> -->
-                 <!-- Search Form -->
-                <form action="{{ route('dashboard_manager') }}" method="GET" class="mb-3">
-                    <div class="input-group w-400">
-                        <input type="text" name="search" class="form-control" placeholder="Cari nama produk..." value="{{ request('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>
-
+            <div class="d-flex justify-content-end align-items-center mb-4">
                 <div class="d-flex align-items-center gap-3">
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
@@ -59,22 +50,22 @@
                     </div>
                 </div>
             </div>
-              <h3>Dashboard</h3>
-                        <div class="container mt-2">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h4 class="mb-4">Sales Details</h4>
-                <canvas id="salesChart" height="100"></canvas>
-                <div class="mt-3 d-flex justify-content-end">
-                    <select class="form-select w-auto">
-                        <option selected>October</option>
-                        <option>September</option>
-                        <option>August</option>
-                    </select>
+            <h3>Dashboard</h3>
+            <div class="container mt-2">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="mb-4">Sales Details</h4>
+                        <canvas id="salesChart" height="100"></canvas>
+                        <div class="mt-3 d-flex justify-content-end">
+                            <select class="form-select w-auto">
+                                <option selected>October</option>
+                                <option>September</option>
+                                <option>August</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
     
     <script>
         const ctx = document.getElementById('salesChart').getContext('2d');

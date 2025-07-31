@@ -87,7 +87,8 @@ Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name(
 Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart.add');
 
 // DASHBOARD
-Route::get('/dashboard_apoteker', [DashboardController::class, 'index'])->name('dashboard_apoteker');
+Route::get('/dashboard_apoteker', [DashboardController::class, 'dashboardApoteker'])->name('dashboard_apoteker');
+Route::get('/dashboard_kasir', [DashboardController::class, 'dashboardKasir'])->name('dashboard_kasir');
 
 
 

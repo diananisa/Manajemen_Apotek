@@ -55,8 +55,8 @@
                     <i class="bi bi-cart3 fs-4 text-primary"></i>
                     <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
                     <div>
-                        <div class="fw-bold">Dinda</div>
-                        <small class="text-muted">Apoteker</small>
+                        <div class="fw-bold">{{ session('Username')}}</div>
+                        <small class="text-muted">{{session('role')}}</small>
                     </div>
                 </div>
             </div>

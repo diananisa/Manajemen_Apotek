@@ -37,10 +37,32 @@
             </ul>
         </div>
 
-        {{-- Main Content --}}
-                {{-- Main Content --}}
-
+        
         <div class="col-md-10 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                {{-- Search Form --}}
+                <form method="GET" action="{{ route('supplier.index') }}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama supplier...">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        @if(request('search'))
+                        <a href="{{ route('supplier.index') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                        @endif
+                    </div>
+                </form>
+
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-cart3 fs-4 text-primary"></i>
+                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                    <div>
+                        <div class="fw-bold">{{ session('Username')}}</div>
+                        <small class="text-muted">{{session('role')}}</small>
+                    </div>
+                </div>
+            </div>
+
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold">Supplier</h4>
                 <a href="{{ route('Supplier.add') }}" class="btn btn-primary">

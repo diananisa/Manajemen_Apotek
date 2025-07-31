@@ -90,6 +90,7 @@
         <p><strong>No. Transaksi:</strong> {{ $kode }}</p>
         <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($tanggal)->format('d-m-Y H:i') }}</p>
         <p><strong>Metode Pembayaran:</strong> {{ strtoupper($metode) }}</p>
+        <p><strong>Kasir:</strong>{{ session('Username')}}</p>
     </div>
 
     <hr>

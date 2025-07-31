@@ -12,10 +12,20 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all(); //mengambil semua data dari tabel supplier
-        return view('Product.index', compact('products'));
+        $products       = Product::all();
+        $search         = $request->get('search');
+        $query          = Product::query();
+
+        // Search Nama Obat
+        if ($search) {
+            $query->where('Nama_Obat', 'like', "%{$search}%");
+        }
+
+        $products = $query->paginate(15)->appends($request->query());
+
+        return view('Product.index', compact('products', 'search'));
     }
 
     /**
