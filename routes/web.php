@@ -93,23 +93,22 @@ Route::get('/dashboard_manager', [DashboardController::class, 'dashboardManager'
 
 
 #PRESENSI
-Route::get('/Presensi/index', function(){
-    return view('/Presensi/index');
-})->name('presensi.index');
+
+Route::get('/login/Form', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/Presensi/belum', function(){
     return view('/Presensi/belum');
-})->name('presensi.belum');
+})->name('Presensi.belum');
 
 Route::get('/Presensi/sudah', function(){
     return view('/Presensi/sudah');
-})->name('presensi.sudah');
+})->name('Presensi.sudah');
 
-Route::get('/Presensi/gagal', function(){
-    return view('/Presensi/gagal');
-})->name('presensi.gagal');
+Route::get('/Presensi/index', [PresensiController::class, 'index'])->name('Presensi.index');
+Route::post('/Presensi', [PresensiController::class, 'store'])->name('Presensi.store');
+Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('Presensi.rekap');
 
-Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('presensi.store');
+Route::get('/login/data', [LoginController::class, 'showData'])->name('login.data');
 
 // Cart related
 Route::get('/Cart/cart', [CartController::class, 'cartView'])->name('cart.view');

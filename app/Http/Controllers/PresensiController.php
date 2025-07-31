@@ -25,7 +25,7 @@ class PresensiController extends Controller
 
         $presensis = $query->get();
 
-        return view('presensi.index', compact('presensis'));
+        return view('Presensi.index', compact('presensis'));
     }
 
     // Menyimpan presensi
@@ -45,7 +45,7 @@ class PresensiController extends Controller
                                ->first();
 
         if ($cekPresensi) {
-            return redirect()->route('presensi.sudah')->with('message', 'Anda sudah melakukan presensi hari ini.');
+            return redirect()->route('Presensi.sudah')->with('message', 'Anda sudah melakukan presensi hari ini.');
         }
 
         // Simpan presensi
@@ -54,8 +54,6 @@ class PresensiController extends Controller
             'tanggal' => Carbon::now()->toDateString(), 
             'jam'     => Carbon::now()->format('H:i:s'),
         ]);
-
-        // return redirect()->route('presensi.berhasil')->with('message', 'Presensi berhasil dilakukan.');
     }
 
     // Menampilkan rekap presensi
@@ -73,6 +71,6 @@ class PresensiController extends Controller
         $users = $userQuery->get();
         $presensis = Presensi::whereDate('tanggal', $tanggal)->get()->keyBy('Username');
 
-        return view('presensi.rekap', compact('users', 'presensis', 'tanggal', 'tipe'));
+        return view('Presensi.rekap', compact('users', 'presensis', 'tanggal', 'tipe'));
     }
 }

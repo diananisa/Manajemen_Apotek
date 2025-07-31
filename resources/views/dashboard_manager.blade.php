@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="{{ route('presensi.belum') }}">
+                <a class="nav-link text-dark" href="{{ route('Presensi.index') }}">
                     <i class="bi bi-clipboard-check me-2"></i>Presensi
                 </a>
             </li>
