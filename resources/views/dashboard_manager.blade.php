@@ -19,7 +19,6 @@
 <body class="bg-light">
 @csrf
 <div class="d-flex">
-
     {{-- Sidebar --}}
     <div class="sidebar bg-white">
         {{-- Logo --}}

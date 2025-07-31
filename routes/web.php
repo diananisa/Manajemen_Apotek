@@ -10,6 +10,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 
 
+
 // Route::get('/', function () {
 //     return redirect()->route('dashboard');
 // });
@@ -24,6 +25,8 @@ Route::get('Login/login', function () {
     return view('Login/login'); // tampilkan view login
 })->name('Login.login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+Route::get('/login/Form', [LoginController::class, 'showLoginForm'])->name('login');
 
 
 // Route::post('/login/showLoginForm', function(){
@@ -93,9 +96,9 @@ Route::get('/dashboard_manager', [DashboardController::class, 'dashboardManager'
 
 
 #PRESENSI
-Route::get('/Presensi/index', function(){
-    return view('/Presensi/index');
-})->name('presensi.index');
+// Route::get('/Presensi/index', function(){
+//     return view('/Presensi/index');
+// })->name('presensi.index');
 
 Route::get('/Presensi/belum', function(){
     return view('/Presensi/belum');
@@ -105,11 +108,14 @@ Route::get('/Presensi/sudah', function(){
     return view('/Presensi/sudah');
 })->name('presensi.sudah');
 
-Route::get('/Presensi/gagal', function(){
-    return view('/Presensi/gagal');
-})->name('presensi.gagal');
 
-Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('presensi.store');
+// Route::post('/Presensi/berhasil', [PresensiController::class, 'store'])->name('presensi.store');
+
+// Route::middleware('auth')->group(function () {
+Route::get('/presensi/index', [PresensiController::class, 'index'])->name('presensi.index');
+Route::post('/presensi', [PresensiController::class, 'store'])->name('presensi.store');
+Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
+// });
 
 // Cart related
 Route::get('/Cart/cart', [CartController::class, 'cartView'])->name('cart.view');
@@ -135,6 +141,31 @@ Route::get('/Cart/success', function () {
 
 // Cetak struk
 Route::get('/Cart/pdf', [CartController::class, 'printPDF'])->name('print.pdf');
+Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
+
+// Route::resource('supplier', SupplierController::class);
+
+Route::get('/Product/cart', [CartController::class, 'cartView'])->name('cart.view');
+Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+// Route::post('/Checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/Cart/method', function(){
+    return view('/Cart/method');
+})->name('Cart.method');
+
+Route::get('/Cart/qris', function(){
+    return view('/Cart/qris');
+})->name('method.qris');
+
+Route::get('/Cart/cash', function(){
+    return view('/Cart/cash');
+})->name('method.cash');
+
+Route::get('/Cart/pdf', function(){
+    return view('/Cart/pdf');
+})->name('print.pdf');
+
+// Route::get('/Struk', [CartController::class, 'struk'])->name('struk');
+// Cetak PDF berdasarkan kode transaksi (DIPAKAI SAAT CHECKOUT)
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
 Route::resource('Supplier', SupplierController::class);

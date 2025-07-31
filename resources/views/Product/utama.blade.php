@@ -26,10 +26,10 @@
                     <a class="nav-link active text-dark" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="#"><i class="bi bi-box-seam me-2"></i>Product</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="{{ route('presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
@@ -82,6 +82,7 @@
                                 <img src="{{ asset('uploads/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->Nama_Obat }}" style="height: 180px; object-fit: contain;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->Nama_Obat }}</h5>
+<<<<<<< HEAD
                                     <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Jual, 0, ',', '.') }}/{{ $product->Jenis_Satuan }}</p>
                                     <p class="card-text text-muted">Stock: {{ $product->Jumlah }} {{ $product->Jenis_Satuan }}</p>
                                     @if($product->Jumlah > 0)
@@ -95,6 +96,15 @@
                                     @else
                                         <button class="btn btn-outline-secondary w-100" disabled>
                                             <i class="bi bi-x-circle"></i> Stok Habis
+=======
+                                    <p class="card-text text-primary fw-semibold">Rp. {{ number_format((float)$product->Harga_Jual, 0, ',', '.') }} / Strip</p>
+                                    <p class="card-text text-muted">Stock: {{ $product->Jumlah }} box</p>
+                                    <form action="{{ route('cart.add') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="Id_Obat" value="{{ $product->Id_Obat }}">
+                                        <button type="submit" class="btn btn-outline-primary w-100">
+                                            <i class="bi bi-cart-plus"></i> Add to Cart
+>>>>>>> master
                                         </button>
                                     @endif
                                 </div>

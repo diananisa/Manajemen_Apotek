@@ -14,6 +14,7 @@
         {{-- Sidebar --}}
         <div class="sidebar bg-white">
             {{-- Logo --}}
+
             <div class="text-center mb-4">
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>

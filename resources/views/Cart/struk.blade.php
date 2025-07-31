@@ -30,6 +30,7 @@
                     <th class="text-center">Jumlah</th>
                     <th class="text-right">Harga</th>
                     <th class="text-right">Subtotal</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -43,7 +44,6 @@
                 @endforeach
             </tbody>
         </table>
-
         <div class="total-box">
             <p class="text-right"><strong>Total Bayar:</strong> Rp {{ number_format($total, 0, ',', '.') }}</p>
 
@@ -69,6 +69,5 @@
         <p>Terima kasih telah berbelanja di Apotek Sehat Selalu</p>
         <p>Semoga lekas sembuh!</p>
     </div>
-
 </body>
 </html>

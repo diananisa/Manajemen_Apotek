@@ -295,5 +295,4 @@ class CartController extends Controller
 
         return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang.');
     }
-
 }
