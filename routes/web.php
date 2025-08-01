@@ -53,17 +53,15 @@ Route::get('/dashboard_apoteker', function () {
 //SUPPLIER
 Route::get('/Supplier/add', [SupplierController::class, 'create'])->name('Supplier.add');
 
-Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('supplier.index');
-Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('supplier.store');
-// Route::post('/supplier_edit/[{id}',pplierController::class, 'edit'])->name('supplier.edit');Route::post('/supplier_destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('supplier.update');
+Route::get('/Supplier/index', [SupplierController::class, 'index'])->name('Supplier.index');
+Route::post('/Supplier_store', [SupplierController::class, 'store'])->name('Supplier.store');
+Route::post('/Supplier_update', [SupplierController::class, 'update'])->name('Supplier.update');
 
-Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
-Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('supplier.edit');
+Route::post('/Supplier_destroy/{Id_supplier}', [SupplierController::class, 'destroy'])->name('Supplier.destroy');
+Route::get('/Supplier/edit/{Id_supplier}', [SupplierController::class, 'edit'])->name('Supplier.edit');
 
 // Laporan Supplier
-Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class, 'laporan'])->name('supplier.laporan');
-// Route::post('/Supplier/update/{Id_supplier}', [SupplierController::class, 'update'])->name('supplier.update');
+Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class, 'laporan'])->name('Supplier.laporan');
 
 // Route::get('api/Supplier/{id}', [SupplierController::class, 'getSupplierbyId']);
 
@@ -71,19 +69,19 @@ Route::get('/supplier-laporan', [\App\Http\Controllers\SupplierController::class
 
 
 //PRODUCT
-Route::get('/Product/add', [ProductController::class, 'create'])->name('product.add');
-Route::get('/Product/utama', [ProductController::class, 'utama'])->name('product.utama');
+Route::get('/Product/add', [ProductController::class, 'create'])->name('Product.add');
+Route::get('/Product/utama', [ProductController::class, 'utama'])->name('Product.utama');
 
 
-Route::put('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('product.update');
-Route::get('/Product/index', [ProductController::class, 'index'])->name('product.index');
+Route::put('/Product_update/{Id_Obat}', [ProductController::class, 'update'])->name('Product.update');
+Route::get('/Product/index', [ProductController::class, 'index'])->name('Product.index');
 
 // Laporan Product
 Route::get('/product-laporan', [\App\Http\Controllers\ProductController::class, 'laporan'])->name('Product.laporan');
 
-Route::post('/Product_store', [ProductController::class, 'store'])->name('product.store');
-Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('product.destroy');
-Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('/Product_store', [ProductController::class, 'store'])->name('Product.store');
+Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('Product.destroy');
+Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('Product.edit');
 Route::post('Produk_cart/', [ProductController::class, 'addToCart'])->name('cart.add');
 
 // DASHBOARD
@@ -136,5 +134,4 @@ Route::get('/Cart/success', function () {
 Route::get('/Cart/pdf', [CartController::class, 'printPDF'])->name('print.pdf');
 Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
 
-Route::resource('Supplier', SupplierController::class);
-Route::resource('Product', ProductController::class);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

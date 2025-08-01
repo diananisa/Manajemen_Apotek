@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('product.utama') }}">
+                    <a class="nav-link text-dark" href="{{ route('Product.utama') }}">
                         <i class="bi bi-box-seam me-2"></i>Product
                     </a>
                 </li>
@@ -54,15 +54,39 @@
                 </button>
 
                 <!-- User Info -->
-                <div class="d-flex align-items-center gap-3">
-                    <a href="#"
-                        class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center">
+                <div class="user-menu-wrapper d-flex align-items-center gap-3 position-relative">
+
+                    <!-- Tombol Keranjang -->
+                    <a href="{{ route('cart.view') }}"
+                        class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center cart-btn">
                         <i class="bi bi-cart3 fs-4"></i>
                     </a>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">{{ session('Username') }}</div>
-                        <small class="text-muted">{{ session('role') }}</small>
+
+                    <!-- User Info (Dropdown Toggle) -->
+                    <div id="userMenuToggle" class="d-flex align-items-center gap-2" style="cursor:pointer;">
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username') }}</div>
+                            <small class="text-muted">{{ session('role') }}</small>
+                        </div>
+                        <i class="bi bi-caret-down-fill text-muted small"></i>
+                    </div>
+
+                    <!-- Dropdown Menu -->
+                    <div id="userDropdown" class="user-dropdown shadow-sm rounded-3 p-2">
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-person me-2"></i> Profil
+                        </a>
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-gear me-2"></i> Pengaturan
+                        </a>
+                        <hr class="my-1">
+                        <form action="{{ route('logout') }}" method="post" class="m-0">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger py-2 px-3 w-100 text-start">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -142,7 +166,7 @@
             @endif
 
             <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('product.utama') }}" class="btn btn-secondary">
+                <a href="{{ route('Product.utama') }}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
                 <form action="{{ route('Cart.method') }}" method="GET">

@@ -137,7 +137,7 @@ class SupplierController extends Controller
         // $request->save();
         //$request->update($request->all());
 
-        return redirect()->route('supplier.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('Supplier.index')->with('success', 'Data berhasil diupdate');
 
     }
 
@@ -150,7 +150,7 @@ class SupplierController extends Controller
         $supplier = Supplier::where('Id_supplier',$Id_supplier)->firstOrFail();
         $supplier->delete();
 
-        return redirect()->route('supplier.index')->with('success', 'data berhasi dihapus');
+        return redirect()->route('Supplier.index')->with('success', 'data berhasi dihapus');
     }
     
     public function laporan(Request $request)

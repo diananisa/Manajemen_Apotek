@@ -51,25 +51,44 @@
                 </button>
 
                 <!-- Search Form -->
-                <form method="GET" action="{{ route('supplier.laporan') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
+                <form method="GET" action="{{ route('Supplier.laporan') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
                     <div class="input-group">
                         <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama supplier...">
                         <button class="btn btn-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                         @if(request('search'))
-                        <a href="{{ route('supplier.laporan') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                        <a href="{{ route('Supplier.laporan') }}" class="btn btn-outline-secondary ms-2">Reset</a>
                         @endif
                     </div>
                 </form>
 
                 <!-- User Info -->
-                <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">{{ session('Username') }}</div>
-                        <small class="text-muted">{{ session('role') }}</small>
+                <div class="user-menu-wrapper position-relative">
+                    <div id="userMenuToggle" class="d-flex align-items-center gap-3 user-info" style="cursor:pointer;">
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username') }}</div>
+                            <small class="text-muted">{{ session('role') }}</small>
+                        </div>
+                        <i class="bi bi-caret-down-fill text-muted small"></i>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div id="userDropdown" class="user-dropdown shadow-sm rounded-3 p-2">
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-person me-2"></i> Profil
+                        </a>
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-gear me-2"></i> Pengaturan
+                        </a>
+                        <hr class="my-1">
+                        <form action="{{ route('logout') }}" method="post" class="m-0">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger py-2 px-3 w-100 text-start">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

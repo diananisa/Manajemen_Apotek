@@ -27,12 +27,12 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}">
+                    <a class="nav-link text-dark" href="{{ route('Supplier.index') }}">
                         <i class="bi bi-truck me-2"></i>Supplier
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('Product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
@@ -51,25 +51,44 @@
                 </button>
 
                 <!-- Search Form -->
-                <form method="GET" action="{{ route('product.index') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
+                <form method="GET" action="{{ route('Product.index') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
                     <div class="input-group">
                         <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama obat...">
                         <button class="btn btn-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                         @if(request('search'))
-                        <a href="{{ route('product.index') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                        <a href="{{ route('Product.index') }}" class="btn btn-outline-secondary ms-2">Reset</a>
                         @endif
                     </div>
                 </form>
 
                 <!-- User Info -->
-                <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">{{ session('Username') }}</div>
-                        <small class="text-muted">{{ session('role') }}</small>
+                <div class="user-menu-wrapper position-relative">
+                    <div id="userMenuToggle" class="d-flex align-items-center gap-3 user-info" style="cursor:pointer;">
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username') }}</div>
+                            <small class="text-muted">{{ session('role') }}</small>
+                        </div>
+                        <i class="bi bi-caret-down-fill text-muted small"></i>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div id="userDropdown" class="user-dropdown shadow-sm rounded-3 p-2">
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-person me-2"></i> Profil
+                        </a>
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-gear me-2"></i> Pengaturan
+                        </a>
+                        <hr class="my-1">
+                        <form action="{{ route('logout') }}" method="post" class="m-0">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger py-2 px-3 w-100 text-start">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -78,7 +97,7 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold">Product</h4>
-                <a href="{{ route('product.add') }}" class="btn btn-primary">
+                <a href="{{ route('Product.add') }}" class="btn btn-primary">
                     @csrf
                     <i class="bi bi-plus-lg"></i> Tambah Product
                 </a>
@@ -134,10 +153,10 @@
                                 {{-- <td>{{ $supplier->Jumlah }}</td>
                                 <td>Rp. {{ number_format($supplier->Total_Harga, 0, ',', '.') }}</td>--}}
                                 <td>
-                                    <a href="{{ route('product.edit', $product->Id_Obat) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('Product.edit', $product->Id_Obat) }}" class="btn btn-sm btn-warning">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form action="{{ route('product.destroy', $product->Id_Obat) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    <form action="{{ route('Product.destroy', $product->Id_Obat) }}" method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
                                         
                                         <button class="btn btn-sm btn-danger">

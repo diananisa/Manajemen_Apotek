@@ -24,13 +24,13 @@
                     <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_kasir') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
+                    <a class="nav-link text-dark" href="{{ route('Supplier.index') }}"><i class="bi bi-truck me-2"></i>Supplier</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('Product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{ route('presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                    <a class="nav-link text-dark" href="{{ route('Presensi.belum') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
                 </li>
             </ul>
         </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
               <h3>Tambah Product</h3>
-                <form action="{{ route('product.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('Product.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="gambar" class="form-label" >Gambar</label>
@@ -119,7 +119,7 @@
                         <input class="form-control" type="file" id="formFileMultiple" multiple>
                     </div> --}}
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('product.index') }}" class="btn btn-secondary"><- Kembali</a>
+                        <a href="{{ route('Product.index') }}" class="btn btn-secondary"><- Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>

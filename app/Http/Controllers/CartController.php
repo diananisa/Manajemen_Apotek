@@ -15,7 +15,7 @@ class CartController extends Controller
     public function reset()
     {
         session()->forget(['cart', 'kode_transaksi', 'Kode_Transaksi_Terakhir']);
-        return redirect()->route('product.utama');
+        return redirect()->route('Product.utama');
     }
 
     public function addToCart(Request $request)

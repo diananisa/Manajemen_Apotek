@@ -27,12 +27,12 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('supplier.laporan') }}">
+                    <a class="nav-link text-dark" href="{{ route('Supplier.laporan') }}">
                         <i class="bi bi-truck me-2"></i>Supplier
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link active text-primary fw-bold" href="{{ route('product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
+                    <a class="nav-link active text-primary fw-bold" href="{{ route('Product.index') }}"><i class="bi bi-box-seam me-2"></i>Product Stock</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{{ route('Presensi.index') }}"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
@@ -64,12 +64,31 @@
                 </form>
 
                 <!-- User Info -->
-                <div class="d-flex align-items-center gap-3">
-                    <i class="bi bi-cart3 fs-4 text-primary"></i>
-                    <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
-                    <div>
-                        <div class="fw-bold">{{ session('Username') }}</div>
-                        <small class="text-muted">{{ session('role') }}</small>
+                <div class="user-menu-wrapper position-relative">
+                    <div id="userMenuToggle" class="d-flex align-items-center gap-3 user-info" style="cursor:pointer;">
+                        <img src="{{ asset('asset/user.png') }}" width="40" class="rounded-circle" alt="profile">
+                        <div>
+                            <div class="fw-bold">{{ session('Username') }}</div>
+                            <small class="text-muted">{{ session('role') }}</small>
+                        </div>
+                        <i class="bi bi-caret-down-fill text-muted small"></i>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div id="userDropdown" class="user-dropdown shadow-sm rounded-3 p-2">
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-person me-2"></i> Profil
+                        </a>
+                        <a href="#" class="dropdown-item py-2 px-3">
+                            <i class="bi bi-gear me-2"></i> Pengaturan
+                        </a>
+                        <hr class="my-1">
+                        <form action="{{ route('logout') }}" method="post" class="m-0">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger py-2 px-3 w-100 text-start">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

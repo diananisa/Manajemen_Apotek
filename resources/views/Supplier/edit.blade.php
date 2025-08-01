@@ -57,7 +57,7 @@
                     </div>
                         
                 @endif
-                <form action="{{ route('supplier.update') }}" method="post">
+                <form action="{{ route('Supplier.update') }}" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="Id_supplier" class="form-label">ID Supplier</label>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
+                        <a href="{{ route('Supplier.index') }}" class="btn btn-secondary"><- Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
               </form>

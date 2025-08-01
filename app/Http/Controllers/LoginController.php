@@ -75,9 +75,11 @@ class LoginController extends Controller
         };
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Session::flush();
+        $request->session()->flush();
+        $request->session()->regenerateToken();
+
         return redirect()->route('Login.login');
     }
 

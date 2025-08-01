@@ -8,6 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
         body.classList.toggle('sidebar-closed');
     });
 
+    // --- User Dropdown ---
+    const userMenuToggle = document.getElementById('userMenuToggle');
+    const userDropdown = document.getElementById('userDropdown');
+
+    userMenuToggle.addEventListener('click', function (e) {
+        e.stopPropagation(); // Biar klik di dalam nggak nutup langsung
+        userDropdown.classList.toggle('show');
+    });
+
+    // Klik di luar -> tutup dropdown
+    document.addEventListener('click', function () {
+        userDropdown.classList.remove('show');
+    });
+
     window.addEventListener('resize', () => {
         salesChart.resize();
     });
