@@ -24,22 +24,22 @@
             {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('dashboard_manager') }}">
+                    <a class="nav-link {{ request()->routeIs('dashboard_manager') ? 'active' : '' }}" href="{{ route('dashboard_manager') }}">
                         <i class="bi bi-speedometer2 me-2"></i>Dashboard
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('Supplier.laporan') }}">
+                    <a class="nav-link {{ request()->routeIs('Supplier.laporan') ? 'active' : '' }}" href="{{ route('Supplier.laporan') }}">
                         <i class="bi bi-truck me-2"></i>Supplier
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('Product.laporan') }}">
+                    <a class="nav-link {{ request()->routeIs('Product.laporan') ? 'active' : '' }}" href="{{ route('Product.laporan') }}">
                         <i class="bi bi-box-seam me-2"></i>Product Stock
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active text-primary fw-bold"href="#">
+                    <a class="nav-link {{ request()->routeIs('Presensi.index') ? 'active' : '' }}" href="{{ route('Presensi.index') }}">
                         <i class="bi bi-clipboard-check me-2"></i>Presensi
                     </a>
                 </li>

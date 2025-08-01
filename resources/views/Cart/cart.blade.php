@@ -25,17 +25,17 @@
             {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('dashboard_kasir') }}">
+                    <a class="nav-link {{ request()->routeIs('dashboard_kasir') ? 'active' : '' }}" href="{{ route('dashboard_kasir') }}">
                         <i class="bi bi-speedometer2 me-2"></i>Dashboard
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark" href="{{ route('Product.utama') }}">
+                    <a class="nav-link {{ request()->routeIs('Product.utama') ? 'active' : '' }}" href="{{ route('Product.utama') }}">
                         <i class="bi bi-box-seam me-2"></i>Product
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link {{ request()->routeIs('Presensi.belum') ? 'active' : '' }}" href="{{ route('Presensi.belum') }}">
                         <i class="bi bi-clipboard-check me-2"></i>Presensi
                     </a>
                 </li>

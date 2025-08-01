@@ -102,3 +102,24 @@
 .user-dropdown .dropdown-item:hover {
     background-color: #f8f9fa;
 }
+
+/* Style menu default */
+.sidebar .nav-link {
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Hover efek */
+.sidebar .nav-link:hover {
+    background-color: #f1f1f1;
+}
+
+/* Menu aktif */
+.sidebar .nav-link.active {
+    background-color: #e8f0fe; /* Biru lembut */
+    font-weight: bold;
+    color: #0d6efd !important; /* Biru Bootstrap */
+    border: 1px solid #c6d5f5;
+}
+

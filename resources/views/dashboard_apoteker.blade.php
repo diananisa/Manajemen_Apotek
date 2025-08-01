@@ -21,22 +21,24 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link active text-primary fw-bold" href="{{ route('dashboard_apoteker') }}">
+                <a class="nav-link {{ request()->routeIs('dashboard_apoteker') ? 'active' : '' }}" href="{{ route('dashboard_apoteker') }}">
                     <i class="bi bi-speedometer2 me-2"></i>Dashboard
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link text-dark" href="{{ route('Supplier.index') }}">
+                <a class="nav-link {{ request()->routeIs('Supplier.index') ? 'active' : '' }}" href="{{ route('Supplier.index') }}">
                     <i class="bi bi-truck me-2"></i>Supplier
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link text-dark" href="{{ route('Product.index') }}">
+                <a class="nav-link {{ request()->routeIs('Product.index') ? 'active' : '' }}" href="{{ route('Product.index') }}">
                     <i class="bi bi-box-seam me-2"></i>Product Stock
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="#"><i class="bi bi-clipboard-check me-2"></i>Presensi</a>
+                <a class="nav-link {{ request()->routeIs('Presensi.belum') ? 'active' : '' }}" href="{{ route('Presensi.belum') }}">
+                    <i class="bi bi-clipboard-check me-2"></i>Presensi
+                </a>
             </li>
         </ul>
     </div>
