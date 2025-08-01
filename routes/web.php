@@ -42,6 +42,8 @@ Route::middleware('auth.session')->group(function () {
         Route::post('/Product_store', [ProductController::class, 'store'])->name('Product.store');
         Route::post('/Product_destroy/{Id_Obat}', [ProductController::class, 'destroy'])->name('Product.destroy');
         Route::get('/Product/edit/{Id_Obat}', [ProductController::class, 'edit'])->name('Product.edit');
+        Route::get('/Presensi/apoteker/belum', fn() => view('Presensi.apoteker.belum'))->name('Presensi.apoteker.belum');
+        Route::get('/Presensi/apoteker/sudah', fn() => view('Presensi.apoteker.sudah'))->name('Presensi.apoteker.sudah');
     });
     
     // ======================
@@ -51,9 +53,11 @@ Route::middleware('auth.session')->group(function () {
         Route::get('/dashboard/manajer', [DashboardController::class, 'dashboardManager'])->name('dashboard_manager');
         Route::get('/supplier-laporan', [SupplierController::class, 'laporan'])->name('Supplier.laporan');
         Route::get('/product-laporan', [ProductController::class, 'laporan'])->name('Product.laporan');
-        Route::get('/Presensi/index', [PresensiController::class, 'index'])->name('Presensi.index');
+        Route::post('/presensi/update-status', [PresensiController::class, 'updateStatus'])
+            ->name('Presensi.updateStatus');
     });
     
+    Route::get('/Presensi/index', [PresensiController::class, 'index'])->name('Presensi.index');
     // ======================
     // KASIR
     // ======================
@@ -76,6 +80,8 @@ Route::middleware('auth.session')->group(function () {
         Route::get('/Cart/success', fn() => view('Cart.success'))->name('cart.success');
         Route::get('/Cart/pdf', [CartController::class, 'printPDF'])->name('print.pdf');
         Route::get('/struk/{kode}', [CartController::class, 'cetakPDF'])->name('struk.pdf');
+        Route::get('/Presensi/kasir/sudah', fn() => view('Presensi.kasir.sudah'))->name('Presensi.kasir.sudah');
+        Route::get('/Presensi/kasir/belum', fn() => view('Presensi.kasir.belum'))->name('Presensi.kasir.belum');
     });
 
     // ======================

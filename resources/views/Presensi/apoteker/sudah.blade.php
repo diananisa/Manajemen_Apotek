@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Metode Pembayaran</title>
+    <title>Sudah Presensi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="d-flex">
-
         {{-- Sidebar --}}
         <div class="sidebar bg-white">
             {{-- Logo --}}
@@ -20,17 +18,22 @@
                 <img src="{{ asset('asset/logo.png') }}" alt="logo" width="80">
                 <h5 class="mt-2">Apoteker.ID</h5>
             </div>
-
+            
             {{-- Menu --}}
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a class="nav-link {{ request()->routeIs('dashboard_kasir') ? 'active' : '' }}" href="{{ route('dashboard_kasir') }}">
+                    <a class="nav-link {{ request()->routeIs('dashboard_apoteker') ? 'active' : '' }}" href="{{ route('dashboard_apoteker') }}">
                         <i class="bi bi-speedometer2 me-2"></i>Dashboard
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link {{ request()->routeIs('Product.utama') ? 'active' : '' }}" href="{{ route('Product.utama') }}">
-                        <i class="bi bi-box-seam me-2"></i>Product
+                    <a class="nav-link {{ request()->routeIs('Supplier.index') ? 'active' : '' }}" href="{{ route('Supplier.index') }}">
+                        <i class="bi bi-truck me-2"></i>Supplier
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link {{ request()->routeIs('Product.index') ? 'active' : '' }}" href="{{ route('Product.index') }}">
+                        <i class="bi bi-box-seam me-2"></i>Product Stock
                     </a>
                 </li>
                 @php
@@ -40,13 +43,13 @@
 
                 <li class="nav-item">
                     @if($statusKehadiran === 'Tidak Hadir' || $statusKehadiran === null)
-                        <a class="nav-link {{ request()->routeIs('Presensi.kasir.belum') ? 'active' : '' }}"
-                        href="{{ route('Presensi.kasir.belum') }}">
+                        <a class="nav-link {{ request()->routeIs('Presensi.apoteker.belum') ? 'active' : '' }}"
+                        href="{{ route('Presensi.apoteker.belum') }}">
                             <i class="bi bi-clipboard-check me-2"></i>Presensi
                         </a>
                     @else
-                        <a class="nav-link {{ request()->routeIs('Presensi.kasir.sudah') ? 'active' : '' }}"
-                        href="{{ route('Presensi.kasir.sudah') }}">
+                        <a class="nav-link {{ request()->routeIs('Presensi.apoteker.sudah') ? 'active' : '' }}"
+                        href="{{ route('Presensi.apoteker.sudah') }}">
                             <i class="bi bi-clipboard-check me-2"></i>Presensi
                         </a>
                     @endif
@@ -103,62 +106,37 @@
             </div>
 
             <div style="height: 80px;"></div>
-            
+
+            {{-- Notifikasi Presensi --}}
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <div class="row mb-5 g-2">
-                <div class="container text-center">
-                    <h3 class="mb-4">Pilih Metode Pembayaran</h3>
-                    <div class="d-flex justify-content-center gap-4 flex-wrap">
-
-                        {{-- Tombol QRIS --}}
-                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
-                            @csrf
-                            <input type="hidden" name="metode" value="qris">
-                            <input type="hidden" name="kode" value="{{ $kode }}">
-                            <button type="submit" class="btn btn-outline-primary p-4">
-                                <img src="{{ asset('asset/Group 63.png') }}" width="200"><br>QRIS
-                            </button>
-                        </form>
-
-                        {{-- Tombol CASH --}}
-                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
-                            @csrf
-                            <input type="hidden" name="metode" value="cash">
-                            <input type="hidden" name="kode" value="{{ $kode }}">
-                            <button type="submit" class="btn btn-outline-success p-4">
-                                <img src="{{ asset('asset/Group 64.png') }}" width="200"><br>Cash
-                            </button>
-                        </form>
-
-                        {{-- Tombol DEBIT --}}
-                        <form action="{{ route('bayar') }}" method="POST" style="display:inline;">
-                            @csrf
-                            <input type="hidden" name="metode" value="debit">
-                            <input type="hidden" name="kode" value="{{ $kode }}">
-                            <button type="submit" class="btn btn-outline-warning p-4">
-                                <img src="{{ asset('asset/debit.png') }}" width="200"><br>Debit
-                            </button>
-                        </form>
+                {{-- <form action="{{ route('Presensi.store') }}" method="POST" class="d-inline">
+                    @csrf --}}
+                    <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+                        <div class="text-center bg-white shadow-sm rounded-4 p-5" style="max-width: 500px; width: 100%;">
+                            
+                            <img src="{{ asset('asset/checklist.png') }}" width="180" class="mb-4">
+                            
+                            <h4 class="text-success fw-bold mb-3">Presensi Berhasil!</h4>
+                            <p class="text-muted mb-4">Anda sudah melakukan presensi hari ini.</p>
+                            
+                            <a href="{{ route('dashboard_apoteker') }}" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left"></i> Kembali
+                            </a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('cart.view') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
-                </div>
-
-                <script>
-                    function submitMetode(metode) {
-                        document.getElementById('metodeInput').value = metode;
-                        document.getElementById('formMetode').submit();
-                    }
-                </script>
+                {{-- </form> --}}
             </div>
+
         </div>
     </div>
-
-<script src="{{ asset('js/dashboard_kasir.js') }}"></script>
-{{-- Bootstrap JS --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/topsidebar.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

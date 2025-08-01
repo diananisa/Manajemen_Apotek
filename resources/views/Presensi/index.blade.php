@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Apoteker</title>
+    <title>Data Presensi Karyawan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tablepresensi.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="d-flex">
@@ -56,6 +57,19 @@
                     <i class="bi bi-list"></i>
                 </button>
 
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('Presensi.index') }}" class="flex-grow-1 me-4" style="max-width: 400px;">
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama karyawan...">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        @if(request('search'))
+                        <a href="{{ route('Presensi.index') }}" class="btn btn-outline-secondary ms-2">Reset</a>
+                        @endif
+                    </div>
+                </form>
+
                 <!-- User Info -->
                 <div class="user-menu-wrapper position-relative">
                     <div id="userMenuToggle" class="d-flex align-items-center gap-3 user-info" style="cursor:pointer;">
@@ -88,34 +102,17 @@
 
             <div style="height: 80px;"></div>
 
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold">Data Presensi Karyawan</h4>
+            </div>
+
             <div class="row mb-5 g-2">
-                <form action="{{ route('Presensi.index') }}" method="GET" class="d-flex flex-wrap gap-2">
-                     @csrf
-                    {{-- Filter Tipe Harian / Bulanan --}}
-                    <div class="col-md-2">
-                        <div class="card text-center shadow-sm p-2">
-                            <select name="tipe" class="form-select">
-                                <option value="harian" {{ request('tipe') == 'harian' ? 'selected' : '' }}>Harian</option>
-                                <option value="bulanan" {{ request('tipe') == 'bulanan' ? 'selected' : '' }}>Bulanan</option>
-                            </select>
-                        </div>
+                <form action="{{ route('Presensi.index') }}" method="GET" class="d-flex gap-2 align-items-center">
+                    <div>
+                        <input type="date" name="tanggal" value="{{ request('tanggal') ?? now()->format('Y-m-d') }}" class="form-control">
                     </div>
-
-                    {{-- Filter Tanggal --}}
-                    <div class="col-md-2">
-                        <div class="card text-center shadow-sm p-2">
-                            <input type="date" name="tanggal" value="{{ request('tanggal') ?? now()->format('Y-m-d') }}" class="form-control">
-                        </div>
-                    </div>
-
-                    {{-- Filter Pencarian Nama --}}
-                    <div class="col-md-4">
-                        <div class="card text-center shadow-sm p-2">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Cari nama karyawan..." value="{{ request('search') }}">
-                                <button class="btn btn-primary" type="submit">Cari</button>
-                            </div>
-                        </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Cari</button>
                     </div>
                 </form>
             </div>
@@ -126,36 +123,61 @@
                 </div>
             @endif --}}
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-primary">
-                        <tr>
+                <table class="table table-hover table-striped align-middle shadow-sm rounded-3">
+                    <thead class="custom-table-header">
+                        <tr class="text-center">
                             <th>No</th>
                             <th>Username</th>
+                            <th>Role</th>
                             <th>Tanggal</th>
                             <th>Jam</th>
+                            <th class="text-center">Status Kehadiran</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            use Carbon\Carbon;
-                            $no = 1;
-                        @endphp
+                        @php $no = 1; @endphp
                         @forelse ($presensis as $presensi)
                             <tr>
-                                <td>{{ $no++ }}</td>
+                                <td class="text-center">{{ $no++ }}</td>
                                 <td>{{ $presensi->Username }}</td>
-                                <td>{{ Carbon::parse($presensi->tanggal)->format('d-m-Y') }}</td>
-                                <td>{{ $presensi->jam }}</td>
+                                <td>{{ $presensi->role }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($presensi->tanggal)->format('d-m-Y') }}</td>
+                                <td class="text-center">{{ $presensi->jam }}</td>
+                                <td class="text-center">
+                                    <div class="d-inline-flex align-items-center gap-2">
+                                        {{-- Badge status --}}
+                                        @php
+                                            $badgeClass = match($presensi->status_kehadiran) {
+                                                'Hadir' => 'success',
+                                                'Tidak Hadir' => 'danger',
+                                                'Izin' => 'warning',
+                                                default => 'secondary'
+                                            };
+                                        @endphp
+                                        <span class="badge bg-{{ $badgeClass }} px-3 py-2">
+                                            {{ $presensi->status_kehadiran }}
+                                        </span>
+
+                                        {{-- Tombol edit status (ikon) --}}
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary edit-status-btn"
+                                            data-id="{{ $presensi->id }}"
+                                            data-current="{{ $presensi->status_kehadiran }}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">Data presensi tidak ditemukan.</td>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="bi bi-info-circle"></i> Data presensi tidak ditemukan.
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-
 
             {{-- <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button>
@@ -168,9 +190,38 @@
         </div>
     </div>
 
+<!-- Simpan nilai ke elemen HTML -->
+<div id="presensiConfig"
+     data-url="{{ route('Presensi.updateStatus') }}"
+     data-token="{{ csrf_token() }}">
+</div>
+
+<!-- Modal Pilih Status -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">Ubah Status Kehadiran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <select id="statusSelect" class="form-select">
+          <option value="Hadir">Hadir</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+          <option value="Izin">Izin</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="saveStatusBtn">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{{ asset('js/topsidebar.js') }}"></script>
+<script src="{{ asset('js/update_presensi.js') }}"></script>
+
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

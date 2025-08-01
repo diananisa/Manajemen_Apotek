@@ -98,7 +98,11 @@
             </div>
 
             <div style="height: 80px;"></div>
-            
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold">Laporan Stock Obat</h4>
+            </div>
+
             {{-- Filter Form --}}
             <form method="GET" action="{{ route('Product.laporan') }}" class="mb-3">
                 <div class="row g-2 align-items-end">
@@ -132,10 +136,6 @@
                     </div>
                 </div>
             </form>
-            
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold">Laporan Stock Obat</h4>
-            </div>
 
             {{-- Table Supplier --}}
             <div class="table-responsive">

@@ -94,7 +94,7 @@
 
         <div style="height: 80px;"></div>
 
-        <h3>Dashboard</h3>
+        <h3>Dashboard Manager</h3>
 
         {{-- Chart Penjualan --}}
         <div class="mt-4">

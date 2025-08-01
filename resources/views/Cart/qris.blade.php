@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Apoteker - QRIS</title>
+    <title>Pembayaran - QRIS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ asset('css/topsidebar.css') }}" rel="stylesheet">
@@ -32,10 +32,23 @@
                         <i class="bi bi-box-seam me-2"></i>Product
                     </a>
                 </li>
+                @php
+                    use App\Http\Controllers\PresensiController;
+                    $statusKehadiran = app(PresensiController::class)->cekStatusHariIni();
+                @endphp
+
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('Presensi.belum') ? 'active' : '' }}" href="{{ route('Presensi.belum') }}">
-                        <i class="bi bi-clipboard-check me-2"></i>Presensi
-                    </a>
+                    @if($statusKehadiran === 'Tidak Hadir' || $statusKehadiran === null)
+                        <a class="nav-link {{ request()->routeIs('Presensi.kasir.belum') ? 'active' : '' }}"
+                        href="{{ route('Presensi.kasir.belum') }}">
+                            <i class="bi bi-clipboard-check me-2"></i>Presensi
+                        </a>
+                    @else
+                        <a class="nav-link {{ request()->routeIs('Presensi.kasir.sudah') ? 'active' : '' }}"
+                        href="{{ route('Presensi.kasir.sudah') }}">
+                            <i class="bi bi-clipboard-check me-2"></i>Presensi
+                        </a>
+                    @endif
                 </li>
             </ul>
         </div>

@@ -1,0 +1,16 @@
+.custom-table-header th {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa) !important;
+    color: white !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.custom-table-header th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.custom-table-header th:last-child {
+    border-top-right-radius: 10px;
+}

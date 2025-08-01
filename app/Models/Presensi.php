@@ -12,6 +12,8 @@ class Presensi extends Model
         'Username',
         'tanggal',
         'jam',
+        'status_kehadiran',
+        'role'
     ];
 
     public function user(){
